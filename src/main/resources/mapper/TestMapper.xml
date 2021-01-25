@@ -3,8 +3,8 @@
 
 <mapper namespace="com.xybl.server.dao.TestDao">
 
-    <select id="test" parameterType="String">
-        SELECT * FROM user LIMIT 1;
+    <select id="test" parameterType="int" resultType="com.xybl.server.entity.Test">
+        SELECT id,info FROM test WHERE id=#{id};
     </select>
 
 </mapper>

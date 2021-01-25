@@ -3,9 +3,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://rm-bp1712ocqs7a37a9lho.mysql.rds.aliyuncs.com:3306/iois?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true
-      username: iois
-      password: D8Xmtid84zV6KRK
+      url: jdbc:mysql://rm-bp1712ocqs7a37a9lho.mysql.rds.aliyuncs.com:3306/xiaoyuanbaling?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+      username: xybl
+      password: xiaoyuanbaling
 
       initial-size: 5
       min-idle: 5
@@ -48,7 +48,6 @@ spring:
         reset-enable: false
         login-username: user
         login-password: password
-
 
 
 mybatis:

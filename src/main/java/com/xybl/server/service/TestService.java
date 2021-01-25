@@ -1,7 +1,7 @@
-package com.xybl.server.dao;
+package com.xybl.server.service;
 
 import com.xybl.server.entity.Test;
 
-public interface TestDao {
+public interface TestService {
     public Test test(int id);
 }
