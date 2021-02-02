@@ -3,11 +3,11 @@
 
 <mapper namespace="com.xybl.server.dao.UserDao">
 
-    <select id="test" parameterType="int" resultType="com.xybl.server.entity.Test">
-        SELECT id,info FROM test WHERE id=#{id};
+    <insert id="addOneUser" parameterType="com.xybl.server.entity.User">
+        INSERT INTO user(id, name, pwd, role, email, tel) VALUE (#{id}, #{name}, #{pwd}, #{role}, #{email}, #{tel});
+    </insert>
+
+    <select id="getUserById" parameterType="String" resultType="com.xybl.server.entity.User">
+        SELECT * FROM user WHERE id=#{id};
     </select>
-    <delete id="delete" parameterType="int">
-
-    </delete>
-
 </mapper>
