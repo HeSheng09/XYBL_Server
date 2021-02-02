@@ -13,6 +13,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * AppealDaoTest
+ * <p>AppealDao 方法测试类。</p>
+ * @author hesheng
+ * @create 2021/2/2
+ **/
 @SpringBootTest(classes = ServerApplication.class)
 class AppealDaoTest {
     @Resource

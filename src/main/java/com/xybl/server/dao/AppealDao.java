@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * AppealDao
- * <p>求助Dao</p>
+ * <p></p>
  * @author hesheng
  * @create 2021/2/2
  **/

@@ -1,5 +1,11 @@
 package com.xybl.server.entity;
 
+/**
+ * Test
+ * <p>实体类。</p>
+ * @author hesheng
+ * @create 2021/2/2
+ **/
 public class Test {
     private int id;
     private String info;
