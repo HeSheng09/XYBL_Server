@@ -1,5 +1,11 @@
 package com.xybl.server.entity;
 
+/**
+ * Reply
+ * <p>实体类。</p>
+ * @author hesheng
+ * @create 2021/2/2
+ **/
 public class Reply {
     private String id;
     private String post_id;
