@@ -9,10 +9,13 @@ import javax.annotation.Resource;
 
 @Service("testService")
 public class TestServiceImpl implements TestService {
+
     @Resource
     private TestDao testDao;
+
     @Override
     public Test test(int id) {
+        //
         return testDao.test(id);
     }
 }
