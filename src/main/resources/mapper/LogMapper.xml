@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xybl.server.dao.LogDao">
+
+    <insert id="addOneLog" parameterType="com.xybl.server.entity.Log">
+        INSERT INTO log(id, log_time, detail)
+        VALUES (#{id}, #{log_time}, #{detail});
+    </insert>
+
+    <select id="getLogs" resultType="com.xybl.server.entity.Log">
+        SELECT *
+        FROM log
+        ORDER BY id DESC
+        LIMIT 100;
+    </select>
+</mapper>

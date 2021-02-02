@@ -25,4 +25,18 @@ public class DatetimeUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(d);
     }
+
+    /**
+    * getAndFormatDatetime
+    * <p>获取并格式话当前系统时间。</p>
+    * @param format java.lang.String. 指定时间格式。
+    * @return java.lang.String
+    * @author hesheng
+    * @create: 2021/2/2
+    */
+    public static String getAndFormatDatetime(String format){
+        Date d=new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(d);
+    }
 }
