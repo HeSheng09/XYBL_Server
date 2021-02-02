@@ -4,18 +4,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author: hesheng
- * @create: 2020-12-2020/12/30
- * @description:
+ * ResponseUtil
+ * <p>封装API调用返回值。</p>
+ * @author hesheng
+ * @create 2021/2/2
  **/
 public class ResponseUtil {
+
     /**
-     * @Description: 封装API调用返回值
-     * @Param: [code, msg]
-     * @Return: java.util.Map<java.lang.String,java.lang.Object>
-     * @Author: hesheng
-     * @Date: 2020/12/30
-     */
+    * response
+    * <p>封装API调用返回值。</p>
+    * @param code int. API返回代码。
+     * @param msg java.lang.String. API返回信息。
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    * @author hesheng
+    * @create: 2021/2/2
+    */
     public static Map<String,Object> response(int code, String msg){
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("code", code);
@@ -24,12 +28,15 @@ public class ResponseUtil {
     }
 
     /**
-     * @Description: 封装API调用返回值
-     * @Param: [code, msg, data]
-     * @Return: java.util.Map<java.lang.String,java.lang.Object>
-     * @Author: hesheng
-     * @Date: 2020/12/30
-     */
+    * response
+    * <p>封装API调用返回值</p>
+    * @param code int. API返回代码。
+     * @param msg java.lang.String. API返回信息。
+     * @param data java.lang.Object. API返回数据。
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    * @author hesheng
+    * @create: 2021/2/2
+    */
     public static Map<String,Object> response(int code,String msg,Object data){
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("code", code);

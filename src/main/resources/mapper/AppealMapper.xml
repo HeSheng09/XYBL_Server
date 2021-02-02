@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xybl.server.dao.AppealDao">
+    <resultMap id="baseMap" type="com.xybl.server.entity.Appeal">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="al_time" jdbcType="DATE" property="al_time"/>
+        <result column="al_address" jdbcType="VARCHAR" property="al_address"/>
+        <result column="abstract" jdbcType="VARCHAR" property="al_abstract"/>
+        <result column="detail" jdbcType="CLOB" property="detail"/>
+        <result column="appellant" jdbcType="VARCHAR" property="appellant"/>
+        <result column="acceptor" jdbcType="VARCHAR" property="acceptor"/>
+        <result column="progress" jdbcType="INTEGER" property="progress"/>
+        <result column="re_appeal" jdbcType="TINYINT" property="re_appeal"/>
+    </resultMap>
+
+    <!--  public Appeal getOneAppealById(String id);  -->
+    <select id="getOneAppealById" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM appeal
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id};
+            </if>
+        </where>
+    </select>
+
+    <!--  public List<Appeal> getAppeals();  -->
+    <select id="getAppeals" resultMap="baseMap">
+        SELECT *
+        FROM appeal
+        LIMIT 100;
+    </select>
+
+    <!--  public void addOneAppeal(Appeal appeal);  -->
+    <insert id="addOneAppeal" parameterType="com.xybl.server.entity.Appeal">
+        <if test="appellant != null and appellant != '' and id != null and id != ''">
+            INSERT INTO appeal(id, al_time, al_address, abstract, detail, appellant, acceptor, progress,
+            re_appeal)
+            VALUES (#{id},#{al_time}, #{al_address}, #{al_abstract}, #{detail}, #{appellant},
+            #{acceptor}, #{progress}, #{re_appeal});
+        </if>
+    </insert>
+
+    <!--  public void deleteOneAppealById(String id);  -->
+    <delete id="deleteOneAppealById" parameterType="String">
+        DELETE
+        FROM appeal
+        WHERE id = #{id};
+    </delete>
+
+    <!--  public void updateOneAppeal(Appeal appeal);  -->
+    <update id="updateOneAppeal" parameterType="com.xybl.server.entity.Appeal">
+        UPDATE appeal
+        <set>
+            <if test="al_time != null and al_time != ''">
+                al_time=#{al_time},
+            </if>
+            <if test="al_address != null and al_address != ''">
+                al_address=#{al_address},
+            </if>
+            <if test="al_abstract != null and al_abstract != ''">
+                abstract=#{al_abstract},
+            </if>
+            <if test="detail != null and detail != ''">
+                detail=#{detail},
+            </if>
+            <if test="appellant != null and appellant != ''">
+                appellant=#{appellant},
+            </if>
+            <if test="acceptor != null and acceptor != ''">
+                acceptor=#{acceptor},
+            </if>
+            <if test="progress != null">
+                progress=#{progress},
+            </if>
+            <choose>
+                <when test="re_appeal == true">re_appeal=1</when>
+                <otherwise>re_appeal=0</otherwise>
+            </choose>
+        </set>
+        <where>
+            id=#{id};
+        </where>
+    </update>
+</mapper>
