@@ -46,4 +46,9 @@ public class UserServiceImpl implements UserService {
         }
         return last_id;
     }
+
+    @Override
+    public User getUserById(String id) {
+        return userDao.getUserById(id);
+    }
 }
