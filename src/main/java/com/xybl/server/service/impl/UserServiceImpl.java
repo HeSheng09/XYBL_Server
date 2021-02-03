@@ -20,7 +20,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean login(String uid, String pwd) {
         User user = userDao.getUserById(uid);
-        return true;
-
+        if(pwd.equals(user.getPwd())){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
