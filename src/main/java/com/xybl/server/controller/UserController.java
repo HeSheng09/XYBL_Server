@@ -2,6 +2,8 @@ package com.xybl.server.controller;
 
 import com.xybl.server.entity.User;
 import com.xybl.server.service.UserService;
+import com.xybl.server.utils.ResponseUtil;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
+
+import static com.xybl.server.utils.ResponseUtil.response;
 
 /**
  * UserController
@@ -37,9 +40,15 @@ public class UserController {
     @GetMapping("/login")
     public Map<String, Object> login(@RequestParam(name = "id")String id,
                                      @RequestParam(name = "pwd")String pwd){
-        Map<String, Object> res = new HashMap<>();
-        res.put("info", userService.login(id, pwd));
-        return res;
+        int isLogin  = userService.login(id, pwd);
+        String msg;
+        switch (isLogin){
+            case 200: msg = "ok";break;
+            case 401: msg = "password error";break;
+            case 402: msg = "user doesn't exsit";break;
+            default: msg="";
+        }
+        return response(isLogin, msg);
     }
 
     /**
@@ -68,12 +77,16 @@ public class UserController {
         user.setPwd(pwd);
         user.setTel(tel);
         //3.入库
-        boolean isAdd = userService.addOneUser(user);
+        int isAdd = userService.addOneUser(user);
         //4.返回消息
-        Map<String, Object> res = new HashMap<>();
-        res.put("info", isAdd);
-        res.put("user", user);
-        return res;
+        String msg;
+        switch (isAdd){
+            case 200: msg = "ok"; break;
+            case 401: msg = "user name has existed"; break;
+            default: msg = "";
+        }
+        return response(isAdd, msg);
+
     }
 
 }

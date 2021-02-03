@@ -10,25 +10,25 @@ import com.xybl.server.entity.User;
  **/
 public interface UserService {
 
-    /**
-    * addOneUser
-    * <p>添加用户</p>
-    * @param user com.xybl.server.entity.User.
-    * @return boolean
-    * @author liubocai
-    * @create: 2021/2/2
-    */
-    public boolean addOneUser(User user);
+   /**
+   * addOneUser
+   * <p>添加一名用户</p>
+   * @param user com.xybl.server.entity.User.
+   * @return int
+   * @author liubocai
+   * @create: 2021-02-03
+   */
+    public int addOneUser(User user);
 
     /**
     * login
     * <p>登录</p>
     * @param uid java.lang.String.
      * @param pwd java.lang.String.
-    * @return boolean
+    * @return int
     * @author liubocai
     * @create: 2021/2/2
     */
-    public boolean login(String uid, String pwd);
+    public int login(String uid, String pwd);
 
 }

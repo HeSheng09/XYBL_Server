@@ -13,21 +13,25 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public boolean addOneUser(User user) {
+    public int addOneUser(User user) {
+        int isAdd = 200;
         if(userDao.getUserByName(user.getName()) != null){
-            return false;
-        };
-        boolean isAdd = userDao.addOneUser(user);
+            isAdd = 401; //用户已存在
+        }else{
+            userDao.addOneUser(user);
+        }
         return isAdd;
     }
 
     @Override
-    public boolean login(String uid, String pwd) {
+    public int login(String uid, String pwd) {
         User user = userDao.getUserById(uid);
-        if(pwd.equals(user.getPwd())){
-            return true;
+        if(user == null){
+            return 402; //用户不存在
+        }else if(pwd.equals(user.getPwd())){
+            return 200;
         }else{
-            return false;
+            return 401; //密码错误
         }
     }
 }
