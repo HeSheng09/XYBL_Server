@@ -4,7 +4,8 @@
 <mapper namespace="com.xybl.server.dao.UserDao">
 
     <insert id="addOneUser" parameterType="com.xybl.server.entity.User">
-        INSERT INTO user(id, name, pwd, role, email, tel) VALUE (#{id}, #{name}, #{pwd}, #{role}, #{email}, #{tel});
+        INSERT INTO user(id, name, pwd, role, email, tel)
+        VALUE (#{id}, #{name}, #{pwd}, #{role}, #{email}, #{tel});
     </insert>
 
     <select id="getUserById" parameterType="String" resultType="com.xybl.server.entity.User">
