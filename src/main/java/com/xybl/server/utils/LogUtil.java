@@ -37,14 +37,13 @@ public class LogUtil {
     * genLogId
     * <p>生成日志id。id长度为17+15=32.</p>
     * @param log_time java.lang.String. 时间。格式：yyyyMMddHHmmssSSS。有效位数：8+6+3=17.
-     * @param userid java.lang.String. 用户id。位数15.
+     * @param userid java.lang.String. 用户id。位数21（取前15位）.
     * @return java.lang.String
     * @author hesheng
     * @create: 2021/2/2
     */
     public static String genLogId(String log_time, String userid) {
-        Random r = new Random();
-        return log_time+ userid;
+        return log_time+ userid.substring(0,15);
     }
 
     /**

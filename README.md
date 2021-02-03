@@ -10,18 +10,29 @@
      * ZZ: 区域。2位。
      * XXXX: 当天注册序号。4位。
    * 实际有效id字长为21位。
-   * **生成id可调用UserUtil.genId(int role, int zone, int last_id).**详情查看函数声明。
+   * **生成id可调用UserUtil.genId(String role, String zone, int last_id).**详情查看函数声明。
+     * last_id可调用UserService.getLast_id()获得。
+   * 生成实例可以参考UserController下注册功能中。
 2. name varchar(32)
 3. pwd varchar(32)
 4. role int(1)
    * 用户角色（权限）。
-   * 暂定9为普通学生。
-   * 其他待定。
+   * 查看UserUtil类获取权限详情。
 5. email varchar(32)
 6. tel varchar(16)
 
+## 日志部分
 
+> 说明此日志为记录用户活动的日志。而非系统运行状况的日志。  
+> 原则上，不管用户进行什么操作，都需要进行记录。
 
+主要使用LogService.addOneLog(User user, String opr, String result)进行日志记录。
+参数说明：
+* user: 用户信息。其id，name，role属性值为必需。
+* opr: 用户所进行的操作。比如注册、登录、查询……
+* result: 操作的结果。注册成功与否、登录成功与否……
+使用示例：（源码在TestController中）
+  ![Screenshot from 2021-02-03 20-37-34](.asserts/Screenshot from 2021-02-03 20-37-34.png)
 
 ## javadoc template
 

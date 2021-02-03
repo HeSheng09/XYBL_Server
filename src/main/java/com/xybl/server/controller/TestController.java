@@ -1,5 +1,7 @@
 package com.xybl.server.controller;
 
+import com.xybl.server.entity.User;
+import com.xybl.server.service.LogService;
 import com.xybl.server.service.TestService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,8 @@ public class TestController {
 
     @Resource
     private TestService testService;
+    @Resource
+    private LogService logService;
 
     /**
     * index
@@ -40,7 +44,7 @@ public class TestController {
         data.put("id",id);
         // expression
         data.put("info",testService.test(id).getInfo());
-
+        logService.addOneLog(new User("020210203202112170001","系统管理员",0),"插入日志测试。","成功");
 
         return response(200,"ok",data);
     }

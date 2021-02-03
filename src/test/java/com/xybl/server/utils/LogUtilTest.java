@@ -31,7 +31,7 @@ class LogUtilTest {
     @Test
     void genLog() {
         User user=new User();
-        user.setId("920210202000001");
+        user.setId("920210202123456000001");
         user.setName("测试学生");
         user.setRole(9);
         Log log=LogUtil.genLog(user,"生成log测试","succeed");
