@@ -58,8 +58,8 @@ public class UserController {
     public Map<String, Object> register(@RequestParam(name = "name")String name,
                                         @RequestParam(name = "pwd")String pwd,
                                         @RequestParam(name = "role")int roleType,
-                                        @RequestParam(name = "email")String email,
-                                        @RequestParam(name = "tel")String tel){
+                                        @RequestParam(name = "email", defaultValue = "noemail")String email,
+                                        @RequestParam(name = "tel", defaultValue = "notel")String tel){
         //1.生成id，以当前时间戳
         String id = String.valueOf(System.currentTimeMillis());
         //2.封装成user

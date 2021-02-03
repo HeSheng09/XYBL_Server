@@ -14,6 +14,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addOneUser(User user) {
+        if(userDao.getUserByName(user.getName()) != null){
+            return false;
+        };
         boolean isAdd = userDao.addOneUser(user);
         return isAdd;
     }

@@ -11,4 +11,8 @@
     <select id="getUserById" parameterType="String" resultType="com.xybl.server.entity.User">
         SELECT * FROM user WHERE id=#{id};
     </select>
+
+    <select id="getUserByName" parameterType="String" resultType="com.xybl.server.entity.User">
+        SELECT * FROM user WHERE name=#{name};
+    </select>
 </mapper>

@@ -2,6 +2,8 @@ package com.xybl.server.dao;
 
 import com.xybl.server.entity.User;
 
+import java.security.PublicKey;
+
 /**
  * UserDao
  * <p></p>
@@ -30,4 +32,13 @@ public interface UserDao {
     */
     public User getUserById(String uid);
 
+    /**
+    * getUserByName
+    * <p>根据用户名查询用户</p>
+    * @param name java.lang.String.
+    * @return com.xybl.server.entity.User
+    * @author liubocai
+    * @create: 2021-02-03
+    */
+    public User getUserByName(String name);
 }
