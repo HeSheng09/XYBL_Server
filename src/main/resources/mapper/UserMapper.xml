@@ -15,4 +15,8 @@
     <select id="getUserByName" parameterType="String" resultType="com.xybl.server.entity.User">
         SELECT * FROM user WHERE name=#{name};
     </select>
+
+    <select id="getLastUserId" resultType="java.util.HashMap">
+        SELECT SUBSTRING(id,18,4) as last_id,SUBSTRING(id,2,14) as t_id FROM user WHERE DATE_FORMAT(NOW(),'%Y%m%d')=substring(id,2,8) ORDER BY t_id DESC LIMIT 1;
+    </select>
 </mapper>

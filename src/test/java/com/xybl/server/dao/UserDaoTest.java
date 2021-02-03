@@ -2,6 +2,7 @@ package com.xybl.server.dao;
 
 import com.xybl.server.ServerApplication;
 import com.xybl.server.entity.User;
+import com.xybl.server.utils.UserUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -23,10 +24,10 @@ class UserDaoTest {
     @Test
     void addOneUser() {
         User user=new User();
-        user.setId("920210202000002");
-        user.setName("测试学生2");
+        user.setId(UserUtil.genUserId("普通用户","湖北省",4));
+        user.setName("测试学生5");
         user.setPwd("password");
-        user.setRole(9);
+        user.setRole(6);
         user.setEmail("teststudent02@qq.com");
         user.setTel("12345678901");
         userDao.addOneUser(user);
@@ -35,5 +36,10 @@ class UserDaoTest {
     @Test
     void getUserById() {
         System.out.println(userDao.getUserById("920210202000002"));
+    }
+
+    @Test
+    void getLastUserId() {
+        System.out.println(userDao.getLastUserId());
     }
 }

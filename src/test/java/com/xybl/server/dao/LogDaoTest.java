@@ -13,6 +13,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * LogDaoTest
+ * <p></p>
+ * @author hesheng
+ * @create 2021/2/3
+ **/
 @SpringBootTest(classes = ServerApplication.class)
 class LogDaoTest {
     @Resource

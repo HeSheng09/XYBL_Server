@@ -6,8 +6,17 @@ import com.xybl.server.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * LogUtilTest
+ * <p></p>
+ * @author hesheng
+ * @create 2021/2/3
+ **/
 class LogUtilTest {
 
     @Test
@@ -28,5 +37,11 @@ class LogUtilTest {
         Log log=LogUtil.genLog(user,"生成log测试","succeed");
         System.out.println(log);
         System.out.println(log.getId().length());
+    }
+
+    @Test
+    void whatever(){
+        List<String> roles = Arrays.asList("系统管理员", "教育部", "省级", "市级", "县级", "学校", "普通用户", "其他用户", "other");
+        System.out.println(roles.indexOf("what"));
     }
 }

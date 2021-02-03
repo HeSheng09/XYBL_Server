@@ -3,6 +3,7 @@ package com.xybl.server.dao;
 import com.xybl.server.entity.User;
 
 import java.security.PublicKey;
+import java.util.Map;
 
 /**
  * UserDao
@@ -41,4 +42,14 @@ public interface UserDao {
     * @create: 2021-02-03
     */
     public User getUserByName(String name);
+
+    /**
+    * getLastUserId
+    * <p>获取当天最新注册的用户id。</p>
+    * @param  .
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    * @author hesheng
+    * @create: 2021/2/3
+    */
+    public Map<String,Object> getLastUserId();
 }

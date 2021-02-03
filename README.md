@@ -1,6 +1,25 @@
 # XYBL_server
-快捷键：
-插入：alt+insert
+
+## 数据库说明
+### user
+1. id varchar(32) primary key
+   * 用户id。
+   * 格式为：RyyyyMMddHHmmssZZXXXX。21位。
+     * R: 角色。1位。
+     * yyyyMMddHHmmss: 注册时间。14位。
+     * ZZ: 区域。2位。
+     * XXXX: 当天注册序号。4位。
+   * 实际有效id字长为21位。
+   * **生成id可调用UserUtil.genId(int role, int zone, int last_id).**详情查看函数声明。
+2. name varchar(32)
+3. pwd varchar(32)
+4. role int(1)
+   * 用户角色（权限）。
+   * 暂定9为普通学生。
+   * 其他待定。
+5. email varchar(32)
+6. tel varchar(16)
+
 
 
 
@@ -94,4 +113,5 @@
 2. File and Code Templates:
 
    new class时自动调用模板。
+
 
