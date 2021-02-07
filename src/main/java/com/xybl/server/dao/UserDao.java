@@ -21,7 +21,7 @@ public interface UserDao {
     * @author liubocai
     * @create: 2021/2/2
     */
-    public boolean addOneUser(User user);
+    public void addOneUser(User user);
 
     /**
     * getUserById

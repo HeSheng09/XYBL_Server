@@ -2,21 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.xybl.server.dao.UserDao">
+    <resultMap id="baseMap" type="com.xybl.server.entity.User">
+        <id column="t_user_id" jdbcType="VARCHAR" property="id"/>
+        <result column="t_user_name" jdbcType="VARCHAR" property="name"/>
+        <result column="t_user_pwd" jdbcType="VARCHAR" property="pwd"/>
+        <result column="t_user_role" jdbcType="TINYINT" property="role"/>
+    </resultMap>
 
     <insert id="addOneUser" parameterType="com.xybl.server.entity.User">
-        INSERT INTO user(id, name, pwd, role, email, tel)
-        VALUE (#{id}, #{name}, #{pwd}, #{role}, #{email}, #{tel});
+        INSERT INTO t_user(t_user_id, t_user_name, t_user_pwd, t_user_role)
+        VALUES (#{id}, #{name}, #{pwd}, #{role});
     </insert>
-
-    <select id="getUserById" parameterType="String" resultType="com.xybl.server.entity.User">
-        SELECT * FROM user WHERE id=#{id};
+    <select id="getUserById" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_user
+        WHERE t_user_id = #{id};
     </select>
-
-    <select id="getUserByName" parameterType="String" resultType="com.xybl.server.entity.User">
-        SELECT * FROM user WHERE name=#{name};
-    </select>
-
     <select id="getLastUserId" resultType="java.util.HashMap">
-        SELECT SUBSTRING(id,18,4) as last_id,SUBSTRING(id,2,14) as t_id FROM user WHERE DATE_FORMAT(NOW(),'%Y%m%d')=substring(id,2,8) ORDER BY t_id DESC LIMIT 1;
+        SELECT SUBSTRING(t_user_id, 1, 13) as register_time, SUBSTRING(t_user_id, 14, 3) as last_id
+        FROM t_user
+        WHERE UNIX_TIMESTAMP(DATE_FORMAT(NOW(), '%Y%m%d'))*1000 &lt;= SUBSTRING(t_user_id, 1, 13)
+        ORDER BY register_time DESC
+        LIMIT 1;
     </select>
+
+    <!--    <insert id="addOneUser" parameterType="com.xybl.server.entity.User">-->
+    <!--        INSERT INTO user(id, name, pwd, role, email, tel)-->
+    <!--        VALUE (#{id}, #{name}, #{pwd}, #{role}, #{email}, #{tel});-->
+    <!--    </insert>-->
+
+    <!--    <select id="getUserById" parameterType="String" resultType="com.xybl.server.entity.User">-->
+    <!--        SELECT * FROM user WHERE id=#{id};-->
+    <!--    </select>-->
+
+    <!--    <select id="getUserByName" parameterType="String" resultType="com.xybl.server.entity.User">-->
+    <!--        SELECT * FROM user WHERE name=#{name};-->
+    <!--    </select>-->
+
+    <!--    <select id="getLastUserId" resultType="java.util.HashMap">-->
+    <!--        SELECT SUBSTRING(id,18,4) as last_id,SUBSTRING(id,2,14) as t_id FROM user WHERE DATE_FORMAT(NOW(),'%Y%m%d')=substring(id,2,8) ORDER BY t_id DESC LIMIT 1;-->
+    <!--    </select>-->
 </mapper>

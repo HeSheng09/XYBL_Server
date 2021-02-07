@@ -26,7 +26,7 @@ class LogDaoTest {
 
     @Test
     void addOneLog() {
-        User user=new User("920210202000001","测试学生",9);
+        User user=new User("920210202000001","测试学生",true);
         logDao.addOneLog(LogUtil.genLog(user,"插入日志测试。","succeed"));
     }
 

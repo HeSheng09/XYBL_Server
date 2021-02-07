@@ -40,4 +40,14 @@ public interface UserService {
     * @create: 2021/2/3
     */
     public int getLast_id();
+
+    /**
+    * genId
+    * <p>生成一个用户id。</p>
+    * @param  .
+    * @return java.lang.String
+    * @author hesheng
+    * @create: 2021/2/8
+    */
+    public String genId();
 }
