@@ -63,4 +63,9 @@ public class UserServiceImpl implements UserService {
         }
         return buffer.toString();
     }
+
+    @Override
+    public User getUserById(String id) {
+        return userDao.getUserById(id);
+    }
 }

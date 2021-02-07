@@ -50,4 +50,14 @@ public interface UserService {
     * @create: 2021/2/8
     */
     public String genId();
+
+    /**
+     * getUserById
+     * <p>根据id获取用户对象</p>
+     * @param id java.lang.String.
+     * @return com.xybl.server.entity.User
+     * @author liubocai
+     * @create: 2021-02-03
+     */
+    public User getUserById(String id);
 }
