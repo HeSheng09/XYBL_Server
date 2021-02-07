@@ -1,6 +1,7 @@
 package com.xybl.server.controller;
 
 import com.xybl.server.entity.User;
+import com.xybl.server.service.LogService;
 import com.xybl.server.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,8 @@ public class UserController {
 
     @Resource
     public UserService userService;
+    @Resource
+    public LogService logService;
 
     /**
     * login
@@ -42,9 +45,10 @@ public class UserController {
         switch (isLogin){
             case 200: msg = "ok";break;
             case 401: msg = "password error";break;
-            case 402: msg = "user doesn't exsit";break;
+            case 402: {msg = "user doesn't exist"; return response(isLogin, msg);}
             default: msg="";
         }
+        logService.addOneLog(userService.getUserById(id), "login", msg);
         return response(isLogin, msg);
     }
 
@@ -85,6 +89,8 @@ public class UserController {
             case 401: msg = "user name has existed"; break;
             default: msg = "";
         }
+        //5.添加操作日志
+        logService.addOneLog(user, "register", msg);
         return response(isAdd, msg);
 
     }
