@@ -2,13 +2,11 @@ package com.xybl.server.dao;
 
 import com.xybl.server.ServerApplication;
 import com.xybl.server.entity.User;
-import com.xybl.server.utils.UserUtil;
+import com.xybl.server.utils.MD5Util;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * UserDaoTest
@@ -23,19 +21,15 @@ class UserDaoTest {
 
     @Test
     void addOneUser() {
-        User user=new User();
-        user.setId(UserUtil.genUserId("普通用户","湖北省",4));
-        user.setName("测试学生5");
-        user.setPwd("password");
-        user.setRole(6);
-        user.setEmail("teststudent02@qq.com");
-        user.setTel("12345678901");
+        User user=new User("1612717415512000","测试学生0",true);
+        user.setPwd(MD5Util.getEncryptedText("password"));
         userDao.addOneUser(user);
     }
 
     @Test
     void getUserById() {
-        System.out.println(userDao.getUserById("920210202000002"));
+        String enPwd=userDao.getUserById("1612715026000001").getPwd();
+        System.out.println(MD5Util.validText("password0", enPwd));
     }
 
     @Test

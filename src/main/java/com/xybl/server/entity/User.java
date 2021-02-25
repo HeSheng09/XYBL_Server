@@ -7,7 +7,7 @@ package com.xybl.server.entity;
  * @create 2021/2/2
  **/
 public class User {
-    public User(String id, String name, int role) {
+    public User(String id, String name, boolean role) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -19,9 +19,7 @@ public class User {
     private String id;
     private String name;
     private String pwd;
-    private int role;
-    private String email;
-    private String tel;
+    private boolean role;
 
     public String getId() {
         return id;
@@ -34,8 +32,6 @@ public class User {
                 ", name='" + name + '\'' +
                 ", pwd='" + pwd + '\'' +
                 ", role=" + role +
-                ", email='" + email + '\'' +
-                ", tel='" + tel + '\'' +
                 '}';
     }
 
@@ -59,27 +55,11 @@ public class User {
         this.pwd = pwd;
     }
 
-    public int getRole() {
+    public boolean getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(boolean role) {
         this.role = role;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
     }
 }

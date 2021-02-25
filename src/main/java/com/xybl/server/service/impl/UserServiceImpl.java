@@ -52,11 +52,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public int getLast_id() {
         Map<String, Object> map = userDao.getLastUserId();
-        int last_id = 0;
+        int last_id = -1;
         if (map != null) {
             last_id = Integer.parseInt(map.get("last_id").toString());
         }
         return last_id;
+    }
+
+    @Override
+    public String genId(){
+        StringBuilder buffer=new StringBuilder();
+        buffer.append(System.currentTimeMillis());
+        int id=getLast_id()+1;
+        if(id<10){
+            buffer.append("00").append(id);
+        }else if(id<100){
+            buffer.append("0").append(id);
+        }else if(id<1000){
+            buffer.append(id);
+        }else{
+            buffer.append("000");
+        }
+        return buffer.toString();
     }
 
     @Override

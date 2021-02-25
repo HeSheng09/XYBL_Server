@@ -39,4 +39,5 @@ public class DatetimeUtil {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(d);
     }
+
 }
