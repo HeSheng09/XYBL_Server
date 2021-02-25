@@ -1,6 +1,7 @@
 package com.xybl.server.service.impl;
 
 import com.xybl.server.dao.UserDao;
+import com.xybl.server.entity.Student;
 import com.xybl.server.entity.User;
 import com.xybl.server.service.UserService;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,17 @@ public class UserServiceImpl implements UserService {
             userDao.addOneUser(user);
         }
         return isAdd;
+    }
+
+    @Override
+    public int addOneStu(Student stu) {
+        int isAdd = 200;
+        if (userDao.getUserByName(stu.getName()) != null){
+            isAdd = 401;//用户已存在
+        }else {
+            userDao.addOneStu(stu);
+        }
+        return 0;
     }
 
     @Override

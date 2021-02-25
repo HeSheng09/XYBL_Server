@@ -19,4 +19,12 @@
     <select id="getLastUserId" resultType="java.util.HashMap">
         SELECT SUBSTRING(id,18,4) as last_id,SUBSTRING(id,2,14) as t_id FROM user WHERE DATE_FORMAT(NOW(),'%Y%m%d')=substring(id,2,8) ORDER BY t_id DESC LIMIT 1;
     </select>
+
+    <insert id="addOneStu" parameterType="com.xybl.server.entity.Student">
+        INSERT INTO t_student(t_stu_id, t_stu_name, t_stu_tel, t_stu_address, t_stu_email)
+        VALUE (#{id}, #{stu_name}, #{tel}, #{address}, #{email});
+
+        INSERT INTO t_user(t_user_id, t_user_name, t_user_pwd, t_user_role)
+        VALUE (#{id}, #{name}, #{pwd}, #{role});
+    </insert>
 </mapper>

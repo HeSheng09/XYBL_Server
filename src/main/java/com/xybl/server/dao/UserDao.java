@@ -1,6 +1,7 @@
 package com.xybl.server.dao;
 
 import com.xybl.server.entity.User;
+import com.xybl.server.entity.Student;
 
 import java.security.PublicKey;
 import java.util.Map;
@@ -22,6 +23,16 @@ public interface UserDao {
     * @create: 2021/2/2
     */
     public boolean addOneUser(User user);
+
+    /**
+    * addOneStu
+    * <p>添加一名学生用户</p>
+    * @param stu com.xybl.server.entity.Student.
+    * @return boolean
+    * @author liubocai
+    * @create: 2021-02-25
+    */
+    public boolean addOneStu(Student stu);
 
     /**
     * getUserById
