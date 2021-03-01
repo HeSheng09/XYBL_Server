@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xybl.server.dao.DepartDao">
+    <insert id="addDepartment" parameterType="com.xybl.server.entity.Department">
+        INSERT INTO t_department(t_dm_id, t_dm_name, t_dm_address, t_dm_web, t_dm_level)
+        VALUE (#{id}, #{name}, #{address}, #{web}, #{level})
+    </insert>
+
+    <select id="getDepartByName" parameterType="String" resultType="com.xybl.server.entity.Department">
+        SELECT * FROM t_department WHERE t_dm_name=#{name}
+    </select>
+
+    <delete id="delDepartById" parameterType="id">
+        DELETE
+        FROM t_department
+        WHERE t_dm_id = #{id}
+    </delete>
+
+</mapper>
