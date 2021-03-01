@@ -24,6 +24,16 @@ public interface DepartDao {
     public Department getDepartByName(String name);
 
     /**
+    * getDepartById
+    * <p>根据部门ID获取部门所有信息</p>
+    * @param id java.lang.String.
+    * @return com.xybl.server.entity.Department
+    * @author liubocai
+    * @create: 2021-03-01
+    */
+    public Department getDepartById(String id);
+
+    /**
     * delDepartById
     * <p>根据部门id删除部门</p>
     * @param id java.lang.String.

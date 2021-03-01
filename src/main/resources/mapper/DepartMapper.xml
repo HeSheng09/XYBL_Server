@@ -17,4 +17,7 @@
         WHERE t_dm_id = #{id}
     </delete>
 
+    <select id="getDartById" parameterType="String" resultType="com.xybl.server.entity.Department">
+        SELECT * FROM t_department WHERE t_dm_id = #{id}
+    </select>
 </mapper>
