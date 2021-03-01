@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xybl.server.dao.SchoolDao">
+    <insert id="addSchool" parameterType="com.xybl.server.entity.School">
+        INSERT INTO t_school(t_sch_id, t_sch_name, t_sch_address, t_sch_postcode, t_sch_tel, t_sch_web)
+        VALUE (#{id}, #{name}, #{address}, #{postcode}, #{tel}, #{web})
+    </insert>
+
+    <select id="getSchoolByName" parameterType="String" resultType="com.xybl.server.entity.School">
+        SELECT * FROM t_school WHERE t_sch_name=#{search_name}
+    </select>
+
+    <delete id="delSchoolById" parameterType="String">
+        DELETE
+        FROM t_school
+        WHERE t_sch_id={id}
+    </delete>
+</mapper>

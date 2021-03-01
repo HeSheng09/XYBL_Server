@@ -19,6 +19,18 @@ public class School {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "School{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", postcode='" + postcode + '\'' +
+                ", tel='" + tel + '\'' +
+                ", web='" + web + '\'' +
+                '}';
+    }
+
     public String getId() {
         return id;
     }
