@@ -12,26 +12,26 @@ package com.xybl.server.entity;
 public class Appeal {
     private String id;
     private String al_time;
-    private String al_address;
-    private String al_abstract;
-    private String detail;
     private String appellant;
-    private String acceptor;
-    private int progress;
-    private boolean re_appeal;
+    private String address;
+    private String pos;
+    private String title;
+    private String detail;
+    private String filepath;
+    private String re_appeal;
 
     @Override
     public String toString() {
         return "Appeal{" +
                 "id='" + id + '\'' +
                 ", al_time='" + al_time + '\'' +
-                ", al_address='" + al_address + '\'' +
-                ", al_abstract='" + al_abstract + '\'' +
-                ", detail='" + detail + '\'' +
                 ", appellant='" + appellant + '\'' +
-                ", acceptor='" + acceptor + '\'' +
-                ", progress=" + progress +
-                ", re_appeal=" + re_appeal +
+                ", address='" + address + '\'' +
+                ", pos='" + pos + '\'' +
+                ", title='" + title + '\'' +
+                ", detail='" + detail + '\'' +
+                ", filepath='" + filepath + '\'' +
+                ", re_appeal='" + re_appeal + '\'' +
                 '}';
     }
 
@@ -51,20 +51,36 @@ public class Appeal {
         this.al_time = al_time;
     }
 
-    public String getAl_address() {
-        return al_address;
+    public String getAppellant() {
+        return appellant;
     }
 
-    public void setAl_address(String al_address) {
-        this.al_address = al_address;
+    public void setAppellant(String appellant) {
+        this.appellant = appellant;
     }
 
-    public String getAl_abstract() {
-        return al_abstract;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAl_abstract(String al_abstract) {
-        this.al_abstract = al_abstract;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPos() {
+        return pos;
+    }
+
+    public void setPos(String pos) {
+        this.pos = pos;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDetail() {
@@ -75,35 +91,19 @@ public class Appeal {
         this.detail = detail;
     }
 
-    public String getAppellant() {
-        return appellant;
+    public String getFilepath() {
+        return filepath;
     }
 
-    public void setAppellant(String appellant) {
-        this.appellant = appellant;
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
     }
 
-    public String getAcceptor() {
-        return acceptor;
-    }
-
-    public void setAcceptor(String acceptor) {
-        this.acceptor = acceptor;
-    }
-
-    public int getProgress() {
-        return progress;
-    }
-
-    public void setProgress(int progress) {
-        this.progress = progress;
-    }
-
-    public boolean isRe_appeal() {
+    public String getRe_appeal() {
         return re_appeal;
     }
 
-    public void setRe_appeal(boolean re_appeal) {
+    public void setRe_appeal(String re_appeal) {
         this.re_appeal = re_appeal;
     }
 }

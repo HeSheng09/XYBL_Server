@@ -3,6 +3,7 @@ package com.xybl.server.dao;
 import com.xybl.server.entity.Appeal;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * AppealDao
@@ -60,4 +61,14 @@ public interface AppealDao {
     * @create: 2021/2/2
     */
     public void updateOneAppeal(Appeal appeal);
+
+    /**
+    * getLastId
+    * <p>获取当日的上一条ID。</p>
+    * @param  .
+    * @return int
+    * @author hesheng
+    * @create: 2021/3/1
+    */
+    public Map<String,Object> getLastId();
 }

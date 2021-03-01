@@ -3,24 +3,24 @@
 
 <mapper namespace="com.xybl.server.dao.AppealDao">
     <resultMap id="baseMap" type="com.xybl.server.entity.Appeal">
-        <id column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="al_time" jdbcType="DATE" property="al_time"/>
-        <result column="al_address" jdbcType="VARCHAR" property="al_address"/>
-        <result column="abstract" jdbcType="VARCHAR" property="al_abstract"/>
-        <result column="detail" jdbcType="CLOB" property="detail"/>
-        <result column="appellant" jdbcType="VARCHAR" property="appellant"/>
-        <result column="acceptor" jdbcType="VARCHAR" property="acceptor"/>
-        <result column="progress" jdbcType="INTEGER" property="progress"/>
-        <result column="re_appeal" jdbcType="TINYINT" property="re_appeal"/>
+        <id column="t_al_id" jdbcType="VARCHAR" property="id"/>
+        <result column="t_al_time" jdbcType="DATE" property="al_time"/>
+        <result column="t_al_address" jdbcType="VARCHAR" property="address"/>
+        <result column="t_al_title" jdbcType="CLOB" property="title"/>
+        <result column="t_al_detail" jdbcType="CLOB" property="detail"/>
+        <result column="t_al_appellant" jdbcType="VARCHAR" property="appellant"/>
+        <result column="t_al_filepath" jdbcType="CLOB" property="filepath"/>
+        <result column="t_al_real" jdbcType="VARCHAR" property="re_appeal"/>
+        <result column="t_al_pos" jdbcType="VARCHAR" property="pos"/>
     </resultMap>
 
     <!--  public Appeal getOneAppealById(String id);  -->
     <select id="getOneAppealById" parameterType="String" resultMap="baseMap">
         SELECT *
-        FROM appeal
+        FROM t_appeal
         <where>
             <if test="id != null and id != ''">
-                id = #{id};
+                t_al_id = #{id};
             </if>
         </where>
     </select>
@@ -28,59 +28,67 @@
     <!--  public List<Appeal> getAppeals();  -->
     <select id="getAppeals" resultMap="baseMap">
         SELECT *
-        FROM appeal
+        FROM t_appeal
         LIMIT 100;
     </select>
 
     <!--  public void addOneAppeal(Appeal appeal);  -->
     <insert id="addOneAppeal" parameterType="com.xybl.server.entity.Appeal">
         <if test="appellant != null and appellant != '' and id != null and id != ''">
-            INSERT INTO appeal(id, al_time, al_address, abstract, detail, appellant, acceptor, progress,
-            re_appeal)
-            VALUES (#{id},#{al_time}, #{al_address}, #{al_abstract}, #{detail}, #{appellant},
-            #{acceptor}, #{progress}, #{re_appeal});
+            INSERT INTO t_appeal(t_al_id, t_al_time, t_al_appellant, t_al_address, t_al_pos, t_al_title, t_al_detail,
+            t_al_filepath, t_al_real)
+            VALUES (#{id}, #{al_time}, #{appellant}, #{address}, #{pos}, #{title}, #{detail}, #{filepath},
+            #{re_appeal});
         </if>
     </insert>
 
     <!--  public void deleteOneAppealById(String id);  -->
     <delete id="deleteOneAppealById" parameterType="String">
         DELETE
-        FROM appeal
-        WHERE id = #{id};
+        FROM t_appeal
+        WHERE t_al_id = #{id};
     </delete>
 
     <!--  public void updateOneAppeal(Appeal appeal);  -->
     <update id="updateOneAppeal" parameterType="com.xybl.server.entity.Appeal">
-        UPDATE appeal
+        UPDATE t_appeal
         <set>
             <if test="al_time != null and al_time != ''">
-                al_time=#{al_time},
+                t_al_time=#{al_time},
             </if>
-            <if test="al_address != null and al_address != ''">
-                al_address=#{al_address},
+            <if test="address != null and address != ''">
+                t_al_address=#{address},
             </if>
-            <if test="al_abstract != null and al_abstract != ''">
-                abstract=#{al_abstract},
+            <if test="title != null and title != ''">
+                t_al_title=#{title},
             </if>
             <if test="detail != null and detail != ''">
-                detail=#{detail},
+                t_al_detail=#{detail},
             </if>
             <if test="appellant != null and appellant != ''">
-                appellant=#{appellant},
+                t_al_appellant=#{appellant},
             </if>
-            <if test="acceptor != null and acceptor != ''">
-                acceptor=#{acceptor},
+            <if test="filepath != null and filepath != ''">
+                t_al_filepath=#{filepath},
             </if>
-            <if test="progress != null">
-                progress=#{progress},
+            <if test="pos != null and pos != ''">
+                t_al_pos=#{pos},
             </if>
-            <choose>
-                <when test="re_appeal == true">re_appeal=1</when>
-                <otherwise>re_appeal=0</otherwise>
-            </choose>
+            <if test="re_appeal != null and re_appeal != ''">
+                t_al_real=#{re_appeal}
+            </if>
         </set>
         <where>
-            id=#{id};
+            t_al_id=#{id};
         </where>
     </update>
+
+    <!--  public Map<String,Object> getLastId();  -->
+    <select id="getLastId" resultType="java.util.HashMap">
+        SELECT SUBSTRING(t_al_id, 14, 3) as last_id, SUBSTRING(t_al_id, 1, 13) as t_id
+        FROM t_appeal
+        WHERE SUBSTRING(t_al_id, 1, 10) > UNIX_TIMESTAMP(CAST(SYSDATE() AS DATE))
+        ORDER BY t_id DESC
+        LIMIT 1;
+    </select>
 </mapper>

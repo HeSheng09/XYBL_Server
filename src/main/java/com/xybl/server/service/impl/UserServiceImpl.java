@@ -4,6 +4,7 @@ import com.xybl.server.dao.UserDao;
 import com.xybl.server.entity.Student;
 import com.xybl.server.entity.User;
 import com.xybl.server.service.UserService;
+import com.xybl.server.utils.IDUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -69,19 +70,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String genId() {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append(System.currentTimeMillis());
-        int id = getLast_id() + 1;
-        if (id < 10) {
-            buffer.append("00").append(id);
-        } else if (id < 100) {
-            buffer.append("0").append(id);
-        } else if (id < 1000) {
-            buffer.append(id);
-        } else {
-            buffer.append("000");
-        }
-        return buffer.toString();
+        return IDUtil.genId(getLast_id());
     }
 
     @Override

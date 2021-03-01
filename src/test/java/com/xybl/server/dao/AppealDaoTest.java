@@ -3,7 +3,6 @@ package com.xybl.server.dao;
 import com.xybl.server.ServerApplication;
 import com.xybl.server.entity.Appeal;
 import com.xybl.server.utils.DatetimeUtil;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -26,7 +25,7 @@ class AppealDaoTest {
 
     @Test
     void getOneAppealById() {
-        System.out.println(appealDao.getOneAppealById("2021020217000001"));
+        System.out.println(appealDao.getOneAppealById("1614603824000000"));
     }
 
     @Test
@@ -40,36 +39,32 @@ class AppealDaoTest {
     @Test
     void addOneAppeal() {
         Appeal appeal=new Appeal();
-        appeal.setId("2021020217000002");
+        appeal.setId("1614604886000002");
         appeal.setAl_time(DatetimeUtil.getAndFormatDatetime());
-        appeal.setAl_address("湖北 武汉");
-        appeal.setAl_abstract("插入测试2");
-        appeal.setDetail("插入测试2");
-        appeal.setAppellant("920210202000001");
-        System.out.println(appeal);
+        appeal.setAppellant("1614600485937000");
+        appeal.setAddress("湖北省武汉市");
+        appeal.setPos("114.365818,30.534872");
+        appeal.setTitle("插入测试3");
+        appeal.setDetail("插入测试3\n"+DatetimeUtil.getAndFormatDatetime());
+        appeal.setFilepath("D:/temp/xybl_file_storage");
+        appeal.setRe_appeal("");
         appealDao.addOneAppeal(appeal);
-        List<Appeal> appeals=appealDao.getAppeals();
-        for(Appeal app:appeals){
-            System.out.println(app);
-        }
     }
 
     @Test
     void updateOneAppeal() {
         Appeal appeal=new Appeal();
-        appeal.setId("2021020217000002");
-        appeal.setDetail("更新测试: "+DatetimeUtil.getAndFormatDatetime());
-        appeal.setAl_address("hubei wuhan");
-        appeal.setAcceptor("020200000000001");
-        appeal.setProgress(1);
-        appeal.setRe_appeal(true);
+        appeal.setId("1614603824000000");
+        Appeal ori_appeal=appealDao.getOneAppealById("1614603824000000");
+        appeal.setDetail(ori_appeal.getDetail()+"\n修改测试2\n"+DatetimeUtil.getAndFormatDatetime());
+        appeal.setFilepath(ori_appeal.getFilepath()+",D:/temp/xybl_file_storage/test.txt");
+        appeal.setRe_appeal("1614604717000001");
         appealDao.updateOneAppeal(appeal);
-        System.out.println(appealDao.getOneAppealById("2021020217000002"));
     }
 
     @Test
     void deleteOneAppealById() {
-        appealDao.deleteOneAppealById("2021020217000002");
+        appealDao.deleteOneAppealById("1614604886000002");
         List<Appeal> appeals=appealDao.getAppeals();
         for(Appeal appeal:appeals){
             System.out.println(appeal);
