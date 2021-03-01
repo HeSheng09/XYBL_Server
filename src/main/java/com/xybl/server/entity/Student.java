@@ -14,7 +14,7 @@ public class Student extends User{
     private String email;
 
     public Student(String id, String name){
-        super(id, name, 0);
+        super(id, name, false);
     }
 
     @Override
@@ -24,9 +24,9 @@ public class Student extends User{
                 ", tel='" + tel + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
-                ", id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", pwd='" + pwd + '\'' +
+                ", id='" + super.getId() + '\'' +
+                ", name='" + super.getName() + '\'' +
+                ", pwd='" + super.getPwd() + '\'' +
                 '}';
     }
 
@@ -60,5 +60,35 @@ public class Student extends User{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String getId(){
+        return super.getId();
+    }
+
+    @Override
+    public void setId(String id) {
+        super.setId(id);
+    }
+
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+    }
+
+    @Override
+    public String getPwd() {
+        return super.getPwd();
+    }
+
+    @Override
+    public void setPwd(String pwd) {
+        super.setPwd(pwd);
     }
 }

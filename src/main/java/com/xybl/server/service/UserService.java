@@ -1,5 +1,6 @@
 package com.xybl.server.service;
 
+import com.xybl.server.entity.Student;
 import com.xybl.server.entity.User;
 
 /**
@@ -60,4 +61,6 @@ public interface UserService {
      * @create: 2021-02-03
      */
     public User getUserById(String id);
+
+    public int addOneStu(Student stu);
 }

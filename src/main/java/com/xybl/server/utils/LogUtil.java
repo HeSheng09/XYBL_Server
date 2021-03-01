@@ -61,9 +61,7 @@ public class LogUtil {
         Log log = new Log();
         String current = DatetimeUtil.getAndFormatDatetime("yyyyMMddHHmmssSSS");
         log.setId(genLogId(current, user.getId()));
-        current=DatetimeUtil.getAndFormatDatetime();
-        log.setLog_time(current);
-        log.setDetail(genLogDetail(user, opr, result, current));
+        log.setDetail(genLogDetail(user, opr, result, DatetimeUtil.getAndFormatDatetime()));
         return log;
     }
 }
