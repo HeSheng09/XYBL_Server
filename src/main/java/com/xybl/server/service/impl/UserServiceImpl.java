@@ -29,10 +29,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public int addOneStu(Student stu) {
         int isAdd = 200;
-        if (userDao.getUserByName(stu.getName()) != null){
+        if (userDao.getUserById(stu.getId()) != null) {
             isAdd = 401;//用户已存在
-        }else {
-            userDao.addOneStu(stu);
+        } else {
+            try{
+                userDao.addOneUser(new User(stu.getId(), stu.getName(), stu.getPwd(), false));
+                userDao.addOneStu(stu);
+            }catch (Exception e){
+                // 插库出错，删除插入的数据
+                userDao.deleteOneStu(stu.getId());
+                userDao.deleteOneUser(stu.getId());
+                isAdd=500;//系统错误
+            }
         }
         return 0;
     }
@@ -60,17 +68,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String genId(){
-        StringBuilder buffer=new StringBuilder();
+    public String genId() {
+        StringBuilder buffer = new StringBuilder();
         buffer.append(System.currentTimeMillis());
-        int id=getLast_id()+1;
-        if(id<10){
+        int id = getLast_id() + 1;
+        if (id < 10) {
             buffer.append("00").append(id);
-        }else if(id<100){
+        } else if (id < 100) {
             buffer.append("0").append(id);
-        }else if(id<1000){
+        } else if (id < 1000) {
             buffer.append(id);
-        }else{
+        } else {
             buffer.append("000");
         }
         return buffer.toString();

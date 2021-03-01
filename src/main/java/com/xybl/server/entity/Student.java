@@ -7,14 +7,22 @@ package com.xybl.server.entity;
  * @author liubocai
  * @create 2021-02-25
  **/
-public class Student extends User{
+public class Student extends User {
     private String stu_name;
     private String tel;
     private String address;
     private String email;
 
-    public Student(String id, String name){
+    public Student(String id, String name) {
         super(id, name, false);
+    }
+
+    public Student() {
+
+    }
+
+    public Student(User user) {
+        super(user.getId(), user.getName(), user.getPwd(), user.getRole());
     }
 
     @Override
@@ -63,7 +71,7 @@ public class Student extends User{
     }
 
     @Override
-    public String getId(){
+    public String getId() {
         return super.getId();
     }
 

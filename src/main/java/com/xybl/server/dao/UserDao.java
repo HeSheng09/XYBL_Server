@@ -3,7 +3,6 @@ package com.xybl.server.dao;
 import com.xybl.server.entity.User;
 import com.xybl.server.entity.Student;
 
-import java.security.PublicKey;
 import java.util.Map;
 
 /**
@@ -16,7 +15,7 @@ public interface UserDao {
 
     /**
     * addOneUser
-    * <p>添加一名用户</p>
+    * <p>添加一名用户信息。</p>
     * @param user com.xybl.server.entity.User.
     * @return boolean
     * @author liubocai
@@ -26,13 +25,12 @@ public interface UserDao {
 
     /**
     * addOneStu
-    * <p>添加一名学生用户</p>
+    * <p>添加一名学生用户信息。</p>
     * @param stu com.xybl.server.entity.Student.
-    * @return boolean
     * @author liubocai
     * @create: 2021-02-25
     */
-    public boolean addOneStu(Student stu);
+    public void addOneStu(Student stu);
 
     /**
     * getUserById
@@ -63,4 +61,24 @@ public interface UserDao {
     * @create: 2021/2/3
     */
     public Map<String,Object> getLastUserId();
+
+    /**
+    * deleteOneUser
+    * <p>按id删除一个用户。此函数只会删除t_user表中的信息，而不会触及其它表。</p>
+    * @param uid java.lang.String.
+    * @return void
+    * @author hesheng
+    * @create: 2021/3/1
+    */
+    public void deleteOneUser(String uid);
+
+    /**
+    * deleteOneStu
+    * <p>按stu_id删除一条学生信息。</p>
+    * @param stu_id java.lang.String.
+    * @return void
+    * @author hesheng
+    * @create: 2021/3/1
+    */
+    public void deleteOneStu(String stu_id);
 }

@@ -13,13 +13,20 @@ public class User {
         this.role = role;
     }
 
+    public User(String id, String name, String pwd, boolean role) {
+        this.id = id;
+        this.name = name;
+        this.pwd = pwd;
+        this.role = role;
+    }
+
     public User() {
     }
 
     private String id;
     private String name;
     private String pwd;
-    private boolean role;
+    private boolean role; //false 代表student，true 代表user。故此属性默认值为0,即学生。
 
     public String getId() {
         return id;

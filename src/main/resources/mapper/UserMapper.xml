@@ -2,29 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.xybl.server.dao.UserDao">
+    <resultMap id="baseMap" type="com.xybl.server.entity.User">
+        <id column="t_user_id" jdbcType="VARCHAR" property="id"/>
+        <result column="t_user_name" jdbcType="VARCHAR" property="name"/>
+        <result column="t_user_pwd" jdbcType="VARCHAR" property="pwd"/>
+        <result column="t_user_role" jdbcType="TINYINT" property="role"/>
+    </resultMap>
 
     <insert id="addOneUser" parameterType="com.xybl.server.entity.User">
-        INSERT INTO user(id, name, pwd, role, email, tel)
-        VALUE (#{id}, #{name}, #{pwd}, #{role}, #{email}, #{tel});
+        INSERT INTO t_user(t_user_id, t_user_name, t_user_pwd, t_user_role)
+            VALUE (#{id}, #{name}, #{pwd}, #{role});
     </insert>
 
-    <select id="getUserById" parameterType="String" resultType="com.xybl.server.entity.User">
-        SELECT * FROM user WHERE id=#{id};
+    <select id="getUserById" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_user
+        WHERE t_user_id = #{uid};
     </select>
 
     <select id="getUserByName" parameterType="String" resultType="com.xybl.server.entity.User">
-        SELECT * FROM user WHERE name=#{name};
+        SELECT *
+        FROM user
+        WHERE name = #{name};
     </select>
 
     <select id="getLastUserId" resultType="java.util.HashMap">
-        SELECT SUBSTRING(id,18,4) as last_id,SUBSTRING(id,2,14) as t_id FROM user WHERE DATE_FORMAT(NOW(),'%Y%m%d')=substring(id,2,8) ORDER BY t_id DESC LIMIT 1;
+        SELECT SUBSTRING(t_user_id, 14, 3) as last_id, SUBSTRING(t_user_id, 1, 13) as t_id
+        FROM t_user
+        WHERE SUBSTRING(t_user_id, 1, 10) > UNIX_TIMESTAMP(CAST(SYSDATE() AS DATE))
+        ORDER BY t_id DESC
+        LIMIT 1;
     </select>
 
     <insert id="addOneStu" parameterType="com.xybl.server.entity.Student">
         INSERT INTO t_student(t_stu_id, t_stu_name, t_stu_tel, t_stu_address, t_stu_email)
-        VALUE (#{id}, #{stu_name}, #{tel}, #{address}, #{email});
-
-        INSERT INTO t_user(t_user_id, t_user_name, t_user_pwd, t_user_role)
-        VALUE (#{id}, #{name}, #{pwd}, #{role});
+            VALUE (#{id}, #{stu_name}, #{tel}, #{address}, #{email});
     </insert>
+
+    <delete id="deleteOneUser" parameterType="String">
+        DELETE
+        FROM t_user
+        WHERE t_user_id = #{uid};
+    </delete>
+
+    <delete id="deleteOneStu" parameterType="String">
+        DELETE
+        FROM t_student
+        WHERE t_stu_id = #{stu_id};
+    </delete>
 </mapper>
