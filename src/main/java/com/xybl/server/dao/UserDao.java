@@ -1,5 +1,6 @@
 package com.xybl.server.dao;
 
+import com.xybl.server.entity.NsUser;
 import com.xybl.server.entity.User;
 import com.xybl.server.entity.Student;
 
@@ -81,4 +82,24 @@ public interface UserDao {
     * @create: 2021/3/1
     */
     public void deleteOneStu(String stu_id);
+
+    /**
+    * addOneNsu
+    * <p>添加一名非学生用户</p>
+    * @param nsu com.xybl.server.entity.NsUser.
+    * @return void
+    * @author liubocai
+    * @create: 2021-03-01
+    */
+    public void addOneNsu(NsUser nsu);
+
+    /**
+    * delOneNsu
+    * <p>删除一名非学生用户</p>
+    * @param nsu_id java.lang.String.
+    * @return void
+    * @author liubocai
+    * @create: 2021-03-01
+    */
+    public void delOneNsu(String nsu_id);
 }

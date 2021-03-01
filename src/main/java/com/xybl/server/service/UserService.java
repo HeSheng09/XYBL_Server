@@ -1,5 +1,7 @@
 package com.xybl.server.service;
 
+import ch.qos.logback.core.joran.spi.NoAutoStartUtil;
+import com.xybl.server.entity.NsUser;
 import com.xybl.server.entity.Student;
 import com.xybl.server.entity.User;
 
@@ -62,5 +64,18 @@ public interface UserService {
      */
     public User getUserById(String id);
 
+
     public int addOneStu(Student stu);
+
+    /**
+    * addOneNsu
+    * <p>添加一名非学生用户</p>
+    * @param nsu com.xybl.server.entity.NsUser.
+    * @return int
+    * @author liubocai
+    * @create: 2021-03-01
+    */
+    public int addOneNsu(NsUser nsu);
+
+    public int delOneUserById(String id);
 }

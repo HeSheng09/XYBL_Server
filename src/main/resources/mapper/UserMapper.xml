@@ -39,6 +39,11 @@
             VALUE (#{id}, #{stu_name}, #{tel}, #{address}, #{email});
     </insert>
 
+    <insert id="addOneNsu" parameterType="com.xybl.server.entity.NsUser">
+        INSERT INTO t_nsuser(t_ns_id, t_ns_name, t_ns_privilege, t_ns_tel, t_ns_email)
+        VALUE (#{id, #{ns_name}, #{privilege}, #{tel}, #{email});
+    </insert>
+
     <delete id="deleteOneUser" parameterType="String">
         DELETE
         FROM t_user
@@ -49,5 +54,11 @@
         DELETE
         FROM t_student
         WHERE t_stu_id = #{stu_id};
+    </delete>
+
+    <delete id="delOneNsu" parameterType="String">
+        DELETE
+        FROM t_nsuser
+        WHERE t_ns_id = #{nsu_id};
     </delete>
 </mapper>

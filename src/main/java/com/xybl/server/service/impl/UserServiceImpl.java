@@ -1,6 +1,7 @@
 package com.xybl.server.service.impl;
 
 import com.xybl.server.dao.UserDao;
+import com.xybl.server.entity.NsUser;
 import com.xybl.server.entity.Student;
 import com.xybl.server.entity.User;
 import com.xybl.server.service.UserService;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
                 isAdd=500;//系统错误
             }
         }
-        return 0;
+        return isAdd;
     }
 
     @Override
@@ -76,5 +77,40 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(String id) {
         return userDao.getUserById(id);
+    }
+
+    @Override
+    public int addOneNsu(NsUser nsu) {
+        int isAdd = 200;
+        if(userDao.getUserById(nsu.getId()) != null){
+            isAdd = 401; //用户已存在
+        }else{
+            try{
+                userDao.addOneUser(new User(nsu.getId(), nsu.getName(), nsu.getPwd(), true));
+                userDao.addOneNsu(nsu);
+            }catch (Exception e){
+                // 插库出错， 删除插入的数据
+                userDao.delOneNsu(nsu.getId());
+                userDao.deleteOneUser(nsu.getId());
+                isAdd = 500;//系统错误
+            }
+        }
+        return isAdd;
+    }
+
+    @Override
+    public int delOneUserById(String id) {
+        int isDel = 200;
+        if(userDao.getUserById(id) != null){
+            userDao.deleteOneUser(id);
+            if(userDao.getUserById(id).getRole() == true){
+                userDao.delOneNsu(id);
+            }else{
+                userDao.deleteOneStu(id);
+            }
+            return isDel; //成功删除
+        }else{
+            return 401;//用户不存在
+        }
     }
 }
