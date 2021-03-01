@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xybl.server.dao.ResearchDao">
+    <resultMap id="baseMap" type="com.xybl.server.entity.Research">
+        <id column="t_rh_id" jdbcType="VARCHAR" property="id"/>
+        <result column="t_rh_handler" jdbcType="VARCHAR" property="handler"/>
+        <result column="t_rh_auditor" jdbcType="VARCHAR" property="auditor"/>
+        <result column="t_rh_protime" jdbcType="DATE" property="pro_time"/>
+        <result column="t_rh_result" jdbcType="CLOB" property="result"/>
+        <result column="t_rh_restime" jdbcType="DATE" property="res_time"/>
+        <result column="t_rh_filepath" jdbcType="CLOB" property="filepath"/>
+        <result column="t_rh_appcomment" jdbcType="CLOB" property="app_comment"/>
+        <result column="t_rh_reresearch" jdbcType="VARCHAR" property="re_research"/>
+    </resultMap>
+
+    <!--  public Research getOneResearchById(String id);  -->
+    <select id="getOneResearchById" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_research
+        <where>
+            <if test="id != null and id != ''">
+                t_rh_id = #{id};
+            </if>
+        </where>
+    </select>
+
+    <!--  public List<Research> getResearches();  -->
+    <select id="getResearches" resultMap="baseMap">
+        SELECT *
+        FROM t_research
+        LIMIT 100;
+    </select>
+
+    <!--  public void addOneResearch(Research research);  -->
+<!--    <insert id="addOneAppeal" parameterType="com.xybl.server.entity.Appeal">-->
+<!--        <if test="appellant != null and appellant != '' and id != null and id != ''">-->
+<!--            INSERT INTO t_appeal(t_al_id, t_al_time, t_al_appellant, t_al_address, t_al_pos, t_al_title, t_al_detail,-->
+<!--            t_al_filepath, t_al_real)-->
+<!--            VALUES (#{id}, #{al_time}, #{appellant}, #{address}, #{pos}, #{title}, #{detail}, #{filepath},-->
+<!--            #{re_appeal});-->
+<!--        </if>-->
+<!--    </insert>-->
+
+    <!--  public void deleteOneResearchById(String id);  -->
+    <delete id="deleteOneResearchById" parameterType="String">
+        DELETE
+        FROM t_research
+        WHERE t_rh_id = #{id};
+    </delete>
+
+    <!--  public void updateOneResearch(Research research);  -->
+<!--    <update id="updateOneAppeal" parameterType="com.xybl.server.entity.Appeal">-->
+<!--        UPDATE t_appeal-->
+<!--        <set>-->
+<!--            <if test="al_time != null and al_time != ''">-->
+<!--                t_al_time=#{al_time},-->
+<!--            </if>-->
+<!--            <if test="address != null and address != ''">-->
+<!--                t_al_address=#{address},-->
+<!--            </if>-->
+<!--            <if test="title != null and title != ''">-->
+<!--                t_al_title=#{title},-->
+<!--            </if>-->
+<!--            <if test="detail != null and detail != ''">-->
+<!--                t_al_detail=#{detail},-->
+<!--            </if>-->
+<!--            <if test="appellant != null and appellant != ''">-->
+<!--                t_al_appellant=#{appellant},-->
+<!--            </if>-->
+<!--            <if test="filepath != null and filepath != ''">-->
+<!--                t_al_filepath=#{filepath},-->
+<!--            </if>-->
+<!--            <if test="pos != null and pos != ''">-->
+<!--                t_al_pos=#{pos},-->
+<!--            </if>-->
+<!--            <if test="re_appeal != null and re_appeal != ''">-->
+<!--                t_al_real=#{re_appeal}-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        <where>-->
+<!--            t_al_id=#{id};-->
+<!--        </where>-->
+<!--    </update>-->
+
+    <!--  public Map<String,Object> getLastId();  -->
+    <select id="getLastId" resultType="java.util.HashMap">
+        SELECT SUBSTRING(t_rh_id, 14, 3) as last_id, SUBSTRING(t_rh_id, 1, 13) as t_id
+        FROM t_research
+        WHERE SUBSTRING(t_rh_id, 1, 10) > UNIX_TIMESTAMP(CAST(SYSDATE() AS DATE))
+        ORDER BY t_id DESC
+        LIMIT 1;
+    </select>
+</mapper>
