@@ -60,18 +60,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int getLast_id() {
+    public String genId() {
         Map<String, Object> map = userDao.getLastUserId();
         int last_id = -1;
         if (map != null) {
             last_id = Integer.parseInt(map.get("last_id").toString());
         }
-        return last_id;
-    }
-
-    @Override
-    public String genId() {
-        return IDUtil.genId(getLast_id());
+        return IDUtil.genId(last_id);
     }
 
     @Override

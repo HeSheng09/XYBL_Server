@@ -16,14 +16,4 @@ public interface AppealService {
     * @create: 2021/3/1
     */
     public String genAppealId();
-
-    /**
-    * getLastId
-    * <p>获取当日的上一条id。</p>
-    * @param  .
-    * @return int
-    * @author hesheng
-    * @create: 2021/3/1
-    */
-    public int getLastId();
 }

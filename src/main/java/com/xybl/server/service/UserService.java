@@ -35,16 +35,6 @@ public interface UserService {
     public int login(String uid, String pwd);
 
     /**
-    * getLast_id
-    * <p>获取当天最新注册的用户id。</p>
-    * @param  . 
-    * @return int
-    * @author hesheng
-    * @create: 2021/2/3
-    */
-    public int getLast_id();
-
-    /**
     * genId
     * <p>生成一个用户id。</p>
     * @param  .

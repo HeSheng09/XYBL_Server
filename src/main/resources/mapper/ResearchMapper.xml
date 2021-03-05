@@ -33,14 +33,14 @@
     </select>
 
     <!--  public void addOneResearch(Research research);  -->
-<!--    <insert id="addOneAppeal" parameterType="com.xybl.server.entity.Appeal">-->
-<!--        <if test="appellant != null and appellant != '' and id != null and id != ''">-->
-<!--            INSERT INTO t_appeal(t_al_id, t_al_time, t_al_appellant, t_al_address, t_al_pos, t_al_title, t_al_detail,-->
-<!--            t_al_filepath, t_al_real)-->
-<!--            VALUES (#{id}, #{al_time}, #{appellant}, #{address}, #{pos}, #{title}, #{detail}, #{filepath},-->
-<!--            #{re_appeal});-->
-<!--        </if>-->
-<!--    </insert>-->
+    <insert id="addOneResearch" parameterType="com.xybl.server.entity.Research">
+        <if test="handler != null and handler != '' and id != null and id != ''">
+            INSERT INTO t_research(t_rh_id, t_rh_handler, t_rh_auditor, t_rh_protime, t_rh_result, t_rh_restime,
+            t_rh_filepath, t_rh_appcomment, t_rh_reresearch)
+            VALUES (#{id}, #{handler}, #{auditor}, #{pro_time}, #{result}, #{res_time}, #{filepath}, #{app_comment},
+            #{re_research});
+        </if>
+    </insert>
 
     <!--  public void deleteOneResearchById(String id);  -->
     <delete id="deleteOneResearchById" parameterType="String">
@@ -50,38 +50,38 @@
     </delete>
 
     <!--  public void updateOneResearch(Research research);  -->
-<!--    <update id="updateOneAppeal" parameterType="com.xybl.server.entity.Appeal">-->
-<!--        UPDATE t_appeal-->
-<!--        <set>-->
-<!--            <if test="al_time != null and al_time != ''">-->
-<!--                t_al_time=#{al_time},-->
-<!--            </if>-->
-<!--            <if test="address != null and address != ''">-->
-<!--                t_al_address=#{address},-->
-<!--            </if>-->
-<!--            <if test="title != null and title != ''">-->
-<!--                t_al_title=#{title},-->
-<!--            </if>-->
-<!--            <if test="detail != null and detail != ''">-->
-<!--                t_al_detail=#{detail},-->
-<!--            </if>-->
-<!--            <if test="appellant != null and appellant != ''">-->
-<!--                t_al_appellant=#{appellant},-->
-<!--            </if>-->
-<!--            <if test="filepath != null and filepath != ''">-->
-<!--                t_al_filepath=#{filepath},-->
-<!--            </if>-->
-<!--            <if test="pos != null and pos != ''">-->
-<!--                t_al_pos=#{pos},-->
-<!--            </if>-->
-<!--            <if test="re_appeal != null and re_appeal != ''">-->
-<!--                t_al_real=#{re_appeal}-->
-<!--            </if>-->
-<!--        </set>-->
-<!--        <where>-->
-<!--            t_al_id=#{id};-->
-<!--        </where>-->
-<!--    </update>-->
+        <update id="updateOneResearch" parameterType="com.xybl.server.entity.Research">
+            UPDATE t_research
+            <set>
+                <if test="handler != null and handler != ''">
+                    t_rh_handler=#{handler},
+                </if>
+                <if test="auditor != null and auditor != ''">
+                    t_rh_auditor=#{auditor},
+                </if>
+                <if test="pro_time != null and pro_time != ''">
+                    t_rh_protime=#{pro_time},
+                </if>
+                <if test="result != null and result != ''">
+                    t_rh_result=#{result},
+                </if>
+                <if test="res_time != null and res_time != ''">
+                    t_rh_restime=#{res_time},
+                </if>
+                <if test="filepath != null and filepath != ''">
+                    t_rh_filepath=#{filepath},
+                </if>
+                <if test="app_comment != null and app_comment != ''">
+                    t_rh_appcomment=#{app_comment},
+                </if>
+                <if test="re_research != null and re_research != ''">
+                    t_rh_reresearch=#{re_research}
+                </if>
+            </set>
+            <where>
+                t_rh_id=#{id};
+            </where>
+        </update>
 
     <!--  public Map<String,Object> getLastId();  -->
     <select id="getLastId" resultType="java.util.HashMap">

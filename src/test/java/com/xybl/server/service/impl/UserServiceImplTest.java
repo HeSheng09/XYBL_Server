@@ -32,11 +32,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    void getLast_id() {
-        System.out.println(userService.getLast_id());
-    }
-
-    @Test
     void genId() {
         System.out.println(userService.genId());
     }

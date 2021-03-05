@@ -41,7 +41,7 @@
 
     <insert id="addOneNsu" parameterType="com.xybl.server.entity.NsUser">
         INSERT INTO t_nsuser(t_ns_id, t_ns_name, t_ns_privilege, t_ns_tel, t_ns_email)
-        VALUE (#{id, #{ns_name}, #{privilege}, #{tel}, #{email});
+        VALUE (#{id}, #{ns_name}, #{privilege}, #{tel}, #{email});
     </insert>
 
     <delete id="deleteOneUser" parameterType="String">
