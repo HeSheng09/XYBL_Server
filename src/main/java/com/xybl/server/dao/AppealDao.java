@@ -22,6 +22,10 @@ public interface AppealDao {
     */
     public Appeal getOneAppealById(String id);
 
+    public Appeal getOneAppealByAlUserId(String al_id,String user_id);
+
+    public void addRelAlHandler(String al_id,String ns_id);
+
     /**
     * getAppeals
     * <p>查询多条Appeal（最多100条）。</p>
@@ -31,6 +35,16 @@ public interface AppealDao {
     * @create: 2021/2/2
     */
     public List<Appeal> getAppeals();
+
+    /**
+    * getAppealsByNsId
+    * <p>根据Ns_id查询得到关联的所有Appeal。</p>
+    * @param ns_id java.lang.String.
+    * @return java.util.List<com.xybl.server.entity.Appeal>
+    * @author hesheng
+    * @create: 2021/3/5
+    */
+    public List<Appeal> getAppealsByNsId(String ns_id);
 
     /**
     * addOneAppeal

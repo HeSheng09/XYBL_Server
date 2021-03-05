@@ -39,9 +39,9 @@ class AppealDaoTest {
     @Test
     void addOneAppeal() {
         Appeal appeal=new Appeal();
-        appeal.setId("1614604886000002");
+        appeal.setId("1614955000234003");
         appeal.setAl_time(DatetimeUtil.getAndFormatDatetime());
-        appeal.setAppellant("1614600485937000");
+        appeal.setAppellant("1614600624790001");
         appeal.setAddress("湖北省武汉市");
         appeal.setPos("114.365818,30.534872");
         appeal.setTitle("插入测试3");
