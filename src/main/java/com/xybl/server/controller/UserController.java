@@ -1,5 +1,6 @@
 package com.xybl.server.controller;
 
+import com.xybl.server.entity.Student;
 import com.xybl.server.entity.User;
 import com.xybl.server.service.LogService;
 import com.xybl.server.service.UserService;
@@ -44,35 +45,34 @@ public class UserController {
     }
 
     /**
-     * register
-     * <p>注册</p>
-     * @param name java.lang.String.
+    * register
+    * <p>学生注册</p>
+    * @param name java.lang.String.
      * @param pwd java.lang.String.
-     * @param roleType int.
      * @param email java.lang.String.
      * @param tel java.lang.String.
-     * @param zone java.lang.String.
-     * @return java.util.Map<java.lang.String,java.lang.Object>
-     * @author liubocai
-     * @create: 2021-02-03
-     */
+     * @param address java.lang.String.
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    * @author liubocai
+    * @create: 2021-03-05
+    */
     @GetMapping("/stu_register")
     public Map<String, Object> register(@RequestParam(name = "name")String name,
                                         @RequestParam(name = "pwd")String pwd,
-                                        @RequestParam(name = "role")int roleType,
-                                        @RequestParam(name = "email", defaultValue = "noemail")String email,
-                                        @RequestParam(name = "tel", defaultValue = "notel")String tel,
-                                        @RequestParam(name = "zone", defaultValue = "unknown")String zone){
+                                        @RequestParam(name = "stu_name")String stu_name,
+                                        @RequestParam(name = "email", defaultValue = "null")String email,
+                                        @RequestParam(name = "tel", defaultValue = "null")String tel,
+                                        @RequestParam(name = "address", defaultValue = "null")String address){
         //1.生成id，以当前时间戳
-//        String id = String.valueOf(System.currentTimeMillis());
         String id= userService.genId();
         //2.封装成user
-        User user = new User(id, name, roleType==6);
-//        user.setEmail(email);
-        user.setPwd(pwd);
-//        user.setTel(tel);
+        Student stu = new Student(id, name, pwd);
+        stu.setEmail(email);
+        stu.setTel(tel);
+        stu.setAddress(address);
+        stu.setStu_name(stu_name);
         //3.入库
-        int isAdd = userService.addOneUser(user);
+        int isAdd = userService.addOneStu(stu);
         //4.返回消息
         String msg;
         switch (isAdd){
@@ -81,7 +81,7 @@ public class UserController {
             default: msg = "";
         }
         //5.添加操作日志
-//        logService.addOneLog(user, "register", msg);
+        logService.addOneLog(stu.getId(), "register", msg);
         return response(isAdd, msg);
 
     }

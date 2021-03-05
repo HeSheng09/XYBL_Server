@@ -16,7 +16,9 @@ public class Student extends User {
     public Student(String id, String name) {
         super(id, name, false);
     }
-
+    public Student(String id, String name, String pwd) {
+        super(id, name, pwd,false);
+    }
     public Student() {
 
     }
