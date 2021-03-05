@@ -5,6 +5,8 @@ import com.xybl.server.entity.NsUser;
 import com.xybl.server.entity.Student;
 import com.xybl.server.entity.User;
 
+import java.util.Map;
+
 /**
  * UserService
  * <p></p>
@@ -32,7 +34,7 @@ public interface UserService {
     * @author liubocai
     * @create: 2021/2/2
     */
-    public int login(String uid, String pwd);
+    public Map<String, Object> login(String uid, String pwd);
 
     /**
     * genId

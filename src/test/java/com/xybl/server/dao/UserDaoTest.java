@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
+import static java.sql.DriverManager.println;
+
 /**
  * UserDaoTest
  * <p></p>
@@ -50,5 +52,14 @@ class UserDaoTest {
         System.out.println(student);
         userDao.addOneUser(user);
         userDao.addOneStu(student);
+    }
+
+    @Test
+    void testLogin(){
+        User test = userDao.getUserByName("测试学生1");
+        System.out.println(test.toString());
+
+        User a = userDao.getUserById("1612715026000001");
+        System.out.println(a.toString());
     }
 }
