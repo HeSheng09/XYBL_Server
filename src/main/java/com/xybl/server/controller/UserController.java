@@ -29,43 +29,34 @@ public class UserController {
     public LogService logService;
 
     /**
-    * login
-    * <p>登录</p>
-    * @param id java.lang.String.
+     * login
+     * <p>根据用户名及密码登录，成功登录会返回role</p>
+     * @param name java.lang.String.
      * @param pwd java.lang.String.
-    * @return java.util.Map<java.lang.String,java.lang.Object>
-    * @author liubocai
-    * @create: 2021-02-03
-    */
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     * @author liubocai
+     * @create: 2021-03-05
+     */
     @GetMapping("/login")
-    public Map<String, Object> login(@RequestParam(name = "id")String id,
+    public Map<String, Object> login(@RequestParam(name = "name")String name,
                                      @RequestParam(name = "pwd")String pwd){
-        int isLogin  = userService.login(id, pwd);
-        String msg;
-        switch (isLogin){
-            case 200: msg = "ok";break;
-            case 401: msg = "password error";break;
-            case 402: {msg = "user doesn't exist"; return response(isLogin, msg);}
-            default: msg="";
-        }
-        logService.addOneLog(userService.getUserById(id), "login", msg);
-        return response(isLogin, msg);
+        return userService.login(name, pwd);
     }
 
     /**
-    * register
-    * <p>注册</p>
-    * @param name java.lang.String.
+     * register
+     * <p>注册</p>
+     * @param name java.lang.String.
      * @param pwd java.lang.String.
      * @param roleType int.
      * @param email java.lang.String.
      * @param tel java.lang.String.
      * @param zone java.lang.String.
-    * @return java.util.Map<java.lang.String,java.lang.Object>
-    * @author liubocai
-    * @create: 2021-02-03
-    */
-    @GetMapping("/register")
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     * @author liubocai
+     * @create: 2021-02-03
+     */
+    @GetMapping("/stu_register")
     public Map<String, Object> register(@RequestParam(name = "name")String name,
                                         @RequestParam(name = "pwd")String pwd,
                                         @RequestParam(name = "role")int roleType,
@@ -90,7 +81,7 @@ public class UserController {
             default: msg = "";
         }
         //5.添加操作日志
-        logService.addOneLog(user, "register", msg);
+//        logService.addOneLog(user, "register", msg);
         return response(isAdd, msg);
 
     }
