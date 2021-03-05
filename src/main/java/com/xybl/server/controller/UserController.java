@@ -30,26 +30,17 @@ public class UserController {
 
     /**
     * login
-    * <p>登录</p>
-    * @param id java.lang.String.
+    * <p>根据用户名及密码登录，成功登录会返回role</p>
+    * @param name java.lang.String.
      * @param pwd java.lang.String.
     * @return java.util.Map<java.lang.String,java.lang.Object>
     * @author liubocai
-    * @create: 2021-02-03
+    * @create: 2021-03-05
     */
     @GetMapping("/login")
-    public Map<String, Object> login(@RequestParam(name = "id")String id,
+    public Map<String, Object> login(@RequestParam(name = "name")String name,
                                      @RequestParam(name = "pwd")String pwd){
-        int isLogin  = userService.login(id, pwd);
-        String msg;
-        switch (isLogin){
-            case 200: msg = "ok";break;
-            case 401: msg = "password error";break;
-            case 402: {msg = "user doesn't exist"; return response(isLogin, msg);}
-            default: msg="";
-        }
-        logService.addOneLog(userService.getUserById(id), "login", msg);
-        return response(isLogin, msg);
+        return userService.login(name, pwd);
     }
 
     /**

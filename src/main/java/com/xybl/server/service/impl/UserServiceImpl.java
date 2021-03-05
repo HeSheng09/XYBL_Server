@@ -6,11 +6,14 @@ import com.xybl.server.entity.Student;
 import com.xybl.server.entity.User;
 import com.xybl.server.service.UserService;
 import com.xybl.server.utils.IDUtil;
+import com.xybl.server.utils.MD5Util;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Map;
+
+import static com.xybl.server.utils.ResponseUtil.response;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -48,14 +51,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int login(String uid, String pwd) {
-        User user = userDao.getUserById(uid);
+    public Map<String, Object> login(String name, String pwd) {
+        User user = userDao.getUserByName(name);
         if (user == null) {
-            return 402; //用户不存在
-        } else if (pwd.equals(user.getPwd())) {
-            return 200;
+            return response(400, "nouser"); //用户不存在
+        } else if (MD5Util.validText(pwd, user.getPwd())) {
+            return response(200, String.valueOf(user.getRole())); //密码正确
         } else {
-            return 401; //密码错误
+            return response(401, "pwderror"); //密码错误
         }
     }
 
