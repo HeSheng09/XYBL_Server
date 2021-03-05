@@ -16,6 +16,6 @@ class LogServiceImplTest {
     private LogService logService;
     @Test
     void addOneLog() {
-        logService.addOneLog("1612717415512000","new log service test", "succeed!");
+        logService.addOneLog("1612717415512000","tomcat test", "succeed!");
     }
 }

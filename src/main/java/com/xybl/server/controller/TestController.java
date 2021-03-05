@@ -1,5 +1,6 @@
 package com.xybl.server.controller;
 
+import com.xybl.server.entity.Test;
 import com.xybl.server.entity.User;
 import com.xybl.server.service.LogService;
 import com.xybl.server.service.TestService;
@@ -21,7 +22,7 @@ import static com.xybl.server.utils.ResponseUtil.response;
  * @create 2021/2/2
  **/
 @RestController
-@RequestMapping("/test")
+//@RequestMapping("/test")
 public class TestController {
 
     @Resource
@@ -47,5 +48,14 @@ public class TestController {
 //        logService.addOneLog(new User("020210203202112170001","系统管理员",true),"插入日志测试。","成功");
 
         return response(200,"ok",data);
+    }
+
+    @GetMapping("/test")
+    public Test test(@RequestParam(name = "param")String param){
+        System.out.println(param);
+        Test test=new Test();
+        test.setId(1);
+        test.setInfo("测试");
+        return test;
     }
 }
