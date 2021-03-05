@@ -1,38 +1,21 @@
 # XYBL_server
 
+## tomcat 配置说明
+1. 配置artifact，如下图所示。
+
+   ![Screenshot from 202021-03-05 21-31-39](.asserts/Screenshot%20from%202021-03-05%2021-31-39.png)
+
+2. 新建tomcat server-->local。配置详情如下。
+   
+   ![Screenshot from 2021-03-05 21-22-31](.asserts/Screenshot%20from%202021-03-05%2021-22-31.png)
+   
+3. 进入deploment页面，左下角添加artifact，选择server：war exploded。配置结果如下：
+
+   ![Screenshot 20from 202021-03-05 2021-22-52](.asserts/Screenshot%20from%202021-03-05%2021-22-52.png)
+
 ## 数据库说明
-### user
-1. id varchar(32) primary key
-   * 用户id。
-   * 格式为：RyyyyMMddHHmmssZZXXXX。21位。
-     * R: 角色。1位。
-     * yyyyMMddHHmmss: 注册时间。14位。
-     * ZZ: 区域。2位。
-     * XXXX: 当天注册序号。4位。
-   * 实际有效id字长为21位。
-   * **生成id可调用UserUtil.genId(String role, String zone, int last_id).**详情查看函数声明。
-     * last_id可调用UserService.getLast_id()获得。
-   * 生成实例可以参考UserController下注册功能中。
-2. name varchar(32)
-3. pwd varchar(32)
-4. role int(1)
-   * 用户角色（权限）。
-   * 查看UserUtil类获取权限详情。
-5. email varchar(32)
-6. tel varchar(16)
 
-## 日志部分
-
-> 说明此日志为记录用户活动的日志。而非系统运行状况的日志。  
-> 原则上，不管用户进行什么操作，都需要进行记录。
-
-主要使用LogService.addOneLog(User user, String opr, String result)进行日志记录。
-参数说明：
-* user: 用户信息。其id，name，role属性值为必需。
-* opr: 用户所进行的操作。比如注册、登录、查询……
-* result: 操作的结果。注册成功与否、登录成功与否……
-使用示例：（源码在TestController中）
-  ![Screenshot from 2021-02-03 20-37-34](.asserts/Screenshot from 2021-02-03 20-37-34.png)
+> 如 ./db/数据库定义.md 所示。
 
 ## javadoc template
 
