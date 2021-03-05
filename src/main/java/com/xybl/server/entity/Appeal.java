@@ -3,9 +3,6 @@ package com.xybl.server.entity;
 /**
  * Appeal
  * <p>实体类。<br>
- * 注意： 1.由于int类型默认值为0,当progress值不为0时，请调用setProgress方法设置。<br>
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- * 2.由于boolean类型默认值为false，当re_appeal值为true时，请调用setRe_appeal方法设置。</p>
  * @author hesheng
  * @create 2021/2/2
  **/

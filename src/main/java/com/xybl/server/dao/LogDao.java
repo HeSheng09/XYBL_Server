@@ -3,6 +3,7 @@ package com.xybl.server.dao;
 import com.xybl.server.entity.Log;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * LogDao
@@ -30,4 +31,14 @@ public interface LogDao {
     * @create: 2021/2/2
     */
     public List<Log> getLogs();
+
+    /**
+    * getLastId
+    * <p>获取当天最近一条log的id。</p>
+    * @param  .
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    * @author hesheng
+    * @create: 2021/3/5
+    */
+    public Map<String,Object> getLastId();
 }

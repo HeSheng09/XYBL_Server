@@ -55,6 +55,14 @@ public interface UserService {
     public User getUserById(String id);
 
 
+    /**
+    * addOneStu
+    * <p>添加一名学生用户。</p>
+    * @param stu com.xybl.server.entity.Student.
+    * @return int
+    * @author hesheng
+    * @create: 2021/3/5
+    */
     public int addOneStu(Student stu);
 
     /**
@@ -67,5 +75,13 @@ public interface UserService {
     */
     public int addOneNsu(NsUser nsu);
 
+    /**
+    * delOneUserById
+    * <p>根据id删除一个用户(user及stu、ns)。</p>
+    * @param id java.lang.String.
+    * @return int
+    * @author liubocai
+    * @create: 2021/3/5
+    */
     public int delOneUserById(String id);
 }

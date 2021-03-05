@@ -19,5 +19,5 @@ public interface LogService {
     * @author hesheng
     * @create: 2021/2/3
     */
-    public void addOneLog(User user,String opr,String result);
+    public void addOneLog(String user_id,String opr,String result);
 }

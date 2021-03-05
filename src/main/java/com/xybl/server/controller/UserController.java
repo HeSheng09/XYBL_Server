@@ -48,7 +48,7 @@ public class UserController {
             case 402: {msg = "user doesn't exist"; return response(isLogin, msg);}
             default: msg="";
         }
-        logService.addOneLog(userService.getUserById(id), "login", msg);
+//        logService.addOneLog(userService.getUserById(id), "login", msg);
         return response(isLogin, msg);
     }
 
@@ -90,7 +90,7 @@ public class UserController {
             default: msg = "";
         }
         //5.添加操作日志
-        logService.addOneLog(user, "register", msg);
+//        logService.addOneLog(user, "register", msg);
         return response(isAdd, msg);
 
     }

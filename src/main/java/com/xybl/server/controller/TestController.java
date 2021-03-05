@@ -44,7 +44,7 @@ public class TestController {
         data.put("id",id);
         // expression
         data.put("info",testService.test(id).getInfo());
-        logService.addOneLog(new User("020210203202112170001","系统管理员",true),"插入日志测试。","成功");
+//        logService.addOneLog(new User("020210203202112170001","系统管理员",true),"插入日志测试。","成功");
 
         return response(200,"ok",data);
     }

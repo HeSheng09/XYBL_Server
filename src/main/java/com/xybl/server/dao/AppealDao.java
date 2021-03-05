@@ -54,7 +54,7 @@ public interface AppealDao {
 
     /**
     * updateOneAppeal
-    * <p>更新某条Appeal。</p>
+    * <p>根据id更新某条Appeal。</p>
     * @param appeal com.xybl.server.entity.Appeal.
     * @return void
     * @author hesheng
@@ -64,7 +64,7 @@ public interface AppealDao {
 
     /**
     * getLastId
-    * <p>获取当日的上一条ID。</p>
+    * <p>获取当天的上一条ID。</p>
     * @param  .
     * @return int
     * @author hesheng

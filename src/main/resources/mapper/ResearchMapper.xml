@@ -29,6 +29,7 @@
     <select id="getResearches" resultMap="baseMap">
         SELECT *
         FROM t_research
+        ORDER BY t_rh_id DESC
         LIMIT 100;
     </select>
 
@@ -50,38 +51,38 @@
     </delete>
 
     <!--  public void updateOneResearch(Research research);  -->
-        <update id="updateOneResearch" parameterType="com.xybl.server.entity.Research">
-            UPDATE t_research
-            <set>
-                <if test="handler != null and handler != ''">
-                    t_rh_handler=#{handler},
-                </if>
-                <if test="auditor != null and auditor != ''">
-                    t_rh_auditor=#{auditor},
-                </if>
-                <if test="pro_time != null and pro_time != ''">
-                    t_rh_protime=#{pro_time},
-                </if>
-                <if test="result != null and result != ''">
-                    t_rh_result=#{result},
-                </if>
-                <if test="res_time != null and res_time != ''">
-                    t_rh_restime=#{res_time},
-                </if>
-                <if test="filepath != null and filepath != ''">
-                    t_rh_filepath=#{filepath},
-                </if>
-                <if test="app_comment != null and app_comment != ''">
-                    t_rh_appcomment=#{app_comment},
-                </if>
-                <if test="re_research != null and re_research != ''">
-                    t_rh_reresearch=#{re_research}
-                </if>
-            </set>
-            <where>
-                t_rh_id=#{id};
-            </where>
-        </update>
+    <update id="updateOneResearch" parameterType="com.xybl.server.entity.Research">
+        UPDATE t_research
+        <set>
+            <if test="handler != null and handler != ''">
+                t_rh_handler=#{handler},
+            </if>
+            <if test="auditor != null and auditor != ''">
+                t_rh_auditor=#{auditor},
+            </if>
+            <if test="pro_time != null and pro_time != ''">
+                t_rh_protime=#{pro_time},
+            </if>
+            <if test="result != null and result != ''">
+                t_rh_result=#{result},
+            </if>
+            <if test="res_time != null and res_time != ''">
+                t_rh_restime=#{res_time},
+            </if>
+            <if test="filepath != null and filepath != ''">
+                t_rh_filepath=#{filepath},
+            </if>
+            <if test="app_comment != null and app_comment != ''">
+                t_rh_appcomment=#{app_comment},
+            </if>
+            <if test="re_research != null and re_research != ''">
+                t_rh_reresearch=#{re_research}
+            </if>
+        </set>
+        <where>
+            t_rh_id=#{id};
+        </where>
+    </update>
 
     <!--  public Map<String,Object> getLastId();  -->
     <select id="getLastId" resultType="java.util.HashMap">

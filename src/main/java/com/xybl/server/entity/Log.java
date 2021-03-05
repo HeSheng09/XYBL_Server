@@ -27,6 +27,14 @@ public class Log {
         this.id = id;
     }
 
+    public Log() {
+    }
+
+    public Log(String id, String detail) {
+        this.id = id;
+        this.detail = detail;
+    }
+
     public String getDetail() {
         return detail;
     }

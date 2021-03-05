@@ -4,14 +4,22 @@
 <mapper namespace="com.xybl.server.dao.LogDao">
 
     <insert id="addOneLog" parameterType="com.xybl.server.entity.Log">
-        INSERT INTO log(id, log_time, detail)
-        VALUES (#{id}, #{log_time}, #{detail});
+        INSERT INTO t_log(id, detail)
+        VALUES (#{id}, #{detail});
     </insert>
 
     <select id="getLogs" resultType="com.xybl.server.entity.Log">
         SELECT *
-        FROM log
+        FROM t_log
         ORDER BY id DESC
         LIMIT 100;
+    </select>
+
+    <select id="getLastId" resultType="java.util.HashMap">
+        SELECT SUBSTRING(id, 14, 3) as last_id, SUBSTRING(id, 1, 13) as t_id
+        FROM t_log
+        WHERE SUBSTRING(id, 1, 10) > UNIX_TIMESTAMP(CAST(SYSDATE() AS DATE))
+        ORDER BY t_id DESC
+        LIMIT 1;
     </select>
 </mapper>
