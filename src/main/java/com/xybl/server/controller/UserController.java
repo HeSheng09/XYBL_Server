@@ -56,7 +56,7 @@ public class UserController {
     * @author liubocai
     * @create: 2021-02-03
     */
-    @GetMapping("/register")
+    @GetMapping("/stu_register")
     public Map<String, Object> register(@RequestParam(name = "name")String name,
                                         @RequestParam(name = "pwd")String pwd,
                                         @RequestParam(name = "role")int roleType,

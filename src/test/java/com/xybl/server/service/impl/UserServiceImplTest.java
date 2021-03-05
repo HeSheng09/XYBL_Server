@@ -35,4 +35,9 @@ class UserServiceImplTest {
     void genId() {
         System.out.println(userService.genId());
     }
+
+    @Test
+    void testLogin(){
+
+    }
 }

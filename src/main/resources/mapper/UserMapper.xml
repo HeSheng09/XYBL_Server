@@ -20,10 +20,10 @@
         WHERE t_user_id = #{uid};
     </select>
 
-    <select id="getUserByName" parameterType="String" resultType="com.xybl.server.entity.User">
+    <select id="getUserByName" parameterType="String" resultMap="baseMap">
         SELECT *
-        FROM user
-        WHERE name = #{name};
+        FROM t_user
+        WHERE t_user_name = #{name};
     </select>
 
     <select id="getLastUserId" resultType="java.util.HashMap">
