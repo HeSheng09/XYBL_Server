@@ -4,6 +4,7 @@ import com.xybl.server.entity.Appeal;
 import com.xybl.server.service.AppealService;
 import com.xybl.server.service.LogService;
 import com.xybl.server.utils.DatetimeUtil;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ import static com.xybl.server.utils.ResponseUtil.response;
  * @author hesheng
  * @create 2021/3/5
  **/
+//@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/appeal")
 public class AppealController {
