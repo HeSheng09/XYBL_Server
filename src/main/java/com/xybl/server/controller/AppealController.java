@@ -4,7 +4,6 @@ import com.xybl.server.entity.Appeal;
 import com.xybl.server.service.AppealService;
 import com.xybl.server.service.LogService;
 import com.xybl.server.utils.DatetimeUtil;
-import com.xybl.server.utils.ResponseUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,58 +31,106 @@ public class AppealController {
 
     // http://localhost:8080/server/appeal/addone?user_id=1614600624790001&al_address=湖北省，武汉市，洪山区 武汉大学&al_pos=114.365818,30.534872&al_title=（controller）添加举报测试&al_detail=（controller）添加举报测试&handler=1612715026000001
     @RequestMapping("/addone")
-    public Map<String,Object> addOneAppeal(@RequestParam(name = "user_id")String appellant,
-                                           @RequestParam(name = "al_address")String al_address,
-                                           @RequestParam(name="al_pos")String al_pos,
-                                           @RequestParam(name = "al_title")String al_title,
-                                           @RequestParam(name="al_detail")String al_detail,
-                                           @RequestParam(name = "handler")String handler){
-        Appeal appeal=new Appeal();
-        String al_id=appealService.genAppealId();
-        appeal.setId(al_id);
-        appeal.setAl_time(DatetimeUtil.getAndFormatDatetime());
-        appeal.setAppellant(appellant);
-        appeal.setAddress(al_address);
-        appeal.setPos(al_pos);
-        appeal.setTitle(al_title);
-        appeal.setDetail(al_detail);
-//        System.out.println(appeal);
-        try{
+    public Map<String, Object> addOneAppeal(@RequestParam(name = "user_id") String appellant,
+                                            @RequestParam(name = "al_address") String al_address,
+                                            @RequestParam(name = "al_pos") String al_pos,
+                                            @RequestParam(name = "al_title") String al_title,
+                                            @RequestParam(name = "al_detail") String al_detail,
+                                            @RequestParam(name = "handler") String handler,
+                                            @RequestParam(name = "last_al", defaultValue = "not_provided") String last_al) {
+        // 初始化参数
+        String al_id = appealService.genAppealId();
+        Appeal appeal = new Appeal(al_id, DatetimeUtil.getAndFormatDatetime(), appellant, al_address, al_pos, al_title, al_detail);
+        try {
+            // 二次申请，首先更新上一条Appeal的re_appeal.
+            if(!"not_provided".equals(last_al)){
+                appealService.updateOneAppealById(new Appeal(last_al, appellant, al_id));
+            }
+            // 插入新的的Appeal
             appealService.addOneAppeal(appeal, handler);
-            logService.addOneLog(appellant,"add one appeal(id="+al_id+")","succeed");
-            return response(200,"ok",appeal);
-        }catch (Exception e){
-            logService.addOneLog(appellant,"add one appeal(id="+al_id+")","failed");
-            return response(500,"server error");
+            logService.addOneLog(appellant, "add one appeal(id=" + al_id + ")", "succeed");
+            return response(200, "ok", appeal);
+        } catch (Exception e) {
+            e.printStackTrace();
+            appealService.deleteOneAppealById(appellant, al_id);
+            logService.addOneLog(appellant, "add one appeal(id=" + al_id + ")", "failed");
+            return response(500, "server error");
         }
     }
 
     // http://localhost:8080/server/appeal/getbyid?al_id=1614958390011004&user_id=1614600624790001
     @RequestMapping("/getbyid")
-    public Map<String,Object> getOneAppealById(@RequestParam(name = "al_id")String al_id,
-                                               @RequestParam(name = "user_id")String user_id){
-        try{
-            Appeal appeal= appealService.getOneAppealById(al_id);
-            logService.addOneLog(user_id,"ask for an apeal(id="+al_id+")","succeed");
-            return response(200,"ok",appeal);
-        }catch (Exception e){
+    public Map<String, Object> getOneAppealById(@RequestParam(name = "al_id") String al_id,
+                                                @RequestParam(name = "user_id") String user_id) {
+        try {
+            Appeal appeal = appealService.getOneAppealById(al_id);
+            logService.addOneLog(user_id, "ask for an apeal(id=" + al_id + ")", "succeed");
+            return response(200, "ok", appeal);
+        } catch (Exception e) {
             e.printStackTrace();
-            logService.addOneLog(user_id,"ask for an apeal(id="+al_id+")","failed");
-            return response(500,"server error");
+            logService.addOneLog(user_id, "ask for an apeal(id=" + al_id + ")", "failed");
+            return response(500, "server error");
         }
     }
 
     // http://localhost:8080/server/appeal/undermanage?user_id=1612715026000001
     @RequestMapping("/undermanage")
-    public Map<String,Object> getAppealsUnderManagement(@RequestParam(name = "user_id")String user_id){
+    public Map<String, Object> getAppealsUnderManagement(@RequestParam(name = "user_id") String user_id) {
         try {
-            List<Appeal> appeals=appealService.getAppealsUnderManagement(user_id);
-            logService.addOneLog(user_id, "ask for appeals under management","succeed");
-            return response(200,"ok",appeals);
-        }catch (Exception e){
+            List<Appeal> appeals = appealService.getAppealsUnderManagement(user_id);
+            logService.addOneLog(user_id, "ask for appeals under management", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
             e.printStackTrace();
-            logService.addOneLog(user_id,"ask for appeals user management","failed");
-            return response(500,"server error");
+            logService.addOneLog(user_id, "ask for appeals under management", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    // http://localhost:8080/server/appeal/deletebyid?al_id=&user_id=
+    @RequestMapping("/deletebyid")
+    public Map<String, Object> deleteOneAppealById(@RequestParam(name = "user_id") String user_id,
+                                                   @RequestParam(name = "al_id") String al_id) {
+        try {
+            appealService.deleteOneAppealById(user_id, al_id);
+            logService.addOneLog(user_id, "delete one appeal", "succeed");
+            return response(200, "ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "delete one appeal", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    // http://localhost:8080/server/appeal/updatebyid?user_id=&al_id=&al_address=&al_pos=&al_title=&al_detail=&
+    @RequestMapping("/updatebyid")
+    public Map<String, Object> updateOneAppealById(@RequestParam(name = "user_id") String user_id,
+                                                   @RequestParam(name = "al_id") String al_id,
+                                                   @RequestParam(name = "al_address", defaultValue = "not_provided") String al_address,
+                                                   @RequestParam(name = "al_pos", defaultValue = "not_provided") String al_pos,
+                                                   @RequestParam(name = "al_title", defaultValue = "not_provided") String al_title,
+                                                   @RequestParam(name = "al_detail", defaultValue = "not_provided") String al_detail) {
+        Appeal appeal = new Appeal(al_id, user_id);
+        if (!"not_provided".equals(al_address)) {
+            appeal.setAddress(al_address);
+        }
+        if (!"not_provided".equals(al_pos)) {
+            appeal.setPos(al_pos);
+        }
+        if (!"not_provided".equals(al_title)) {
+            appeal.setTitle(al_title);
+        }
+        if (!"not_provided".equals(al_detail)) {
+            appeal.setDetail(al_detail);
+        }
+        try {
+            appealService.updateOneAppealById(appeal);
+            logService.addOneLog(user_id, "update one appeal(id=" + al_id + ")", "succeed");
+            return response(200, "ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "update one appeal(id=" + al_id + ")", "failed");
+            return response(500, "server error");
         }
     }
 }

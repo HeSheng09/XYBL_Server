@@ -36,7 +36,7 @@ class MD5UtilTest {
 
     @Test
     void getEncryptedText() {
-        String text="001";
+        String text="password";
         System.out.println("1:"+MD5Util.getEncryptedText(text));
         System.out.println("2:"+MD5Util.getEncryptedText(text));
     }

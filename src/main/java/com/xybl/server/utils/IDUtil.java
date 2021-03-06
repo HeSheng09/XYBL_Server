@@ -1,5 +1,8 @@
 package com.xybl.server.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * IDUtil
  * <p>ID生成工具类。</p>

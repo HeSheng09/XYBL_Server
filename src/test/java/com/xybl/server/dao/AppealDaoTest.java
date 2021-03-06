@@ -64,7 +64,7 @@ class AppealDaoTest {
 
     @Test
     void deleteOneAppealById() {
-        appealDao.deleteOneAppealById("1614604886000002");
+//        appealDao.deleteOneAppealById("1614604886000002");
         List<Appeal> appeals=appealDao.getAppeals();
         for(Appeal appeal:appeals){
             System.out.println(appeal);

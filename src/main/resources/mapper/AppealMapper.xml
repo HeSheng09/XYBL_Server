@@ -25,6 +25,7 @@
         </where>
     </select>
 
+    <!--  public Appeal getOneAppealByAlUserId(String al_id,String user_id);  -->
     <select id="getOneAppealByAlUserId" resultMap="baseMap">
         SELECT *
         FROM t_appeal
@@ -32,15 +33,16 @@
           AND t_al_appellant = #{user_id};
     </select>
 
+    <!--  public void addRelAlHandler(String al_id,String smsch_id);  -->
     <insert id="addRelAlHandler">
-        INSERT INTO r_ns_al(ns_id, al_id) VALUE (#{ns_id}, #{al_id});
+        INSERT INTO r_al_ns(al_id, dmsch_id) VALUE (#{al_id}, #{dmsch_id});
     </insert>
 
-
-    <select id="getAppealsByNsId" parameterType="String" resultMap="baseMap">
+    <!--  public List<Appeal> getAppealsByDmSchId(String dmsch_id);  -->
+    <select id="getAppealsByDmSchId" parameterType="String" resultMap="baseMap">
         SELECT *
         FROM t_appeal
-        WHERE t_al_id in (SELECT al_id FROM r_ns_al WHERE ns_id = #{ns_id});
+        WHERE t_al_id in (SELECT al_id FROM r_al_ns WHERE dmsch_id = #{dmsch_id});
     </select>
 
     <!--  public List<Appeal> getAppeals();  -->
@@ -62,10 +64,11 @@
     </insert>
 
     <!--  public void deleteOneAppealById(String id);  -->
-    <delete id="deleteOneAppealById" parameterType="String">
+    <delete id="deleteOneAppealById">
         DELETE
         FROM t_appeal
-        WHERE t_al_id = #{id};
+        WHERE t_al_id = #{id}
+          and t_al_appellant = #{user_id};
     </delete>
 
     <!--  public void updateOneAppeal(Appeal appeal);  -->
@@ -84,9 +87,6 @@
             <if test="detail != null and detail != ''">
                 t_al_detail=#{detail},
             </if>
-            <if test="appellant != null and appellant != ''">
-                t_al_appellant=#{appellant},
-            </if>
             <if test="filepath != null and filepath != ''">
                 t_al_filepath=#{filepath},
             </if>
@@ -98,7 +98,7 @@
             </if>
         </set>
         <where>
-            t_al_id=#{id};
+            t_al_id=#{id} and t_al_appellant=#{appellant};
         </where>
     </update>
 
@@ -110,4 +110,12 @@
         ORDER BY t_id DESC
         LIMIT 1;
     </select>
+
+    <!--  public void deleteRelAlNsByAlId(String al_id, String user_id);  -->
+    <delete id="deleteRelAlNsByAlId">
+        DELETE
+        FROM r_al_ns
+        WHERE al_id = #{al_id}
+          and #{user_id} = (SELECT t_al_appellant FROM t_appeal WHERE t_al_id = #{al_id});
+    </delete>
 </mapper>

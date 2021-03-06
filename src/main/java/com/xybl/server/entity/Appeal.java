@@ -1,5 +1,7 @@
 package com.xybl.server.entity;
 
+import com.xybl.server.utils.DatetimeUtil;
+
 /**
  * Appeal
  * <p>实体类。<br>
@@ -16,6 +18,30 @@ public class Appeal {
     private String detail;
     private String filepath;
     private String re_appeal;
+
+    public Appeal() {
+    }
+
+    public Appeal(String id, String al_time, String appellant, String address, String pos, String title, String detail) {
+        this.id = id;
+        this.al_time = al_time;
+        this.appellant = appellant;
+        this.address = address;
+        this.pos = pos;
+        this.title = title;
+        this.detail = detail;
+    }
+
+    public Appeal(String id, String appellant) {
+        this.id = id;
+        this.appellant = appellant;
+    }
+
+    public Appeal(String id, String appellant, String re_appeal) {
+        this.id = id;
+        this.appellant = appellant;
+        this.re_appeal = re_appeal;
+    }
 
     @Override
     public String toString() {

@@ -106,7 +106,7 @@ public class UserController {
         String enPwd = MD5Util.getEncryptedText(pwd); //密码加密用于存入数据库
         //3.生成userName
         String userName = userService.genNsUserName(autho_name, describe, level);
-        if(userName == ""){
+        if("".equals(userName)){
             msg = "no right to authorize";
             logService.addOneLog(userService.getUserByName(autho_name).getId(), "authorize", msg);
             return response(401, msg);
@@ -123,12 +123,7 @@ public class UserController {
         logService.addOneLog(userService.getUserByName(autho_name).getId(), "authorize", msg);
         logService.addOneLog(nsUser.getId(), "register", msg);
         //6.返回前端
-        Map<String, Object> res = new HashMap<>();
-        res.put("code", 200);
-        res.put("msg", msg);
-        res.put("name", userName);
-        res.put("pwd", pwd);
-        return res;
+        return response(200,msg,new User(userName,pwd));
     }
 
 }

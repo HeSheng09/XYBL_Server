@@ -38,14 +38,28 @@ public class AppealServiceImpl implements AppealService {
     }
 
     @Override
-    public void addOneAppeal(Appeal appeal, String handler) {
-        // 保存handler信息
-        appealDao.addRelAlHandler(appeal.getId(),handler);
+    public void addOneAppeal(Appeal appeal, String handler) throws Exception{
+        // 保存一条关系到r_al_ns中。
+        appealDao.addRelAlHandler(appeal.getId(), handler);
+        // 保存举报信息
         appealDao.addOneAppeal(appeal);
     }
 
     @Override
+    public void deleteOneAppealById(String user_id, String al_id) {
+        // 删除关系
+        appealDao.deleteRelAlNsByAlId(al_id, user_id);
+        // 删除举报信息
+        appealDao.deleteOneAppealById(al_id, user_id);
+    }
+
+    @Override
     public List<Appeal> getAppealsUnderManagement(String user_id) {
-        return appealDao.getAppealsByNsId(user_id);
+        return appealDao.getAppealsByDmSchId(user_id.substring(0, 10) + "000");
+    }
+
+    @Override
+    public void updateOneAppealById(Appeal appeal) {
+        appealDao.updateOneAppeal(appeal);
     }
 }

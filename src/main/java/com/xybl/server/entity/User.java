@@ -13,6 +13,11 @@ public class User {
         this.role = role;
     }
 
+    public User(String name, String pwd) {
+        this.name = name;
+        this.pwd = pwd;
+    }
+
     public User(String id, String name, String pwd, boolean role) {
         this.id = id;
         this.name = name;
