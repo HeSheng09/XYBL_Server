@@ -46,7 +46,7 @@ public interface AppealDao {
      * @author hesheng
      * @create: 2021/3/6
      */
-    public void addRelAlHandler(String al_id, String smsch_id);
+    public void addRelAlHandler(String al_id, String dmsch_id);
 
     /**
      * deleteRelAlNsByAlId
@@ -126,4 +126,14 @@ public interface AppealDao {
      * @create: 2021/3/1
      */
     public Map<String, Object> getLastId();
+
+    /**
+    * getAppealsByUser_id
+    * <p>根据user_id(student)获取该用户所提交的所有的appeal。</p>
+    * @param user_id java.lang.String.
+    * @return java.util.List<com.xybl.server.entity.Appeal>
+    * @author hesheng
+    * @create: 2021/3/6
+    */
+    public List<Appeal> getAppealsByUser_id(String user_id);
 }

@@ -1,6 +1,7 @@
 package com.xybl.server.service.impl;
 
 import com.xybl.server.dao.AppealDao;
+import com.xybl.server.dao.UserDao;
 import com.xybl.server.entity.Appeal;
 import com.xybl.server.service.AppealService;
 import com.xybl.server.utils.IDUtil;
@@ -21,6 +22,8 @@ import java.util.Map;
 public class AppealServiceImpl implements AppealService {
     @Resource
     private AppealDao appealDao;
+    @Resource
+    private UserDao userDao;
 
     @Override
     public String genAppealId() {
@@ -38,7 +41,7 @@ public class AppealServiceImpl implements AppealService {
     }
 
     @Override
-    public void addOneAppeal(Appeal appeal, String handler) throws Exception{
+    public void addOneAppeal(Appeal appeal, String handler) throws Exception {
         // 保存一条关系到r_al_ns中。
         appealDao.addRelAlHandler(appeal.getId(), handler);
         // 保存举报信息
@@ -55,11 +58,17 @@ public class AppealServiceImpl implements AppealService {
 
     @Override
     public List<Appeal> getAppealsUnderManagement(String user_id) {
-        return appealDao.getAppealsByDmSchId(user_id.substring(0, 10) + "000");
+        String dmsch_id = userDao.getUserById(user_id).getName().substring(0, 10) + "000";
+        return appealDao.getAppealsByDmSchId(dmsch_id);
     }
 
     @Override
     public void updateOneAppealById(Appeal appeal) {
         appealDao.updateOneAppeal(appeal);
+    }
+
+    @Override
+    public List<Appeal> getAppealsByUserId(String user_id) {
+        return appealDao.getAppealsByUser_id(user_id);
     }
 }

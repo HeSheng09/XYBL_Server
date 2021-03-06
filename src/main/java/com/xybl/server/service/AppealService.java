@@ -73,4 +73,14 @@ public interface AppealService {
     * @create: 2021/3/6
     */
     public void updateOneAppealById(Appeal appeal);
+
+    /**
+    * getAppealsByUserId
+    * <p>根据user_id(student)获取该用户所提交的所有的appeal。</p>
+    * @param user_id java.lang.String.
+    * @return java.util.List<com.xybl.server.entity.Appeal>
+    * @author hesheng
+    * @create: 2021/3/6
+    */
+    public List<Appeal> getAppealsByUserId(String user_id);
 }

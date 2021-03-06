@@ -118,4 +118,11 @@
         WHERE al_id = #{al_id}
           and #{user_id} = (SELECT t_al_appellant FROM t_appeal WHERE t_al_id = #{al_id});
     </delete>
+
+    <!-- public List<Appeal> getAppealsByUser_id(String user_id);  -->
+    <select id="getAppealsByUser_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_appellant = #{user_id};
+    </select>
 </mapper>

@@ -29,7 +29,7 @@ public class AppealController {
     @Resource
     private LogService logService;
 
-    // http://localhost:8080/server/appeal/addone?user_id=1614600624790001&al_address=湖北省，武汉市，洪山区 武汉大学&al_pos=114.365818,30.534872&al_title=（controller）添加举报测试&al_detail=（controller）添加举报测试&handler=1612715026000001
+    // http://localhost:8080/server/appeal/addone?user_id=&al_address=&al_pos=&al_title=&al_detail=&handler=
     @RequestMapping("/addone")
     public Map<String, Object> addOneAppeal(@RequestParam(name = "user_id") String appellant,
                                             @RequestParam(name = "al_address") String al_address,
@@ -43,7 +43,7 @@ public class AppealController {
         Appeal appeal = new Appeal(al_id, DatetimeUtil.getAndFormatDatetime(), appellant, al_address, al_pos, al_title, al_detail);
         try {
             // 二次申请，首先更新上一条Appeal的re_appeal.
-            if(!"not_provided".equals(last_al)){
+            if (!"not_provided".equals(last_al)) {
                 appealService.updateOneAppealById(new Appeal(last_al, appellant, al_id));
             }
             // 插入新的的Appeal
@@ -58,7 +58,7 @@ public class AppealController {
         }
     }
 
-    // http://localhost:8080/server/appeal/getbyid?al_id=1614958390011004&user_id=1614600624790001
+    // http://localhost:8080/server/appeal/getbyid?al_id=&user_id=
     @RequestMapping("/getbyid")
     public Map<String, Object> getOneAppealById(@RequestParam(name = "al_id") String al_id,
                                                 @RequestParam(name = "user_id") String user_id) {
@@ -73,7 +73,7 @@ public class AppealController {
         }
     }
 
-    // http://localhost:8080/server/appeal/undermanage?user_id=1612715026000001
+    // http://localhost:8080/server/appeal/undermanage?user_id=
     @RequestMapping("/undermanage")
     public Map<String, Object> getAppealsUnderManagement(@RequestParam(name = "user_id") String user_id) {
         try {
@@ -130,6 +130,20 @@ public class AppealController {
         } catch (Exception e) {
             e.printStackTrace();
             logService.addOneLog(user_id, "update one appeal(id=" + al_id + ")", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    // http://localhost:8080/server/appeal/getbyuserid?user_id=
+    @RequestMapping("/getbyuserid")
+    public Map<String, Object> getAppealsByUser_id(@RequestParam(name = "user_id") String user_id) {
+        try {
+            List<Appeal> appeals = appealService.getAppealsByUserId(user_id);
+            logService.addOneLog(user_id, "ask for user's all appeals", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "ask for user's all appeals", "failed");
             return response(500, "server error");
         }
     }
