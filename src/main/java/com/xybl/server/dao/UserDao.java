@@ -102,4 +102,7 @@ public interface UserDao {
     * @create: 2021-03-01
     */
     public void delOneNsu(String nsu_id);
+
+
+    public String getLastNsName(String sameFront);
 }

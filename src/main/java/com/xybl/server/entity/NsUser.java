@@ -13,6 +13,10 @@ public class NsUser extends User{
     private String tel;
     private String email;
 
+    public NsUser(String id, String name){
+        super(id, name, true);
+    }
+
     @Override
     public String getId() {
         return super.getId();

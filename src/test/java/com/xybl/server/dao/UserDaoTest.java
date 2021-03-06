@@ -62,4 +62,10 @@ class UserDaoTest {
         User a = userDao.getUserById("1612715026000001");
         System.out.println(a.toString());
     }
+
+    @Test
+    void testGetLastNsName(){
+        String a = userDao.getLastNsName("00000000000");
+        System.out.println(a);
+    }
 }

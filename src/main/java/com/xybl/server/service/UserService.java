@@ -56,6 +56,15 @@ public interface UserService {
      */
     public User getUserById(String id);
 
+    /**
+    * getUserByName
+    * <p>根据name获取用户对象</p>
+    * @param name java.lang.String.
+    * @return com.xybl.server.entity.User
+    * @author liubocai
+    * @create: 2021-03-06
+    */
+    public User getUserByName(String name);
 
     /**
     * addOneStu
@@ -86,4 +95,14 @@ public interface UserService {
     * @create: 2021/3/5
     */
     public int delOneUserById(String id);
+
+    /**
+    * genNsUserName
+    * <p>生成非学生用户的系统账号名</p>
+    * @param authoName java.lang.String.
+    * @return
+    * @author liubocai
+    * @create: 2021-03-06
+    */
+    public String genNsUserName(String authoName, String describe, String level);
 }

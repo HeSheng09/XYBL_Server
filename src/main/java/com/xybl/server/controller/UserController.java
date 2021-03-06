@@ -1,15 +1,18 @@
 package com.xybl.server.controller;
 
+import com.xybl.server.entity.NsUser;
 import com.xybl.server.entity.Student;
 import com.xybl.server.entity.User;
 import com.xybl.server.service.LogService;
 import com.xybl.server.service.UserService;
+import com.xybl.server.utils.MD5Util;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.xybl.server.utils.ResponseUtil.response;
@@ -66,7 +69,8 @@ public class UserController {
         //1.生成id，以当前时间戳
         String id= userService.genId();
         //2.封装成user
-        Student stu = new Student(id, name, pwd);
+        String enPwd = MD5Util.getEncryptedText(pwd);//密码加密
+        Student stu = new Student(id, name, enPwd);
         stu.setEmail(email);
         stu.setTel(tel);
         stu.setAddress(address);
@@ -84,6 +88,47 @@ public class UserController {
         logService.addOneLog(stu.getId(), "register", msg);
         return response(isAdd, msg);
 
+    }
+
+    @GetMapping("/authorize")
+    Map<String, Object> authorize(@RequestParam(name = "ns_name")String ns_name,
+                                  @RequestParam(name = "level")String level,
+                                  @RequestParam(name = "describe")String describe,
+                                  @RequestParam(name = "autho_name")String autho_name,
+                                  @RequestParam(name = "tel", defaultValue = "null")String tel,
+                                  @RequestParam(name = "email", defaultValue = "null")String email){
+        //0.返回消息
+        String msg = "";
+        //1.生成id
+        String id = userService.genId();
+        //2.生成pwd
+        String pwd = String.valueOf((int)Math.ceil((Math.random()*9+1)*100000));
+        String enPwd = MD5Util.getEncryptedText(pwd); //密码加密用于存入数据库
+        //3.生成userName
+        String userName = userService.genNsUserName(autho_name, describe, level);
+        if(userName == ""){
+            msg = "no right to authorize";
+            logService.addOneLog(userService.getUserByName(autho_name).getId(), "authorize", msg);
+            return response(401, msg);
+        }
+        //4.封装成NsUser及存入t_nsuser表
+        NsUser nsUser = new NsUser(id, userName);
+        nsUser.setPwd(enPwd);
+        nsUser.setNs_name(ns_name);
+        nsUser.setEmail(email);
+        nsUser.setTel(tel);
+        userService.addOneNsu(nsUser);
+        msg = "ok";
+        //5.添加日志
+        logService.addOneLog(userService.getUserByName(autho_name).getId(), "authorize", msg);
+        logService.addOneLog(nsUser.getId(), "register", msg);
+        //6.返回前端
+        Map<String, Object> res = new HashMap<>();
+        res.put("code", 200);
+        res.put("msg", msg);
+        res.put("name", userName);
+        res.put("pwd", pwd);
+        return res;
     }
 
 }

@@ -61,4 +61,12 @@
         FROM t_nsuser
         WHERE t_ns_id = #{nsu_id};
     </delete>
+
+    <select id="getLastNsName" parameterType="String" resultType="String">
+        SELECT SUBSTRING(t_user_name, 12, 13) as lastP
+        FROM t_user
+        WHERE SUBSTRING(t_user_name, 1, 11) = #{sameFront}
+        ORDER BY lastP DESC
+        LIMIT 1;
+    </select>
 </mapper>
