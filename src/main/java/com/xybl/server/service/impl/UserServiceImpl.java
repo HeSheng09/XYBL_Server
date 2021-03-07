@@ -192,4 +192,32 @@ public class UserServiceImpl implements UserService {
         }
         return perName;
     }
+
+    @Override
+    public String getSuperDmId(String ns_id) {
+        String self_org_id=userDao.getUserById(ns_id).getName().substring(0,10);
+        int self_org_index=0;
+        for(int i=9;i>=0;i--){
+            if('0'!=(self_org_id.charAt(i))){
+                self_org_index=i;
+                break;
+            }
+        }
+        String super_org="";
+        switch (self_org_index){
+            case 9:
+                super_org+=self_org_id.substring(0,7)+"000";
+                break;
+            case 6:
+                super_org+=self_org_id.substring(0,4)+"000000";
+                break;
+            case 3:
+                super_org+=self_org_id.substring(0,2)+"00000000";
+                break;
+            case 1:
+                super_org+="0000000000";
+                break;
+        }
+        return userDao.getUserByName(super_org+"000").getId();
+    }
 }

@@ -147,4 +147,14 @@ public interface UserService {
     * @create: 2021-03-07
     */
     public String genNsUserPerName(String authoName, String privilege);
+
+    /**
+    * getSuperDmId
+    * <p>根据ns_user id查询其上一级组织的id。</p>
+    * @param ns_id java.lang.String.
+    * @return java.lang.String
+    * @author hesheng
+    * @create: 2021/3/7
+    */
+    public String getSuperDmId(String ns_id);
 }
