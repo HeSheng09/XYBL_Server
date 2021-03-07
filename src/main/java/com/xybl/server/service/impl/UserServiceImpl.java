@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return response(400, "nouser"); //用户不存在
         } else if (MD5Util.validText(pwd, user.getPwd())) {
-            return response(200, String.valueOf(user.getRole())); //密码正确
+            return response(200, "ok", user); //密码正确
         } else {
             return response(401, "pwderror"); //密码错误
         }

@@ -18,6 +18,14 @@
         <result column="t_ns_email" jdbcType="VARCHAR" property="email"/>
     </resultMap>
 
+    <resultMap id="stuUserMap" type="com.xybl.server.entity.Student">
+        <id column="t_stu_id" jdbcType="VARCHAR" property="id"/>
+        <result column="t_stu_name" jdbcType="VARCHAR" property="stu_name"/>
+        <result column="t_stu_tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="t_stu_address" jdbcType="VARCHAR" property="address"/>
+        <result column="t_stu_email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+
     <insert id="addOneUser" parameterType="com.xybl.server.entity.User">
         INSERT INTO t_user(t_user_id, t_user_name, t_user_pwd, t_user_role)
             VALUE (#{id}, #{name}, #{pwd}, #{role});
@@ -84,6 +92,11 @@
                t_nsuser.t_ns_email, t_user.t_user_name
         from t_nsuser inner join t_user on t_nsuser.t_ns_id = t_user.t_user_id
         where t_ns_id = #{id};
+    </select>
+
+    <select id="getStuById" parameterType="String" resultMap="stuUserMap">
+        select * from t_student
+        where t_stu_id = #{id};
     </select>
 
     <select id="getLastDmschNameNum" parameterType="String" resultType="String">
