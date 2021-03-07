@@ -211,7 +211,7 @@ public class UserController {
         //4.添加日志及返回消息
         msg = "ok";
         logService.addOneLog(authoId, "generate personal management accout", msg);
-        return response(200, "ok", new User(nameCode, pwd, true));
+        return response(200, "ok", new User(id, nameCode, pwd, true));
     }
 
 
