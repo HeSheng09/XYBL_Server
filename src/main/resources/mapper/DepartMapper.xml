@@ -2,13 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.xybl.server.dao.DepartDao">
+    <resultMap id="departMap" type="com.xybl.server.entity.Department">
+        <id column="t_dm_id" jdbcType="VARCHAR" property="id"/>
+        <result column="t_dm_name" jdbcType="VARCHAR" property="name"/>
+        <result column="t_dm_address" jdbcType="VARCHAR" property="address"/>
+        <result column="t_dm_web" jdbcType="VARCHAR" property="web"/>
+        <result column="t_dm_level" jdbcType="VARCHAR" property="level"/>
+    </resultMap>
+
     <insert id="addDepartment" parameterType="com.xybl.server.entity.Department">
         INSERT INTO t_department(t_dm_id, t_dm_name, t_dm_address, t_dm_web, t_dm_level)
         VALUE (#{id}, #{name}, #{address}, #{web}, #{level})
     </insert>
 
-    <select id="getDepartByName" parameterType="String" resultType="com.xybl.server.entity.Department">
-        SELECT * FROM t_department WHERE t_dm_name=#{name}
+    <select id="getDepartByName" parameterType="String" resultMap="departMap">
+        SELECT * FROM t_department WHERE t_dm_name=#{name};
     </select>
 
     <delete id="delDepartById" parameterType="String">
@@ -17,7 +25,7 @@
         WHERE t_dm_id = #{id}
     </delete>
 
-    <select id="getDartById" parameterType="String" resultType="com.xybl.server.entity.Department">
-        SELECT * FROM t_department WHERE t_dm_id = #{id}
+    <select id="getDepartById" parameterType="String" resultMap="departMap">
+        SELECT * FROM t_department WHERE t_dm_id = #{id};
     </select>
 </mapper>

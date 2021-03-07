@@ -48,11 +48,17 @@ class UserServiceImplTest {
         String pwd = String.valueOf((int)Math.ceil((Math.random()*9+1)*100000));
         System.out.println(pwd);
         String enPwd = MD5Util.getEncryptedText(pwd);
-        String name = userService.genNsUserName("0000000000001", "湖北省", "0");
+        String name = userService.genNsUserName("0000000000001", "湖北省");
         NsUser nsUser = new NsUser(id, name);
         nsUser.setPwd(enPwd);
         nsUser.setNs_name("省级账号管理员");
         System.out.println(nsUser.toString());
         userService.addOneNsu(nsUser);
+    }
+
+    @Test
+    void testAddDmschName(){
+
+        userService.addOneDmschName("湖南省教育厅","0000");
     }
 }

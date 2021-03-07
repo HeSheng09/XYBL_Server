@@ -29,4 +29,10 @@ public class DepartServiceImplTest {
         department.setLevel("T");
         departService.addDepartment(department);
     }
+
+    @Test
+    void testGetById(){
+        Department depart = departService.getDepartById("0000000000000");
+        System.out.println(depart);
+    }
 }

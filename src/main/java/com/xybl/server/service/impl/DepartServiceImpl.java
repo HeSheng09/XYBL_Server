@@ -32,12 +32,12 @@ public class DepartServiceImpl implements DepartService {
 
     @Override
     public Department getDepartByName(String name) {
-        Department tempD = departDao.getDepartByName(name);
-        if(tempD != null){
-            return departDao.getDepartByName(name);
-        }else{
-            return null;
-        }
+        return departDao.getDepartByName(name);
+    }
+
+    @Override
+    public Department getDepartById(String id) {
+        return departDao.getDepartById(id);
     }
 
     @Override

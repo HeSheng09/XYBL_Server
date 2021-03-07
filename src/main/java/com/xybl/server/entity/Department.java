@@ -18,6 +18,22 @@ public class Department {
         this.name = name;
     }
 
+    public Department(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Department(String id, String name, String address, String web, String level) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.web = web;
+        this.level = level;
+    }
+
+    public Department() {
+    }
+
     @Override
     public String toString() {
         return "Department{" +

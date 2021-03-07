@@ -34,4 +34,16 @@ public class IDUtil {
         }
         return buffer.toString();
     }
+
+    public static String strBackFillZero(String str, int length) {
+        StringBuffer buffer = new StringBuffer(str);
+        if (buffer.length() >= length) {
+            return buffer.toString();
+        } else {
+            while (buffer.length() < length) {
+                buffer.append("0");
+            }
+        }
+        return buffer.toString();
+    }
 }

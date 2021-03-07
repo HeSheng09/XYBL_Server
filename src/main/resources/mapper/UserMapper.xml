@@ -69,4 +69,45 @@
         ORDER BY lastP DESC
         LIMIT 1;
     </select>
+
+    <select id="getLastDmschNameNum" parameterType="String" resultType="String">
+        <choose>
+            <when test="searchPart==1">
+                SELECT SUBSTRING(name, 1, 2) as lastNum
+                FROM r_dmsch_name
+                ORDER BY lastNum DESC
+                LIMIT 1;
+            </when>
+            <when test="searchPart==2">
+                SELECT SUBSTRING(name, 3, 2) as lastNum
+                FROM r_dmsch_name
+                ORDER BY lastNum DESC
+                LIMIT 1;
+            </when>
+            <when test="searchPart==3">
+                SELECT SUBSTRING(name, 5, 3) as lastNum
+                FROM r_dmsch_name
+                ORDER BY lastNum DESC
+                LIMIT 1;
+            </when>
+            <otherwise>
+                SELECT SUBSTRING(name, 8, 3) as lastNum
+                FROM r_dmsch_name
+                ORDER BY lastNum DESC
+                LIMIT 1;
+            </otherwise>
+        </choose>
+    </select>
+
+<!--    public String addOneDmschName(String beNamed, String nameCode);-->
+    <insert id="addOneDmschName">
+        INSERT INTO r_dmsch_name(dmsch, name)
+        value (#{beNamed}, #{nameCode});
+    </insert>
+
+    <select id="getDmschName" parameterType="String" resultType="String">
+        select dmsch
+        from r_dmsch_name
+        where name = #{nameCode};
+    </select>
 </mapper>

@@ -103,6 +103,44 @@ public interface UserDao {
     */
     public void delOneNsu(String nsu_id);
 
-
+    /**
+    * getLastNsName
+    * <p></p>
+    * @param sameFront java.lang.String.
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-03-06
+    */
     public String getLastNsName(String sameFront);
+
+    /**
+    * getLastDmschNameNum
+    * <p>获取r_dmsch_name表中某一级别的最高序号</p>
+    * @param searchPart java.lang.String.
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-03-06
+    */
+    public String getLastDmschNameNum(String searchPart);
+
+    /**
+    * addOneDmschName
+    * <p>向r_dmsch_name表中存入新加0级机构的实名以及其在user中的name代号</p>
+    * @param beNamed java.lang.String.
+     * @param nameCode java.lang.String.
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-03-06
+    */
+    public void addOneDmschName(String beNamed, String nameCode);
+
+    /**
+    * getDmschName
+    * <p>根据机构或学校的在user表中的name代号来获取其中文名称</p>
+    * @param nameCode java.lang.String.
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-03-07
+    */
+    public String getDmschName(String nameCode);
 }

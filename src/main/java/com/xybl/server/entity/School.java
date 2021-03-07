@@ -15,6 +15,11 @@ public class School {
     private String tel;
     private String web;
 
+    public School(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public School(String name){
         this.name = name;
     }

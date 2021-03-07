@@ -24,6 +24,16 @@ public interface DepartService {
     public Department getDepartByName(String name);
 
     /**
+    * getDepartById
+    * <p>根据id检索部门</p>
+    * @param id java.lang.String.
+    * @return com.xybl.server.entity.Department
+    * @author liubocai
+    * @create: 2021-03-06
+    */
+    public Department getDepartById(String id);
+
+    /**
     * delDepartById
     * <p>根据部门id删除部门</p>
     * @param id java.lang.String.

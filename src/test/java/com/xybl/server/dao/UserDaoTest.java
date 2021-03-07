@@ -68,4 +68,10 @@ class UserDaoTest {
         String a = userDao.getLastNsName("00000000000");
         System.out.println(a);
     }
+
+    @Test
+    void getDmschName(){
+        String name = userDao.getDmschName("0000000000000");
+        System.out.println(name);
+    }
 }

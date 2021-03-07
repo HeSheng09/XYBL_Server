@@ -104,5 +104,26 @@ public interface UserService {
     * @author liubocai
     * @create: 2021-03-06
     */
-    public String genNsUserName(String authoName, String describe, String level);
+    public String genNsUserName(String authoName, String beNamed);
+
+    /**
+    * addOneDmschName
+    * <p>向r_dmsch_name表中写入一条数据</p>
+    * @param dmschName java.lang.String.
+     * @param userName java.lang.String.
+    * @return int
+    * @author liubocai
+    * @create: 2021-03-06
+    */
+    public int addOneDmschName(String dmschName, String userName);
+
+    /**
+    * getDmschName
+     * * <p>根据机构或学校的在user表中的name代号来获取其中文名称</p>
+    * @param nameCode java.lang.String.
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-03-07
+    */
+    public String getDmschName(String nameCode);
 }

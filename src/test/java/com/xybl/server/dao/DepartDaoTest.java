@@ -29,4 +29,6 @@ public class DepartDaoTest {
         System.out.println(department.toString());
         departDao.addDepartment(department);
     }
+
+
 }
