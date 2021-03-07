@@ -17,6 +17,22 @@ public class Research {
     private String filepath;
     private String app_comment;
     private String re_research;
+    private String au_result;
+    private String au_time;
+
+    public Research() {
+    }
+
+    public Research(String id, String handler) {
+        this.id = id;
+        this.handler = handler;
+    }
+
+    public Research(String id, String handler, String pro_time) {
+        this.id = id;
+        this.handler = handler;
+        this.pro_time = pro_time;
+    }
 
     @Override
     public String toString() {
@@ -30,7 +46,25 @@ public class Research {
                 ", filepath='" + filepath + '\'' +
                 ", app_comment='" + app_comment + '\'' +
                 ", re_research='" + re_research + '\'' +
+                ", au_result='" + au_result + '\'' +
+                ", au_time='" + au_time + '\'' +
                 '}';
+    }
+
+    public String getAu_result() {
+        return au_result;
+    }
+
+    public void setAu_result(String au_result) {
+        this.au_result = au_result;
+    }
+
+    public String getAu_time() {
+        return au_time;
+    }
+
+    public void setAu_time(String au_time) {
+        this.au_time = au_time;
     }
 
     public String getId() {

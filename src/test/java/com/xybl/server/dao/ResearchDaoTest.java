@@ -50,7 +50,7 @@ class ResearchDaoTest {
         research.setPro_time(DatetimeUtil.getAndFormatDatetime());
         researchDao.addOneResearch(research);
         System.out.println("add one(id=\""+id+"\"):" + researchDao.getResearches().size());
-        researchDao.deleteOneResearchById(id);
+//        researchDao.deleteOneResearchById(id);
         System.out.println("delete one:" + researchDao.getResearches().size());
         System.out.println("select * from t_research where t_rh_id=#{id}:"+researchDao.getOneResearchById(id));
     }
@@ -67,7 +67,7 @@ class ResearchDaoTest {
         research.setFilepath("d:/temp/xybl_file_storage/research/001.jpg,d:/temp/xybl_file_storage/research/002.txt");
         research.setApp_comment("five stars");
         research.setRe_research("1614928028481000");
-        researchDao.updateOneResearch(research);
+//        researchDao.updateOneResearch(research);
         System.out.println("after:"+researchDao.getOneResearchById(id));
     }
 

@@ -4,7 +4,6 @@ import com.xybl.server.entity.Appeal;
 import com.xybl.server.service.AppealService;
 import com.xybl.server.service.LogService;
 import com.xybl.server.utils.DatetimeUtil;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,13 +43,16 @@ public class AppealController {
         String al_id = appealService.genAppealId();
         Appeal appeal = new Appeal(al_id, DatetimeUtil.getAndFormatDatetime(), appellant, al_address, al_pos, al_title, al_detail);
         try {
-            // 二次申请，首先更新上一条Appeal的re_appeal.
-            if (!"not_provided".equals(last_al)) {
-                appealService.updateOneAppealById(new Appeal(last_al, appellant, al_id));
-            }
             // 插入新的的Appeal
             appealService.addOneAppeal(appeal, handler);
             logService.addOneLog(appellant, "add one appeal(id=" + al_id + ")", "succeed");
+
+            // 二次申请，更新上一条Appeal的re_appeal.
+            if (!"not_provided".equals(last_al)) {
+                appealService.updateOneAppealById(new Appeal(last_al, appellant, al_id));
+                logService.addOneLog(appellant, "reappeal on appeal(id=" + last_al + ")", "ok");
+            }
+
             return response(200, "ok", appeal);
         } catch (Exception e) {
             e.printStackTrace();

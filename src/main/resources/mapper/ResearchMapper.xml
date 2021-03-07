@@ -12,6 +12,8 @@
         <result column="t_rh_filepath" jdbcType="CLOB" property="filepath"/>
         <result column="t_rh_appcomment" jdbcType="CLOB" property="app_comment"/>
         <result column="t_rh_reresearch" jdbcType="VARCHAR" property="re_research"/>
+        <result column="t_rh_aures" jdbcType="CLOB" property="au_result"/>
+        <result column="t_rh_autime" jdbcType="DATE" property="au_time"/>
     </resultMap>
 
     <!--  public Research getOneResearchById(String id);  -->
@@ -36,30 +38,27 @@
     <!--  public void addOneResearch(Research research);  -->
     <insert id="addOneResearch" parameterType="com.xybl.server.entity.Research">
         <if test="handler != null and handler != '' and id != null and id != ''">
-            INSERT INTO t_research(t_rh_id, t_rh_handler, t_rh_auditor, t_rh_protime, t_rh_result, t_rh_restime,
-            t_rh_filepath, t_rh_appcomment, t_rh_reresearch)
-            VALUES (#{id}, #{handler}, #{auditor}, #{pro_time}, #{result}, #{res_time}, #{filepath}, #{app_comment},
-            #{re_research});
+            INSERT INTO t_research(t_rh_id, t_rh_handler, t_rh_auditor, t_rh_protime, t_rh_result,
+            t_rh_restime,t_rh_filepath, t_rh_appcomment, t_rh_reresearch, t_rh_aures, t_rh_autime)
+            VALUES (#{id}, #{handler}, #{auditor}, #{pro_time}, #{result}, #{res_time}, #{filepath},
+            #{app_comment},#{re_research},#{au_result},#{au_time});
         </if>
     </insert>
 
-    <!--  public void deleteOneResearchById(String id);  -->
-    <delete id="deleteOneResearchById" parameterType="String">
+    <!--  public void deleteOneResearchById(String id,String user_id);  -->
+    <delete id="deleteOneResearchById">
         DELETE
         FROM t_research
-        WHERE t_rh_id = #{id};
+        WHERE t_rh_id = #{id}
+          AND SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}), 1, 10) =
+              SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = t_rh_handler), 1, 10)
+          AND '3' != substring((SELECT t_ns_privilege FROM t_nsuser WHERE t_ns_id = #{user_id}), 1, 1);
     </delete>
 
-    <!--  public void updateOneResearch(Research research);  -->
-    <update id="updateOneResearch" parameterType="com.xybl.server.entity.Research">
+    <!--  public void selfUpdateOneResearch(Research research);  -->
+    <update id="selfUpdateOneResearch" parameterType="com.xybl.server.entity.Research">
         UPDATE t_research
         <set>
-            <if test="handler != null and handler != ''">
-                t_rh_handler=#{handler},
-            </if>
-            <if test="auditor != null and auditor != ''">
-                t_rh_auditor=#{auditor},
-            </if>
             <if test="pro_time != null and pro_time != ''">
                 t_rh_protime=#{pro_time},
             </if>
@@ -72,17 +71,50 @@
             <if test="filepath != null and filepath != ''">
                 t_rh_filepath=#{filepath},
             </if>
-            <if test="app_comment != null and app_comment != ''">
-                t_rh_appcomment=#{app_comment},
-            </if>
             <if test="re_research != null and re_research != ''">
                 t_rh_reresearch=#{re_research}
             </if>
+            <if test="auditor != null and auditor != ''">
+                t_rh_auditor=#{auditor},
+            </if>
+        </set>
+        WHERE t_rh_id=#{id} AND SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{handler}),1,10) =
+        SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = t_rh_handler),1,10)
+    </update>
+
+    <!--  public void superUpdateOneResearch(Research research);  -->
+    <update id="superUpdateOneResearch" parameterType="com.xybl.server.entity.Research">
+        UPDATE t_research
+        <set>
+            <if test="auditor != null and auditor != ''">
+                t_rh_auditor=#{auditor},
+            </if>
+            <if test="au_result != null and au_result != ''">
+                t_rh_aures=#{au_result},
+            </if>
+            <if test="au_time != null and au_time != ''">
+                t_rh_autime=#{au_time},
+            </if>
         </set>
         <where>
-            t_rh_id=#{id};
+            t_rh_id=#{id}
+            AND SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{auditor}),1,10) =
+            SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = t_rh_auditor),1,10)
         </where>
     </update>
+
+    <!--  public void stuUpdateOneResearch(String stu_id, String rh_id, String app_comment);  -->
+    <update id="stuUpdateOneResearch">
+        UPDATE t_research
+        SET t_rh_appcomment=#{app_comment}
+        WHERE t_rh_id = #{rh_id}
+          AND #{stu_id} = (SELECT t_al_appellant
+                            FROM t_appeal
+                            WHERE t_al_id = (SELECT al_id
+                                             FROM r_al_rh
+                                             WHERE rh_id = #{rh_id}))
+    </update>
+
 
     <!--  public Map<String,Object> getLastId();  -->
     <select id="getLastId" resultType="java.util.HashMap">
@@ -92,4 +124,21 @@
         ORDER BY t_id DESC
         LIMIT 1;
     </select>
+
+    <!--  public void addRelAlRh(String rh_id, String al_id);  -->
+    <insert id="addRelAlRh">
+        INSERT INTO r_al_rh(al_id, rh_id) VALUE (#{al_id}, #{rh_id});
+    </insert>
+
+    <!--  public void deleteRelAlRh(String rh_id,String user_id);  -->
+    <delete id="deleteRelAlRh">
+        DELETE
+        FROM r_al_rh
+        WHERE rh_id = #{rh_id}
+          AND SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}), 1, 10) =
+              SUBSTRING((SELECT t_user_name
+                         FROM t_user
+                         WHERE t_user_id = (SELECT t_rh_handler FROM t_research WHERE t_rh_id = #{rh_id})), 1, 10)
+          AND '3' != substring((SELECT t_ns_privilege FROM t_nsuser WHERE t_ns_id = #{user_id}), 1, 1);
+    </delete>
 </mapper>
