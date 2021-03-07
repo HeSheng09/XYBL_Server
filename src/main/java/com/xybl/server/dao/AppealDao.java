@@ -72,6 +72,16 @@ public interface AppealDao {
     public List<Appeal> getAppealsByDmSchId(String dmsch_id);
 
     /**
+    * getAppealsByNsUserId
+    * <p>根据非学生用户的id获取其部门的所有相关Appeal</p>
+    * @param user_id java.lang.String.
+    * @return java.util.List<com.xybl.server.entity.Appeal>
+    * @author hesheng
+    * @create: 2021/3/7
+    */
+    public List<Appeal> getAppealsByNsUserId(String user_id);
+
+    /**
      * getAppeals
      * <p>查询多条Appeal（最多100条）。</p>
      *

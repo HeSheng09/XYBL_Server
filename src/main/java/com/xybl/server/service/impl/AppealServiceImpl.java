@@ -58,8 +58,9 @@ public class AppealServiceImpl implements AppealService {
 
     @Override
     public List<Appeal> getAppealsUnderManagement(String user_id) {
-        String dmsch_id = userDao.getUserById(user_id).getName().substring(0, 10) + "000";
-        return appealDao.getAppealsByDmSchId(dmsch_id);
+//        String dmsch_id = userDao.getUserById(user_id).getName().substring(0, 10) + "000";
+//        return appealDao.getAppealsByDmSchId(dmsch_id);
+        return appealDao.getAppealsByNsUserId(user_id);
     }
 
     @Override

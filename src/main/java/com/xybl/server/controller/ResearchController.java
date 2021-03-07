@@ -49,7 +49,7 @@ public class ResearchController {
 
                     // 是否二次举报。若是，则更新上次举报的re_appeal属性
                     if (!"not_provided".equals(last_rh)) {
-                        Research lastRh = new Research(last_rh, user_id);
+                        Research lastRh=researchService.getOneResearchById(last_rh);
                         lastRh.setRe_research(rh_id);
                         researchService.selfUpdateResearch(lastRh);
                     }
