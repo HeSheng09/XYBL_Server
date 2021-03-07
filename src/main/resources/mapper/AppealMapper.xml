@@ -45,6 +45,16 @@
         WHERE t_al_id in (SELECT al_id FROM r_al_ns WHERE dmsch_id = #{dmsch_id});
     </select>
 
+    <!--  public List<Appeal> getAppealsByNsUserId(String user_id);  -->
+    <select id="getAppealsByNsUserId" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_id in (SELECT al_id
+                          FROM r_al_ns
+                          WHERE SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = r_al_ns.dmsch_id), 1, 10) =
+                                SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}), 1, 10))
+    </select>
+
     <!--  public List<Appeal> getAppeals();  -->
     <select id="getAppeals" resultMap="baseMap">
         SELECT *
