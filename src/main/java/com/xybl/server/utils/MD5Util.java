@@ -122,6 +122,18 @@ public class MD5Util {
         }
         return validation;
     }
+
+    /**
+    * genSixPwd
+    * <p>生成六位数的随机整数密码</p>
+    * @param  .
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-03-07
+    */
+    public static String genSixPwd(){
+        return String.valueOf((int)Math.ceil((Math.random()*9+1)*100000));
+    }
 }
 
 

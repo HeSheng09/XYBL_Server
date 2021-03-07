@@ -103,6 +103,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public NsUser getNsUserById(String id) {
+        return userDao.getNsUserById(id);
+    }
+
+    @Override
     public int delOneUserById(String id) {
         int isDel = 200;
         if(userDao.getUserById(id) != null){
@@ -166,5 +171,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getDmschName(String nameCode) {
         return userDao.getDmschName(nameCode);
+    }
+
+    @Override
+    public String genNsUserPerName(String authoName, String privilege) {
+        String perName = "";
+        String front = authoName.substring(0, 10);
+        perName += front;
+        perName += privilege;
+        //get相同前11位的最新用户编号
+        if(userDao.getLastNsNameNum(perName) == null){
+            perName += "00";
+        }else{
+            int lastP = Integer.parseInt(userDao.getLastNsNameNum(perName));
+            if( (lastP+1) < 10){
+                perName += ("0" + String.valueOf(lastP+1) );
+            }else{
+                perName += String.valueOf(lastP+1);
+            }
+        }
+        return perName;
     }
 }

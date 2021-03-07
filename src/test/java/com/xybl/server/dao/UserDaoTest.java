@@ -1,6 +1,7 @@
 package com.xybl.server.dao;
 
 import com.xybl.server.ServerApplication;
+import com.xybl.server.entity.NsUser;
 import com.xybl.server.entity.Student;
 import com.xybl.server.entity.User;
 import com.xybl.server.utils.MD5Util;
@@ -65,7 +66,7 @@ class UserDaoTest {
 
     @Test
     void testGetLastNsName(){
-        String a = userDao.getLastNsName("00000000000");
+        String a = userDao.getLastNsNameNum("00000000000");
         System.out.println(a);
     }
 
@@ -73,5 +74,11 @@ class UserDaoTest {
     void getDmschName(){
         String name = userDao.getDmschName("0000000000000");
         System.out.println(name);
+    }
+
+    @Test
+    void testGetNsuserById(){
+        NsUser nsUser = userDao.getNsUserById("1615086940718005");
+        System.out.println(nsUser);
     }
 }

@@ -9,6 +9,15 @@
         <result column="t_user_role" jdbcType="TINYINT" property="role"/>
     </resultMap>
 
+    <resultMap id="nsUserMap" type="com.xybl.server.entity.NsUser">
+        <id column="t_ns_id" jdbcType="VARCHAR" property="id"/>
+        <result column="t_user_name" jdbcType="VARCHAR" property="name"/>
+        <result column="t_ns_name" jdbcType="VARCHAR" property="ns_name"/>
+        <result column="t_ns_privilege" jdbcType="VARCHAR" property="privilege"/>
+        <result column="t_ns_tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="t_ns_email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+
     <insert id="addOneUser" parameterType="com.xybl.server.entity.User">
         INSERT INTO t_user(t_user_id, t_user_name, t_user_pwd, t_user_role)
             VALUE (#{id}, #{name}, #{pwd}, #{role});
@@ -62,12 +71,19 @@
         WHERE t_ns_id = #{nsu_id};
     </delete>
 
-    <select id="getLastNsName" parameterType="String" resultType="String">
+    <select id="getLastNsNameNum" parameterType="String" resultType="String">
         SELECT SUBSTRING(t_user_name, 12, 2) as lastP
         FROM t_user
         WHERE SUBSTRING(t_user_name, 1, 11) = #{sameFront}
         ORDER BY lastP DESC
         LIMIT 1;
+    </select>
+
+    <select id="getNsUserById" parameterType="String" resultMap="nsUserMap">
+        select t_nsuser.t_ns_id, t_nsuser.t_ns_name, t_nsuser.t_ns_privilege, t_nsuser.t_ns_tel,
+               t_nsuser.t_ns_email, t_user.t_user_name
+        from t_nsuser inner join t_user on t_nsuser.t_ns_id = t_user.t_user_id
+        where t_ns_id = #{id};
     </select>
 
     <select id="getLastDmschNameNum" parameterType="String" resultType="String">

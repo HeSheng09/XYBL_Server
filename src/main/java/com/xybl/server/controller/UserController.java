@@ -171,4 +171,48 @@ public class UserController {
         //6.返回前端
         return response(200,msg,new User(id,userName,pwd,true));
     }
+
+    @RequestMapping("/personal")
+    Map<String, Object> personal(@RequestParam(name = "authoId")String authoId,
+                                 @RequestParam(name = "privilege")String privilege,
+                                 @RequestParam(name = "ns_name", defaultValue = "null")String ns_name,
+                                 @RequestParam(name = "tel", defaultValue = "null")String tel,
+                                 @RequestParam(name = "email", defaultValue = "null")String email){
+        //0.初始化参数
+        String msg = "";
+        NsUser author = userService.getNsUserById(authoId);
+        String authoName = author.getName();
+        //1.生成user相关参数
+        String id = userService.genId();
+        String pwd = MD5Util.genSixPwd();
+        String enPwd = MD5Util.getEncryptedText(pwd);
+        String nameCode = userService.genNsUserPerName(authoName, privilege);
+        boolean role = true;
+        //2.检查:是否有权限，是否重复
+        if(!"0".equals(authoName.substring(10,11))){
+            msg = "authorizer has no right to authorize personal account";
+            logService.addOneLog(authoId, "generate personal management accout", msg);
+            return response(400, msg);
+        }
+        if(userService.getUserByName(nameCode) != null){
+            msg = "user name has been exsited";
+            logService.addOneLog(authoId, "generate personal management accout", msg);
+            return response(401, msg);
+        }
+        //3.入库
+        NsUser nsUser = new NsUser(id, nameCode);
+        nsUser.setPwd(enPwd);
+        nsUser.setRole(role);
+        nsUser.setNs_name(ns_name);
+        nsUser.setPrivilege(author.getPrivilege().charAt(0) + privilege);
+        nsUser.setTel(tel);
+        nsUser.setEmail(email);
+        userService.addOneNsu(nsUser);
+        //4.添加日志及返回消息
+        msg = "ok";
+        logService.addOneLog(authoId, "generate personal management accout", msg);
+        return response(200, "ok", new User(nameCode, pwd, true));
+    }
+
+
 }

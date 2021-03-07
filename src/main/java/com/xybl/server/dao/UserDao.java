@@ -111,7 +111,17 @@ public interface UserDao {
     * @author liubocai
     * @create: 2021-03-06
     */
-    public String getLastNsName(String sameFront);
+    public String getLastNsNameNum(String sameFront);
+
+    /**
+    * getNsUserById
+    * <p>根据管理员id获取其NsUser账号的信息</p>
+    * @param id java.lang.String.
+    * @return com.xybl.server.entity.NsUser
+    * @author liubocai
+    * @create: 2021-03-07
+    */
+    public NsUser getNsUserById(String id);
 
     /**
     * getLastDmschNameNum

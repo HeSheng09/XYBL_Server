@@ -87,6 +87,16 @@ public interface UserService {
     public int addOneNsu(NsUser nsu);
 
     /**
+    * getNsUserById
+    * <p>根据用户id查询管理员账号的个人信息</p>
+    * @param id java.lang.String.
+    * @return com.xybl.server.entity.NsUser
+    * @author liubocai
+    * @create: 2021-03-07
+    */
+    public NsUser getNsUserById(String id);
+
+    /**
     * delOneUserById
     * <p>根据id删除一个用户(user及stu、ns)。</p>
     * @param id java.lang.String.
@@ -126,4 +136,15 @@ public interface UserService {
     * @create: 2021-03-07
     */
     public String getDmschName(String nameCode);
+
+    /**
+    * genNsUserPerName
+    * <p>机构或学校给自己的用户分配账号，</p>
+    * @param authoName java.lang.String.   授权机构的0级账号的t_user_name
+     * @param privilege java.lang.String.  可选“1”，“2”，“3”
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-03-07
+    */
+    public String genNsUserPerName(String authoName, String privilege);
 }
