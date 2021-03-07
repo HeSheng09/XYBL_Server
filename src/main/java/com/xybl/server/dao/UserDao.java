@@ -44,6 +44,16 @@ public interface UserDao {
     public User getUserById(String uid);
 
     /**
+    * getStuById
+    * <p>确定是学生用户后，根据其id查询该学生详细信息</p>
+    * @param id java.lang.String.
+    * @return com.xybl.server.entity.Student
+    * @author liubocai
+    * @create: 2021-03-07
+    */
+    public Student getStuById(String id);
+
+    /**
     * getUserByName
     * <p>根据用户名查询用户</p>
     * @param name java.lang.String.

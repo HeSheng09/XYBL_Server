@@ -81,4 +81,10 @@ class UserDaoTest {
         NsUser nsUser = userDao.getNsUserById("1615086940718005");
         System.out.println(nsUser);
     }
+
+    @Test
+    void testGetStuById(){
+        Student stu = userDao.getStuById("1615105454044009");
+        System.out.println(stu);
+    }
 }

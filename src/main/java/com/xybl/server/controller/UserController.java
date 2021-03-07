@@ -214,5 +214,20 @@ public class UserController {
         return response(200, "ok", new User(id, nameCode, pwd, true));
     }
 
+    @RequestMapping("/getuser")
+    Map<String, Object> getUser(@RequestParam(name = "requestId")String requestId,
+                                @RequestParam(name = "id")String id){
+        User user = userService.getUserById(id);
+//        if(user.getRole()){
+//            Student ruser = userService.getStuById(id);
+//        }else{
+//            NsUser ruser = userService.getNsUserById(id);
+//        }
+        User ruser = new User();
+        String msg="ok";
+        logService.addOneLog(requestId, "get User("+id+") information" ,msg);
+        return response(200, msg, ruser);
+    };
+
 
 }

@@ -23,6 +23,14 @@ public class Student extends User {
 
     }
 
+    public Student(String id, String name, String stu_name, String tel, String address, String email) {
+        super(id, name, false);
+        this.stu_name = stu_name;
+        this.tel = tel;
+        this.address = address;
+        this.email = email;
+    }
+
     public Student(User user) {
         super(user.getId(), user.getName(), user.getPwd(), user.getRole());
     }
