@@ -33,4 +33,14 @@ public interface SchoolDao {
     * @create: 2021-03-01
     */
     public void delSchoolById(String id);
+
+    /**
+    * getSchoolById
+    * <p>根据学校id获取school对象</p>
+    * @param id java.lang.String.
+    * @return com.xybl.server.entity.School
+    * @author liubocai
+    * @create: 2021-03-08
+    */
+    public School getSchoolById(String id);
 }

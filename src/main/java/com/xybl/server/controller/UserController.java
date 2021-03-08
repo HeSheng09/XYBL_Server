@@ -1,5 +1,6 @@
 package com.xybl.server.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xybl.server.entity.*;
 import com.xybl.server.service.DepartService;
 import com.xybl.server.service.LogService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.lang.invoke.SwitchPoint;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.xybl.server.utils.ResponseUtil.response;
@@ -214,19 +216,41 @@ public class UserController {
         return response(200, "ok", new User(id, nameCode, pwd, true));
     }
 
-    @RequestMapping("/getuser")
+    @RequestMapping("/getuserinfo")
     Map<String, Object> getUser(@RequestParam(name = "requestId")String requestId,
                                 @RequestParam(name = "id")String id){
         User user = userService.getUserById(id);
-//        if(user.getRole()){
-//            Student ruser = userService.getStuById(id);
-//        }else{
-//            NsUser ruser = userService.getNsUserById(id);
-//        }
-        User ruser = new User();
+        User requestUser = userService.getUserById(requestId);
+        if(user == null){
+            String msg = "there is no such user";
+            logService.addOneLog(requestId, "get User("+id+") information", msg);
+            return response(401, msg);
+        }
+        if( id!=requestId && requestUser.getRole()){
+            String msg = "has no right";
+            logService.addOneLog(requestId, "get User("+id+") information", msg);
+            return response(400, msg);
+        }
+        User tempUser = new User();
+        Object tempDmsch = new Object();
+        if(user.getRole()){
+            tempUser = userService.getNsUserById(id);
+            if("000".equals(id.substring(7,10))){
+                tempDmsch = departService.getDepartById(id.substring(0,10)+"000");
+            }else{
+                tempDmsch = schoolService.getSchoolById(id.substring(0,10)+"000");
+            }
+        }else{
+            tempUser = userService.getStuById(id);
+            String tempSchId = userService.getSchIdByStuid(id);
+            tempDmsch = schoolService.getSchoolById(tempSchId);
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("user", tempUser);
+        jsonObject.put("dmsch", tempDmsch);
         String msg="ok";
         logService.addOneLog(requestId, "get User("+id+") information" ,msg);
-        return response(200, msg, ruser);
+        return response(200, msg, jsonObject);
     };
 
 

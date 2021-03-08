@@ -43,4 +43,5 @@ public interface DepartDao {
     */
     public void delDepartById(String id);
 
+
 }

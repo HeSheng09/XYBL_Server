@@ -20,6 +20,15 @@ public class School {
         this.name = name;
     }
 
+    public School(String id, String name, String address, String postcode, String tel, String web) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.postcode = postcode;
+        this.tel = tel;
+        this.web = web;
+    }
+
     public School(String name){
         this.name = name;
     }

@@ -2,10 +2,14 @@ package com.xybl.server.service.impl;
 
 import com.xybl.server.ServerApplication;
 import com.xybl.server.entity.NsUser;
+import com.xybl.server.entity.School;
 import com.xybl.server.entity.Student;
 import com.xybl.server.entity.User;
+import com.xybl.server.service.SchoolService;
 import com.xybl.server.service.UserService;
 import com.xybl.server.utils.MD5Util;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -24,6 +28,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserServiceImplTest {
     @Resource
     private UserService userService;
+    @Resource
+    private SchoolService schoolService;
 
     @Test
     void testAddOneStudent() {
@@ -60,5 +66,20 @@ class UserServiceImplTest {
     void testAddDmschName(){
 
         userService.addOneDmschName("湖南省教育厅","0000");
+    }
+
+    @Test
+    void GetUserInfoById() throws JSONException {
+        String id = "1615105454044009";
+//      User tempUser = new User();
+        Object tempUser = new Object();
+        tempUser = userService.getStuById(id);
+//        String tempSchId = userService.getSchIdByStuid(id);
+//        School tempDmsch = schoolService.getSchoolById(tempSchId);
+//        String data = tempUser.toString() + tempDmsch.toString();
+//        System.out.println(data);
+        System.out.println(tempUser);
+
+
     }
 }

@@ -25,4 +25,8 @@
         FROM t_school
         WHERE t_sch_id=#{id}
     </delete>
+
+    <select id="getSchoolById" parameterType="String" resultMap="baseMap">
+        select * from t_school where t_sch_id=#{id};
+    </select>
 </mapper>

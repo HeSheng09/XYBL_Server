@@ -67,6 +67,16 @@ public interface UserService {
     public User getUserByName(String name);
 
     /**
+    * getStuById
+    * <p>根据学生id获取信息</p>
+    * @param id java.lang.String.
+    * @return com.xybl.server.entity.Student
+    * @author liubocai
+    * @create: 2021-03-08
+    */
+    public Student getStuById(String id);
+
+    /**
     * addOneStu
     * <p>添加一名学生用户。</p>
     * @param stu com.xybl.server.entity.Student.
@@ -157,4 +167,14 @@ public interface UserService {
     * @create: 2021/3/7
     */
     public String getSuperDmId(String ns_id);
+
+    /**
+    * getSchIdByStuid
+    * <p>根据学生id在r_sch_stu表中查询其所在学校的id</p>
+    * @param stu_id java.lang.String.
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-03-08
+    */
+    public String getSchIdByStuid(String stu_id);
 }

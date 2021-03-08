@@ -79,6 +79,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Student getStuById(String id) {
+        return userDao.getStuById(id);
+    }
+
+    @Override
     public User getUserByName(String name) {
         return userDao.getUserByName(name);
     }
@@ -219,5 +224,10 @@ public class UserServiceImpl implements UserService {
                 break;
         }
         return userDao.getUserByName(super_org+"000").getId();
+    }
+
+    @Override
+    public String getSchIdByStuid(String stu_id) {
+        return userDao.getSchIdByStuid(stu_id);
     }
 }

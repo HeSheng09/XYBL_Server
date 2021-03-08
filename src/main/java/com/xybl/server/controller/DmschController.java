@@ -1,7 +1,9 @@
 package com.xybl.server.controller;
 
 import com.xybl.server.entity.School;
+import com.xybl.server.service.DepartService;
 import com.xybl.server.service.SchoolService;
+import com.xybl.server.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,10 +21,16 @@ import static com.xybl.server.utils.ResponseUtil.response;
  * @create 2021-03-01
  **/
 @RestController
-@RequestMapping("/school")
-public class SchoolController {
+@RequestMapping("/dmsch")
+public class DmschController {
     @Resource
     private SchoolService schoolService;
+    @Resource
+    private DepartService departService;
+    @Resource
+    private UserService userService;
+
+
 
     @GetMapping("/add")
     public Map<String, Object> addSchoolTest(){

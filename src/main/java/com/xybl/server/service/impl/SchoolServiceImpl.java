@@ -39,6 +39,11 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
+    public School getSchoolById(String id) {
+        return schoolDao.getSchoolById(id);
+    }
+
+    @Override
     public String delSchoolById(String id) {
         schoolDao.delSchoolById(id);
         return "done";

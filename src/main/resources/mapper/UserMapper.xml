@@ -139,4 +139,8 @@
         from r_dmsch_name
         where name = #{nameCode};
     </select>
+
+    <select id="getSchIdByStuid" parameterType="String" resultType="String">
+        select sch_id from r_sch_stu where stu_id=#{id};
+    </select>
 </mapper>

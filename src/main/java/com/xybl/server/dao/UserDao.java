@@ -163,4 +163,14 @@ public interface UserDao {
     * @create: 2021-03-07
     */
     public String getDmschName(String nameCode);
+
+    /**
+    * getSchIdByStuid
+    * <p>根据学生id在r_sch_stu表中查询其所在学校的id</p>
+    * @param id java.lang.String.
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-03-08
+    */
+    public String getSchIdByStuid(String id);
 }
