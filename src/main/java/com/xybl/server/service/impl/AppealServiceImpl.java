@@ -72,4 +72,14 @@ public class AppealServiceImpl implements AppealService {
     public List<Appeal> getAppealsByUserId(String user_id) {
         return appealDao.getAppealsByUser_id(user_id);
     }
+
+    @Override
+    public List<Appeal> getUnWatchedAppealsByStu_id(String stu_id) {
+        return appealDao.getUnWatchedAppealsByStu_id(stu_id);
+    }
+
+    @Override
+    public List<Appeal> getUnWatchedAppealsByNs_id(String ns_id) {
+        return appealDao.getUnWatchedAppealsByNs_id(ns_id);
+    }
 }

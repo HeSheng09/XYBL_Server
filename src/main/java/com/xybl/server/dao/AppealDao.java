@@ -146,4 +146,24 @@ public interface AppealDao {
     * @create: 2021/3/6
     */
     public List<Appeal> getAppealsByUser_id(String user_id);
+
+    /**
+    * getUnWatchedAppealsByStu_id
+    * <p>根据学生id获取未受理的所有举报。</p>
+    * @param stu_id java.lang.String.
+    * @return java.util.List<com.xybl.server.entity.Appeal>
+    * @author hesheng
+    * @create: 2021/3/8
+    */
+    public List<Appeal> getUnWatchedAppealsByStu_id(String stu_id);
+
+    /**
+    * getUnWatchedAppealsByNs_id
+    * <p>根据非学生用户id获取未受理的所有举报。</p>
+    * @param ns_id java.lang.String.
+    * @return java.util.List<com.xybl.server.entity.Appeal>
+    * @author hesheng
+    * @create: 2021/3/8
+    */
+    public List<Appeal> getUnWatchedAppealsByNs_id(String ns_id);
 }

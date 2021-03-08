@@ -34,9 +34,9 @@ public class ResearchController {
 
     // http://localhost:8080/server/research/addone?user_id=&al_id=&last_rh=
     @RequestMapping("/addone")
-    public Map<String, Object> addOneResearch(@RequestParam("user_id") String user_id,
-                                              @RequestParam("al_id") String al_id,
-                                              @RequestParam(value = "last_rh", defaultValue = "not_provided") String last_rh) {
+    public Map<String, Object> addOneResearch(@RequestParam(name = "user_id") String user_id,
+                                              @RequestParam(name = "al_id") String al_id,
+                                              @RequestParam(name = "last_rh", defaultValue = "not_provided") String last_rh) {
         try {
             NsUser user = userService.getNsUserById(user_id);
             if (Integer.parseInt(user.getPrivilege().substring(1, 2)) < 3) {
@@ -72,8 +72,8 @@ public class ResearchController {
 
     // http://localhost:8080/server/research/deleteone?user_id=&rh_id=
     @RequestMapping("/deleteone")
-    public Map<String, Object> deleteOneResearch(@RequestParam("user_id") String user_id,
-                                                 @RequestParam("rh_id") String rh_id) {
+    public Map<String, Object> deleteOneResearch(@RequestParam(name = "user_id") String user_id,
+                                                 @RequestParam(name = "rh_id") String rh_id) {
         try {
             researchService.deleteOneResearch(rh_id, user_id);
             logService.addOneLog(user_id, "delete one research(id=" + rh_id + ")", "succeed");
@@ -88,9 +88,9 @@ public class ResearchController {
     // 机构提交处理结果
     // http://localhost:8080/server/research/submit_result?user_id=&rh_id=&result=
     @RequestMapping("/submit_result")
-    public Map<String, Object> submitResearchResult(@RequestParam("user_id") String user_id,
-                                                    @RequestParam("rh_id") String rh_id,
-                                                    @RequestParam("result") String result) {
+    public Map<String, Object> submitResearchResult(@RequestParam(name = "user_id") String user_id,
+                                                    @RequestParam(name = "rh_id") String rh_id,
+                                                    @RequestParam(name = "result") String result) {
         Research research = new Research(rh_id, user_id);
         research.setResult(result);
         research.setRes_time(getAndFormatDatetime());
@@ -111,9 +111,9 @@ public class ResearchController {
     // 上级机构审核
     // http://localhost:8080/server/research/super_audit?user_id=&rh_id=&rh_aures=
     @RequestMapping("/super_audit")
-    public Map<String, Object> superAuditResearch(@RequestParam("user_id") String user_id,
-                                                  @RequestParam("rh_id") String rh_id,
-                                                  @RequestParam("rh_aures") String rh_aures) {
+    public Map<String, Object> superAuditResearch(@RequestParam(name = "user_id") String user_id,
+                                                  @RequestParam(name = "rh_id") String rh_id,
+                                                  @RequestParam(name = "rh_aures") String rh_aures) {
         Research research = new Research();
         research.setId(rh_id);
         research.setAuditor(user_id);
@@ -133,9 +133,9 @@ public class ResearchController {
     // 用户提交对于处理的意见
     // http://localhost:8080/server/research/submit_comment?user_id=&rh_id=&app_comment=
     @RequestMapping("/submit_comment")
-    public Map<String, Object> updateOneResearch(@RequestParam("user_id") String user_id,
-                                                 @RequestParam("rh_id") String rh_id,
-                                                 @RequestParam("app_comment") String app_comment) {
+    public Map<String, Object> updateOneResearch(@RequestParam(name = "user_id") String user_id,
+                                                 @RequestParam(name = "rh_id") String rh_id,
+                                                 @RequestParam(name = "app_comment") String app_comment) {
         try {
             researchService.stuUpdateResearch(user_id, rh_id, app_comment);
             logService.addOneLog(user_id, "submit research(id=" + rh_id + ") comment", "succeed");
@@ -149,8 +149,8 @@ public class ResearchController {
 
     // http://localhost:8080/server/research/getone?user_id=&rh_id=
     @RequestMapping("/getone")
-    public Map<String, Object> getOneResearch(@RequestParam("user_id") String user_id,
-                                              @RequestParam("rh_id") String rh_id) {
+    public Map<String, Object> getOneResearch(@RequestParam(name = "user_id") String user_id,
+                                              @RequestParam(name = "rh_id") String rh_id) {
         try {
             Research research = researchService.getOneResearchById(rh_id);
             logService.addOneLog(user_id, "ask for one research(id=" + rh_id + ")", "succeed");

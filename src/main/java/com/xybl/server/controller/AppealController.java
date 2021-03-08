@@ -151,4 +151,30 @@ public class AppealController {
             return response(500, "server error");
         }
     }
+
+    @RequestMapping("/get_unwatched_by_stu_id")
+    public Map<String,Object> getUnwatchedAppealsByUser_id(@RequestParam(name = "user_id")String user_id){
+        try{
+            List<Appeal> appeals=appealService.getUnWatchedAppealsByStu_id(user_id);
+            logService.addOneLog(user_id,"ask for unwatched appeals","succeed");
+            return response(200,"ok",appeals);
+        }catch (Exception e){
+            e.printStackTrace();
+            logService.addOneLog(user_id,"ask for unwatched appeals","failed");
+            return response(500,"server error");
+        }
+    }
+
+    @RequestMapping("/get_unwatched_by_ns")
+    public Map<String,Object> getUnwatchedAppealsByNs_id(@RequestParam(name = "user_id")String user_id){
+        try{
+            List<Appeal> appeals=appealService.getUnWatchedAppealsByNs_id(user_id);
+            logService.addOneLog(user_id,"ask for unwatched appeals","succeed");
+            return response(200,"ok",appeals);
+        }catch (Exception e){
+            e.printStackTrace();
+            logService.addOneLog(user_id,"ask for unwatched appeals","failed");
+            return response(500,"server error");
+        }
+    }
 }

@@ -135,4 +135,23 @@
         FROM t_appeal
         WHERE t_al_appellant = #{user_id};
     </select>
+
+    <!--  public List<Appeal> getUnWatchedAppealsByStu_id(String stu_id);  -->
+    <select id="getUnWatchedAppealsByStu_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_appellant = #{stu_id}
+          AND t_al_id NOT IN (SELECT al_id FROM r_al_rh);
+    </select>
+
+    <!--  public List<Appeal> getUnWatchedAppealsByNs_id(String ns_id);  -->
+    <select id="getUnWatchedAppealsByNs_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_id IN (SELECT r_al_ns.al_id
+                          FROM r_al_ns
+                          WHERE SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = r_al_ns.dmsch_id), 1, 10) =
+                                SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{ns_id}), 1, 10)
+                            AND r_al_ns.al_id NOT IN (SELECT r_al_rh.al_id FROM r_al_rh));
+    </select>
 </mapper>

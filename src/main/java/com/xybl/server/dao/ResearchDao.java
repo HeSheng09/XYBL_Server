@@ -108,4 +108,14 @@ public interface ResearchDao {
      * @create: 2021/3/7
      */
     public void deleteRelAlRh(String rh_id, String user_id);
+
+    /**
+    * getOneResearchByAlId
+    * <p>根据appeal id获取其对应的research详情。</p>
+    * @param al_id java.lang.String.
+    * @return com.xybl.server.entity.Research
+    * @author hesheng
+    * @create: 2021/3/8
+    */
+    public Research getOneResearchByAlId(String al_id);
 }

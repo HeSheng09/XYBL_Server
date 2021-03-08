@@ -109,10 +109,10 @@
         SET t_rh_appcomment=#{app_comment}
         WHERE t_rh_id = #{rh_id}
           AND #{stu_id} = (SELECT t_al_appellant
-                            FROM t_appeal
-                            WHERE t_al_id = (SELECT al_id
-                                             FROM r_al_rh
-                                             WHERE rh_id = #{rh_id}))
+                           FROM t_appeal
+                           WHERE t_al_id = (SELECT al_id
+                                            FROM r_al_rh
+                                            WHERE rh_id = #{rh_id}))
     </update>
 
 
@@ -141,4 +141,11 @@
                          WHERE t_user_id = (SELECT t_rh_handler FROM t_research WHERE t_rh_id = #{rh_id})), 1, 10)
           AND '3' != substring((SELECT t_ns_privilege FROM t_nsuser WHERE t_ns_id = #{user_id}), 1, 1);
     </delete>
+
+    <!--  public Research getOneResearchByAlId(String al_id);  -->
+    <select id="getOneResearchByAlId" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_research
+        WHERE t_rh_id = (SELECT rh_id FROM r_al_rh WHERE al_id = #{al_id});
+    </select>
 </mapper>
