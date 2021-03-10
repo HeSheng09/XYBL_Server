@@ -65,4 +65,9 @@
             t_sch_id = #{id};
         </where>
     </update>
+
+<!--    public void addOneStu(String schId, String stuId);-->
+    <insert id="addOneStu">
+        insert into r_sch_stu(sch_id, stu_id) VALUE (#{schId}, #{stuId});
+    </insert>
 </mapper>

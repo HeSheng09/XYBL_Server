@@ -17,6 +17,14 @@ public class NsUser extends User{
         super(id);
     }
 
+    public NsUser(String id, String ns_name, String privilege, String tel, String email) {
+        super(id);
+        this.ns_name = ns_name;
+        this.privilege = privilege;
+        this.tel = tel;
+        this.email = email;
+    }
+
     public NsUser(String id, String name){
         super(id, name, true);
     }

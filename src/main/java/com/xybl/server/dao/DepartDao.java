@@ -85,4 +85,26 @@ public interface DepartDao {
     * @create: 2021-03-10
     */
     public void updateDmsch(String nameCode, String newName);
+
+    /**
+    * addOneNs
+    * <p>在r_ns_dmsch表中添加一条记录</p>
+    * @param dmschid java.lang.String.
+ * @param nsUid java.lang.String.
+    * @return void
+    * @author liubocai
+    * @create: 2021-03-10
+    */
+    public void addOneNs(String dmschid, String nsUid);
+
+    /**
+    * addOneSch
+    * <p>在关系表r_dm_sch表中添加一条记录</p>
+    * @param departid java.lang.String.
+     * @param schid java.lang.String.
+    * @return void
+    * @author liubocai
+    * @create: 2021-03-10
+    */
+    public void addOneSch(String departid, String schid);
 }

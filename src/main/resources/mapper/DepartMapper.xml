@@ -70,4 +70,14 @@
             name = #{nameCode};
         </where>
     </update>
+
+<!--    public void addOneNs(String dmschid, String nsUid);-->
+    <insert id="addOneNs">
+        insert into r_ns_dmsch(ns_id, dmsch_id) VALUE (#{nsUid}, #{dmschid})
+    </insert>
+
+<!--    public void addOneSch(String departid, String schid);-->
+    <insert id="addOneSch">
+        insert into r_dm_sch(dm_id, sch_id) VALUE (#{departid}, #{schid})
+    </insert>
 </mapper>

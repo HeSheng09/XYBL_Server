@@ -11,7 +11,6 @@
 
     <resultMap id="nsUserMap" type="com.xybl.server.entity.NsUser">
         <id column="t_ns_id" jdbcType="VARCHAR" property="id"/>
-        <result column="t_user_name" jdbcType="VARCHAR" property="name"/>
         <result column="t_ns_name" jdbcType="VARCHAR" property="ns_name"/>
         <result column="t_ns_privilege" jdbcType="VARCHAR" property="privilege"/>
         <result column="t_ns_tel" jdbcType="VARCHAR" property="tel"/>
@@ -88,9 +87,8 @@
     </select>
 
     <select id="getNsUserById" parameterType="String" resultMap="nsUserMap">
-        select t_nsuser.t_ns_id, t_nsuser.t_ns_name, t_nsuser.t_ns_privilege, t_nsuser.t_ns_tel,
-               t_nsuser.t_ns_email, t_user.t_user_name
-        from t_nsuser inner join t_user on t_nsuser.t_ns_id = t_user.t_user_id
+        select *
+        from t_nsuser
         where t_ns_id = #{id};
     </select>
 

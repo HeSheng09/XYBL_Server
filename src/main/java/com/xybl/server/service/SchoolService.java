@@ -74,4 +74,15 @@ public interface SchoolService {
      * @create: 2021-03-10
      */
     public void updateSchool(School New);
+
+    /**
+     * addOneStu
+     * <p>在学生，学校关系表中添加一名学生</p>
+     * @param schId java.lang.String.
+     * @param stuId java.lang.String.
+     * @return void
+     * @author liubocai
+     * @create: 2021-03-10
+     */
+    public void addOneStu(String schId, String stuId);
 }

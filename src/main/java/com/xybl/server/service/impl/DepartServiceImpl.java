@@ -70,4 +70,14 @@ public class DepartServiceImpl implements DepartService {
     public void updateDmsch(String nameCode, String newName) {
         departDao.updateDmsch(nameCode, newName);
     }
+
+    @Override
+    public void addOneNs(String dmschid, String nsUid) {
+        departDao.addOneNs(dmschid, nsUid);
+    }
+
+    @Override
+    public void addOneSch(String departid, String schid) {
+        departDao.addOneSch(departid, schid);
+    }
 }

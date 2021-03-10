@@ -64,4 +64,9 @@ public class SchoolServiceImpl implements SchoolService {
     public void updateSchool(School New) {
         schoolDao.updateSchool(New);
     }
+
+    @Override
+    public void addOneStu(String schId, String stuId) {
+        schoolDao.addOneStu(schId, stuId);
+    }
 }

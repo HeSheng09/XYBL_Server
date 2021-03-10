@@ -70,9 +70,12 @@ public class UserController {
     public Map<String, Object> register(@RequestParam(name = "name")String name,
                                         @RequestParam(name = "pwd")String pwd,
                                         @RequestParam(name = "stu_name")String stu_name,
+                                        @RequestParam(name = "schoolId")String schId,
                                         @RequestParam(name = "email", defaultValue = "null")String email,
                                         @RequestParam(name = "tel", defaultValue = "null")String tel,
                                         @RequestParam(name = "address", defaultValue = "null")String address){
+
+
         //1.生成id，以当前时间戳
         String id= userService.genId();
         //2.封装成user
@@ -84,6 +87,11 @@ public class UserController {
         stu.setStu_name(stu_name);
         //3.入库
         int isAdd = userService.addOneStu(stu);
+        try{
+            schoolService.addOneStu(schId, id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         //4.返回消息
         String msg;
         switch (isAdd){
@@ -105,6 +113,8 @@ public class UserController {
                                   @RequestParam(name = "web", defaultValue = "null")String web,
                                   @RequestParam(name = "address", defaultValue = "null")String address,
                                   @RequestParam(name = "postcode", defaultValue = "null")String postcode){
+        //
+
         //0.返回消息
         String msg = "";
         //0.获取授权者信息
@@ -160,6 +170,7 @@ public class UserController {
             school.setTel(tel);
             school.setAddress(address);
             schoolService.addSchool(school);
+            departService.addOneSch(autho_name, userName);
         }else{//判断授权者为县级以上机构，则入t_department库
             Department department = new Department(userName, beNamed);
             department.setAddress(address);
@@ -182,8 +193,9 @@ public class UserController {
                                  @RequestParam(name = "email", defaultValue = "null")String email){
         //0.初始化参数
         String msg = "";
-        NsUser author = userService.getNsUserById(authoId);
-        String authoName = author.getName();
+        User uAuthor = userService.getUserById(authoId);
+        NsUser nsuAuthor = userService.getNsUserById(authoId);
+        String authoName = uAuthor.getName();
         //1.生成user相关参数
         String id = userService.genId();
         String pwd = MD5Util.genSixPwd();
@@ -206,10 +218,12 @@ public class UserController {
         nsUser.setPwd(enPwd);
         nsUser.setRole(role);
         nsUser.setNs_name(ns_name);
-        nsUser.setPrivilege(author.getPrivilege().charAt(0) + privilege);
+        nsUser.setPrivilege(nsuAuthor.getPrivilege().charAt(0) + privilege);
         nsUser.setTel(tel);
         nsUser.setEmail(email);
         userService.addOneNsu(nsUser);
+        //入关系库
+        departService.addOneNs(authoName, id);
         //4.添加日志及返回消息
         msg = "ok";
         logService.addOneLog(authoId, "generate personal management accout", msg);
