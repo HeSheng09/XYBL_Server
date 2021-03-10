@@ -41,7 +41,7 @@ public interface AppealDao {
      * <p>向r_al_ns表中插入一条关系。</p>
      *
      * @param al_id    java.lang.String.
-     * @param smsch_id java.lang.String.
+     * @param dmsch_id java.lang.String.
      * @return void
      * @author hesheng
      * @create: 2021/3/6
@@ -79,7 +79,7 @@ public interface AppealDao {
     * @author hesheng
     * @create: 2021/3/7
     */
-    public List<Appeal> getAppealsByNsUserId(String user_id);
+    public List<Appeal> getAppealsByNsUserId(String user_id,boolean is_first);
 
     /**
      * getAppeals
@@ -155,7 +155,7 @@ public interface AppealDao {
     * @author hesheng
     * @create: 2021/3/8
     */
-    public List<Appeal> getUnWatchedAppealsByStu_id(String stu_id);
+    public List<Appeal> getUnWatchedAppealsByStu_id(String stu_id,boolean is_first);
 
     /**
     * getUnWatchedAppealsByNs_id
@@ -165,7 +165,7 @@ public interface AppealDao {
     * @author hesheng
     * @create: 2021/3/8
     */
-    public List<Appeal> getUnWatchedAppealsByNs_id(String ns_id);
+    public List<Appeal> getUnWatchedAppealsByNs_id(String ns_id,boolean is_first);
 
     /**
     * getWatchedAppealsByStu_id
@@ -175,7 +175,7 @@ public interface AppealDao {
     * @author hesheng
     * @create: 2021/3/10
     */
-    List<Appeal> getWatchedAppealsByStu_id(String user_id);
+    List<Appeal> getWatchedAppealsByStu_id(String user_id,boolean is_first);
 
     /**
     * getNoResultAppealsByStu_id
@@ -185,7 +185,7 @@ public interface AppealDao {
     * @author hesheng
     * @create: 2021/3/10
     */
-    List<Appeal> getNoResultAppealsByStu_id(String user_id);
+    List<Appeal> getNoResultAppealsByStu_id(String user_id,boolean is_first);
 
     /**
     * getHasResultAppealsByStu_id
@@ -195,7 +195,7 @@ public interface AppealDao {
     * @author hesheng
     * @create: 2021/3/10
     */
-    List<Appeal> getHasResultAppealsByStu_id(String user_id);
+    List<Appeal> getHasResultAppealsByStu_id(String user_id,boolean is_first);
 
     /**
     * getRe_appealedAppealsByStu_id
@@ -205,7 +205,7 @@ public interface AppealDao {
     * @author hesheng
     * @create: 2021/3/10
     */
-    List<Appeal> getRe_appealedAppealsByStu_id(String user_id);
+    List<Appeal> getRe_appealedAppealsByStu_id(String user_id,boolean is_first);
 
     /**
     * getWatchedAppealsByNs_id
@@ -215,7 +215,7 @@ public interface AppealDao {
     * @author hesheng
     * @create: 2021/3/10
     */
-    List<Appeal> getWatchedAppealsByNs_id(String user_id);
+    List<Appeal> getWatchedAppealsByNs_id(String user_id,boolean is_first);
 
     /**
     * getNoResultAppealsByNs_id
@@ -225,7 +225,7 @@ public interface AppealDao {
     * @author hesheng
     * @create: 2021/3/10
     */
-    List<Appeal> getNoResultAppealsByNs_id(String user_id);
+    List<Appeal> getNoResultAppealsByNs_id(String user_id,boolean is_first);
 
     /**
     * getHasResultAppealsByNs_id
@@ -235,7 +235,7 @@ public interface AppealDao {
     * @author hesheng
     * @create: 2021/3/10
     */
-    List<Appeal> getHasResultAppealsByNs_id(String user_id);
+    List<Appeal> getHasResultAppealsByNs_id(String user_id,boolean is_first);
 
     /**
     * searchForAppealsByKeywords
@@ -246,5 +246,19 @@ public interface AppealDao {
     * @author hesheng
     * @create: 2021/3/10
     */
-    List<Appeal> searchForAppealsByKeywords(String user_id, String keys);
+    List<Appeal> searchForAppealsByKeywords(String user_id, String keys,boolean is_first);
+
+    Appeal getAppealByRh_id(String rh_id);
+
+    List<Appeal> getAppealsWaitForAuditing(String user_id,boolean is_first);
+
+    List<Appeal> getAppealsHasAudited(String user_id,boolean is_first);
+
+    List<Appeal> getAppealsWaitForComment(String user_id,boolean is_first);
+
+    List<Appeal> getAppealsHasCommented(String user_id,boolean is_first);
+
+    List<Appeal> getFirstAppealsByStu_id(String user_id);
+
+    List<Appeal> getFirstAppealByNs_id(String user_id);
 }

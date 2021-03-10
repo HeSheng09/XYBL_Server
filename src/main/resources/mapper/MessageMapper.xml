@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xybl.server.dao.MessageDao">
+    <resultMap id="baseMap" type="com.xybl.server.entity.Message">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="user_id" jdbcType="VARCHAR" property="user_id"/>
+        <result column="msg" jdbcType="CLOB" property="msg"/>
+        <result column="flag" jdbcType="TINYINT" property="flag"/>
+    </resultMap>
+    <select id="getLastId" resultType="java.util.Map">
+        SELECT SUBSTRING(id, 14, 3) as last_id, SUBSTRING(id, 1, 13) as t_id
+        FROM t_msg
+        WHERE SUBSTRING(id, 1, 10) > UNIX_TIMESTAMP(CAST(SYSDATE() AS DATE))
+        ORDER BY t_id DESC
+        LIMIT 1;
+    </select>
+
+    <insert id="addOneMessage" parameterType="com.xybl.server.entity.Message">
+        INSERT INTO t_msg(id, user_id, msg, flag) VALUE (#{id}, #{user_id}, #{msg}, #{flag});
+    </insert>
+
+    <select id="getUnseenMessageByUser_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_msg
+        WHERE user_id = #{user_id}
+          AND flag = FALSE;
+    </select>
+
+    <select id="getAllMessagesByUser_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_msg
+        WHERE user_id = #{user_id};
+    </select>
+
+    <update id="updateOneMessage" parameterType="com.xybl.server.entity.Message">
+        UPDATE t_msg
+        <set>
+            <if test="user_id != null and user_id != ''">
+                user_id=#{user_id},
+            </if>
+            <if test="msg != null and msg != ''">
+                msg=#{msg},
+            </if>
+            <if test="flag != null and flag != ''">
+                flag=#{flag},
+            </if>
+        </set>
+        <where>
+            id=#{id};
+        </where>
+    </update>
+</mapper>

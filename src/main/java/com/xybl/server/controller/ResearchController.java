@@ -1,10 +1,9 @@
 package com.xybl.server.controller;
 
+import com.xybl.server.entity.Appeal;
 import com.xybl.server.entity.NsUser;
 import com.xybl.server.entity.Research;
-import com.xybl.server.service.LogService;
-import com.xybl.server.service.ResearchService;
-import com.xybl.server.service.UserService;
+import com.xybl.server.service.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +30,10 @@ public class ResearchController {
     private LogService logService;
     @Resource
     private UserService userService;
+    @Resource
+    private MessageService messageService;
+    @Resource
+    private AppealService appealService;
 
     // http://localhost:8080/server/research/addone?user_id=&al_id=&last_rh=
     @RequestMapping("/addone")
@@ -44,10 +47,12 @@ public class ResearchController {
                 String rh_id = researchService.genResearchId();
                 Research research = new Research(rh_id, user_id, getAndFormatDatetime());
                 if (researchService.addOneResearch(research, al_id)) {
+
+                    messageService.sendMessage(appealService.getOneAppealById(al_id).getAppellant(), "Your appeal(id="+al_id+") has been accepted!");
                     // 插入成功
                     logService.addOneLog(user_id, "add one research(id=(" + rh_id + ")", "succeed");
 
-                    // 是否二次举报。若是，则更新上次举报的re_appeal属性
+                    // 是否二次处理。若是，则更新上次举报的re_research属性
                     if (!"not_provided".equals(last_rh)) {
                         Research lastRh=researchService.getOneResearchById(last_rh);
                         lastRh.setRe_research(rh_id);
@@ -96,9 +101,18 @@ public class ResearchController {
         research.setRes_time(getAndFormatDatetime());
         try {
             // 提交完结果之后，需要将此research提交给上级部门审核。故需要update rh_auditor字段
-            research.setAuditor(userService.getSuperDmId(user_id));
+            String super_id=userService.getSuperDmId(user_id);
+            research.setAuditor(super_id);
 
             researchService.selfUpdateResearch(research);
+
+            // 通知学生已经提交调查结果
+            Appeal appeal=appealService.getAppealByRh_id(rh_id);
+            messageService.sendMessage(appeal.getAppellant(),"The organization has submitted research result on your appeal(id="+appeal.getId()+")!");
+
+            // 通知上级部门进行审核
+            messageService.sendMessage(super_id,"A new research on appeal(id="+appeal.getId()+") need to be examined.");
+
             logService.addOneLog(user_id, "submit research(id=" + rh_id + ") result", "succeed");
             return response(200, "ok");
         } catch (Exception e) {
@@ -121,6 +135,14 @@ public class ResearchController {
         research.setAu_time(getAndFormatDatetime());
         try {
             researchService.superUpdateResearch(research);
+
+            // 通知处理部门已经审核
+            String handler=researchService.getOneResearchById(rh_id).getHandler();
+            Appeal appeal=appealService.getAppealByRh_id(rh_id);
+            messageService.sendMessage(handler,"The research on appeal(id-"+appeal.getId()+") has been examined!");
+            // 通知用户已经审核结束
+            messageService.sendMessage(appeal.getAppellant(), "Your appeal(id="+appeal.getId()+") has been examined.");
+
             logService.addOneLog(user_id, "examine research(id=" + rh_id + ")", "succeed");
             return response(200, "ok");
         } catch (Exception e) {
@@ -138,6 +160,13 @@ public class ResearchController {
                                                  @RequestParam(name = "app_comment") String app_comment) {
         try {
             researchService.stuUpdateResearch(user_id, rh_id, app_comment);
+
+            Research research=researchService.getOneResearchById(rh_id);
+            Appeal appeal=appealService.getAppealByRh_id(rh_id);
+            // 通知管理和审核部门用户意见
+            messageService.sendMessage(research.getHandler(), "The student has submitted comment on your research about appeal(id="+appeal.getAppellant()+").");
+            messageService.sendMessage(research.getAuditor(),"The student has submitted comment on your research about appeal(id="+appeal.getAppellant()+").");
+
             logService.addOneLog(user_id, "submit research(id=" + rh_id + ") comment", "succeed");
             return response(200, "ok");
         } catch (Exception e) {

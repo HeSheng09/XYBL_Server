@@ -3,6 +3,7 @@ package com.xybl.server.controller;
 import com.xybl.server.entity.Appeal;
 import com.xybl.server.service.AppealService;
 import com.xybl.server.service.LogService;
+import com.xybl.server.service.MessageService;
 import com.xybl.server.utils.DatetimeUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,8 @@ public class AppealController {
     private AppealService appealService;
     @Resource
     private LogService logService;
+    @Resource
+    private MessageService messageService;
 
     /**
      * addOneAppeal
@@ -60,6 +63,9 @@ public class AppealController {
         try {
             // 插入新的的Appeal
             appealService.addOneAppeal(appeal, handler);
+            // 向handler发送提示信息
+            messageService.sendMessage(handler,"A student has submitted a new appeal(id="+al_id+").");
+            // 计入日志
             logService.addOneLog(appellant, "add one appeal(id=" + al_id + ")", "succeed");
 
             // 二次申请，更新上一条Appeal的re_appeal.
@@ -184,9 +190,10 @@ public class AppealController {
      */
     // http://localhost:8080/server/appeal/getbyuserid?user_id=
     @RequestMapping("/get_bs")
-    public Map<String, Object> getAppealsByUser_id(@RequestParam(name = "user_id") String user_id) {
+    public Map<String, Object> getAppealsByUser_id(@RequestParam(name = "user_id") String user_id,
+                                                   @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.getAppealsByUserId(user_id);
+            List<Appeal> appeals = appealService.getAppealsByUserId(user_id, is_first!=0);
             logService.addOneLog(user_id, "ask for user's all appeals", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
@@ -206,9 +213,10 @@ public class AppealController {
      * @create: 2021/3/10
      */
     @RequestMapping("/get_unwatched_bs")
-    public Map<String, Object> getUnwatchedAppealsByUser_id(@RequestParam(name = "user_id") String user_id) {
+    public Map<String, Object> getUnwatchedAppealsByUser_id(@RequestParam(name = "user_id") String user_id,
+                                                            @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.getUnWatchedAppealsByStu_id(user_id);
+            List<Appeal> appeals = appealService.getUnWatchedAppealsByStu_id(user_id,is_first!=0);
             logService.addOneLog(user_id, "ask for unwatched appeals", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
@@ -228,9 +236,10 @@ public class AppealController {
      * @create: 2021/3/10
      */
     @RequestMapping("/get_watched_bs")
-    public Map<String, Object> getWatchedAppealsByStu_id(@RequestParam(name = "user_id") String user_id) {
+    public Map<String, Object> getWatchedAppealsByStu_id(@RequestParam(name = "user_id") String user_id,
+                                                         @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.getWatchedAppealsByStu_id(user_id);
+            List<Appeal> appeals = appealService.getWatchedAppealsByStu_id(user_id,is_first!=0);
             logService.addOneLog(user_id, "ask for watched appeals", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
@@ -250,9 +259,10 @@ public class AppealController {
      * @create: 2021/3/10
      */
     @RequestMapping("/get_noresult_bs")
-    public Map<String, Object> getNoResultAppealsByStu_id(@RequestParam(name = "user_id") String user_id) {
+    public Map<String, Object> getNoResultAppealsByStu_id(@RequestParam(name = "user_id") String user_id,
+                                                          @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.getNoResultAppealsByStu_id(user_id);
+            List<Appeal> appeals = appealService.getNoResultAppealsByStu_id(user_id,is_first!=0);
             logService.addOneLog(user_id, "ask for no result appeals", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
@@ -272,9 +282,10 @@ public class AppealController {
      * @create: 2021/3/10
      */
     @RequestMapping("/get_hasresult_bs")
-    public Map<String, Object> getHasResultAppealsByStu_id(@RequestParam(name = "user_id") String user_id) {
+    public Map<String, Object> getHasResultAppealsByStu_id(@RequestParam(name = "user_id") String user_id,
+                                                           @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.getHasResultAppealsByStu_id(user_id);
+            List<Appeal> appeals = appealService.getHasResultAppealsByStu_id(user_id,is_first!=0);
             logService.addOneLog(user_id, "ask for has result appeals", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
@@ -294,9 +305,10 @@ public class AppealController {
      * @create: 2021/3/10
      */
     @RequestMapping("/get_real")
-    public Map<String, Object> getRe_appealedAppealsByStu_id(@RequestParam(name = "user_id") String user_id) {
+    public Map<String, Object> getRe_appealedAppealsByStu_id(@RequestParam(name = "user_id") String user_id,
+                                                             @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.getRe_appealedAppealsByStu_id(user_id);
+            List<Appeal> appeals = appealService.getRe_appealedAppealsByStu_id(user_id,is_first!=0);
             logService.addOneLog(user_id, "ask for re_appealed appeals", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
@@ -317,9 +329,10 @@ public class AppealController {
      */
     // http://localhost:8080/server/appeal/undermanage?user_id=
     @RequestMapping("/undermanage")
-    public Map<String, Object> getAppealsUnderManagement(@RequestParam(name = "user_id") String user_id) {
+    public Map<String, Object> getAppealsUnderManagement(@RequestParam(name = "user_id") String user_id,
+                                                         @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.getAppealsUnderManagement(user_id);
+            List<Appeal> appeals = appealService.getAppealsUnderManagement(user_id,is_first!=0);
             logService.addOneLog(user_id, "ask for appeals under management", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
@@ -339,9 +352,10 @@ public class AppealController {
      * @create: 2021/3/10
      */
     @RequestMapping("/get_unwatched_ns")
-    public Map<String, Object> getUnwatchedAppealsByNs_id(@RequestParam(name = "user_id") String user_id) {
+    public Map<String, Object> getUnwatchedAppealsByNs_id(@RequestParam(name = "user_id") String user_id,
+                                                          @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.getUnWatchedAppealsByNs_id(user_id);
+            List<Appeal> appeals = appealService.getUnWatchedAppealsByNs_id(user_id,is_first!=0);
             logService.addOneLog(user_id, "ask for unwatched appeals", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
@@ -361,9 +375,10 @@ public class AppealController {
      * @create: 2021/3/10
      */
     @RequestMapping("/get_watched_ns")
-    public Map<String, Object> getWatchedAppealsByNs_id(@RequestParam(name = "user_id") String user_id) {
+    public Map<String, Object> getWatchedAppealsByNs_id(@RequestParam(name = "user_id") String user_id,
+                                                        @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.getWatchedAppealsByNs_id(user_id);
+            List<Appeal> appeals = appealService.getWatchedAppealsByNs_id(user_id,is_first!=0);
             logService.addOneLog(user_id, "ask for watched appeals", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
@@ -383,9 +398,10 @@ public class AppealController {
      * @create: 2021/3/10
      */
     @RequestMapping("/get_noresult_ns")
-    public Map<String, Object> getNoResultAppealsByNs_id(@RequestParam(name = "user_id") String user_id) {
+    public Map<String, Object> getNoResultAppealsByNs_id(@RequestParam(name = "user_id") String user_id,
+                                                         @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.getNoResultAppealsByNs_id(user_id);
+            List<Appeal> appeals = appealService.getNoResultAppealsByNs_id(user_id,is_first!=0);
             logService.addOneLog(user_id, "ask for no result appeals", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
@@ -405,9 +421,10 @@ public class AppealController {
      * @create: 2021/3/10
      */
     @RequestMapping("/get_hasresult_ns")
-    public Map<String, Object> getHasResultAppealsByNs_id(@RequestParam(name = "user_id") String user_id) {
+    public Map<String, Object> getHasResultAppealsByNs_id(@RequestParam(name = "user_id") String user_id,
+                                                          @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.getHasResultAppealsByNs_id(user_id);
+            List<Appeal> appeals = appealService.getHasResultAppealsByNs_id(user_id,is_first!=0);
             logService.addOneLog(user_id, "ask for has result appeals", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
@@ -428,14 +445,87 @@ public class AppealController {
     */
     @RequestMapping("/search_al")
     public Map<String, Object> searchForAppealsByKeywords(@RequestParam(name = "user_id") String user_id,
-                                                          @RequestParam(name = "keys") String keys) {
+                                                          @RequestParam(name = "keys") String keys,
+                                                          @RequestParam(name = "is_first",defaultValue = "0")int is_first) {
         try {
-            List<Appeal> appeals = appealService.searchForAppealsByKeywords(user_id,keys);
+            List<Appeal> appeals = appealService.searchForAppealsByKeywords(user_id,keys,is_first!=0);
             logService.addOneLog(user_id, "search for appeals by keywords", "succeed");
             return response(200, "ok", appeals);
         } catch (Exception e) {
             e.printStackTrace();
             logService.addOneLog(user_id, "search for appeals by keywords", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+    * getAppealsWaitForAuditing
+    * <p>获取待审核的举报。</p>
+    * @param user_id java.lang.String.
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    * @author hesheng
+    * @create: 2021/3/10
+    */
+    @RequestMapping("/wait_audit")
+    public Map<String,Object> getAppealsWaitForAuditing(@RequestParam(name = "user_id")String user_id,
+                                                        @RequestParam(name = "is_first",defaultValue = "0")int is_first){
+        try {
+            List<Appeal> appeals = appealService.getAppealsWaitForAuditing(user_id,is_first!=0);
+            logService.addOneLog(user_id, "get appeals waiting for auditing", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "get appeals waiting for auditing", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+    * getAppealsHasAudited
+    * <p>获取已经审核过的举报。</p>
+    * @param user_id java.lang.String.
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    * @author hesheng
+    * @create: 2021/3/10
+    */
+    @RequestMapping("/get_audited")
+    public Map<String,Object> getAppealsHasAudited(@RequestParam(name = "user_id")String user_id,
+                                                   @RequestParam(name = "is_first",defaultValue = "0")int is_first){
+        try {
+            List<Appeal> appeals = appealService.getAppealsHasAudited(user_id,is_first!=0);
+            logService.addOneLog(user_id, "get appeals that already been audited", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "get appeals that already been audited", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    @RequestMapping("/wait_comment")
+    public Map<String,Object> getAppealsWaitForComment(@RequestParam(name = "user_id")String user_id,
+                                                       @RequestParam(name = "is_first",defaultValue = "0")int is_first){
+        try {
+            List<Appeal> appeals = appealService.getAppealsWaitForComment(user_id,is_first!=0);
+            logService.addOneLog(user_id, "get appeals that already been audited", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "get appeals that already been audited", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    @RequestMapping("/get_commented")
+    public Map<String,Object> getAppealsHasCommented(@RequestParam(name = "user_id")String user_id,
+                                                     @RequestParam(name = "is_first",defaultValue = "0")int is_first){
+        try {
+            List<Appeal> appeals = appealService.getAppealsHasCommented(user_id,is_first!=0);
+            logService.addOneLog(user_id, "get appeals that already been audited", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "get appeals that already been audited", "failed");
             return response(500, "server error");
         }
     }

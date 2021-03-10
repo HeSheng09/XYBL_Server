@@ -56,7 +56,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/6
      */
-    public List<Appeal> getAppealsUnderManagement(String user_id);
+    public List<Appeal> getAppealsUnderManagement(String user_id,boolean is_first);
 
     /**
      * deleteOneAppealById
@@ -90,7 +90,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/6
      */
-    public List<Appeal> getAppealsByUserId(String user_id);
+    public List<Appeal> getAppealsByUserId(String user_id,boolean is_first);
 
     /**
      * getUnWatchedAppealsByStu_id
@@ -101,7 +101,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/8
      */
-    public List<Appeal> getUnWatchedAppealsByStu_id(String stu_id);
+    public List<Appeal> getUnWatchedAppealsByStu_id(String stu_id,boolean is_first);
 
     /**
      * getUnWatchedAppealsByNs_id
@@ -112,7 +112,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/8
      */
-    public List<Appeal> getUnWatchedAppealsByNs_id(String ns_id);
+    public List<Appeal> getUnWatchedAppealsByNs_id(String ns_id,boolean is_first);
 
     /**
      * getWatchedAppealsByStu_id
@@ -123,7 +123,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/10
      */
-    List<Appeal> getWatchedAppealsByStu_id(String user_id);
+    public List<Appeal> getWatchedAppealsByStu_id(String user_id,boolean is_first);
 
     /**
      * getNoResultAppealsByStu_id
@@ -134,7 +134,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/10
      */
-    List<Appeal> getNoResultAppealsByStu_id(String user_id);
+    public List<Appeal> getNoResultAppealsByStu_id(String user_id,boolean is_first);
 
     /**
      * getHasResultAppealsByStu_id
@@ -145,7 +145,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/10
      */
-    List<Appeal> getHasResultAppealsByStu_id(String user_id);
+    public List<Appeal> getHasResultAppealsByStu_id(String user_id,boolean is_first);
 
     /**
      * getRe_appealedAppealsByStu_id
@@ -156,7 +156,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/10
      */
-    List<Appeal> getRe_appealedAppealsByStu_id(String user_id);
+    public List<Appeal> getRe_appealedAppealsByStu_id(String user_id,boolean is_first);
 
     /**
      * getWatchedAppealsByNs_id
@@ -167,7 +167,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/10
      */
-    List<Appeal> getWatchedAppealsByNs_id(String user_id);
+    public List<Appeal> getWatchedAppealsByNs_id(String user_id,boolean is_first);
 
     /**
      * getNoResultAppealsByNs_id
@@ -178,7 +178,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/10
      */
-    List<Appeal> getNoResultAppealsByNs_id(String user_id);
+    public List<Appeal> getNoResultAppealsByNs_id(String user_id,boolean is_first);
 
     /**
      * getHasResultAppealsByNs_id
@@ -189,7 +189,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/10
      */
-    List<Appeal> getHasResultAppealsByNs_id(String user_id);
+    public List<Appeal> getHasResultAppealsByNs_id(String user_id,boolean is_first);
 
     /**
      * searchForAppealsByKeywords
@@ -201,5 +201,19 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/10
      */
-    List<Appeal> searchForAppealsByKeywords(String user_id, String keys);
+    public List<Appeal> searchForAppealsByKeywords(String user_id, String keys,boolean is_first);
+
+    public Appeal getAppealByRh_id(String rh_id);
+
+    List<Appeal> getAppealsWaitForAuditing(String user_id,boolean is_first);
+
+    List<Appeal> getAppealsHasAudited(String user_id,boolean is_first);
+
+    List<Appeal> getAppealsWaitForComment(String user_id,boolean is_first);
+
+    List<Appeal> getAppealsHasCommented(String user_id,boolean is_first);
+
+    List<Appeal> getFirstAppealsByStu_id(String user_id);
+
+    List<Appeal> getFirstAppealsByNs_id(String user_id);
 }

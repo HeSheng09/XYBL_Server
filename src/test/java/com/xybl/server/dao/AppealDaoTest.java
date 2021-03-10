@@ -42,64 +42,8 @@ class AppealDaoTest {
     }
 
     @Test
-    void getWatchedAppealsByStu_id() {
-        List<Appeal> appeals=appealDao.getWatchedAppealsByStu_id(stu_id);
-        for(Appeal appeal:appeals){
-            System.out.println(appeal);
-        }
-    }
-
-    @Test
-    void getNoResultAppealsByStu_id() {
-        List<Appeal> appeals=appealDao.getNoResultAppealsByStu_id(stu_id);
-        for(Appeal appeal:appeals){
-            System.out.println(appeal);
-        }
-    }
-
-    @Test
-    void getHasResultAppealsByStu_id() {
-        List<Appeal> appeals=appealDao.getHasResultAppealsByStu_id(stu_id);
-        for(Appeal appeal:appeals){
-            System.out.println(appeal);
-        }
-    }
-
-    @Test
-    void getRe_appealedAppealsByStu_id() {
-        List<Appeal> appeals=appealDao.getRe_appealedAppealsByStu_id(stu_id);
-        for(Appeal appeal:appeals){
-            System.out.println(appeal);
-        }
-    }
-
-    @Test
-    void getWatchedAppealsByNs_id() {
-        List<Appeal> appeals=appealDao.getWatchedAppealsByNs_id(whu_id);
-        for(Appeal appeal:appeals){
-            System.out.println(appeal);
-        }
-    }
-
-    @Test
-    void getNoResultAppealsByNs_id() {
-        List<Appeal> appeals=appealDao.getNoResultAppealsByNs_id(whu_id);
-        for(Appeal appeal:appeals){
-            System.out.println(appeal);
-        }
-    }
-
-    @Test
-    void getHasResultAppealsByNs_id() {
-        List<Appeal> appeals=appealDao.getHasResultAppealsByNs_id(whu_id);
-        for(Appeal appeal:appeals){
-            System.out.println(appeal);
-        }
-    }
-
-    @Test
-    void searchForAppealsByKeywords() {
-        List<Appeal> appeals=appealDao.searchForAppealsByKeywords(whu_id,"武汉大学");
+    void getUnWatchedAppealsByStu_id() {
+        List<Appeal> appeals=appealDao.getUnWatchedAppealsByStu_id(stu_id,true);
         for(Appeal appeal:appeals){
             System.out.println(appeal);
         }
