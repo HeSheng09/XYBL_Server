@@ -59,4 +59,9 @@ public class SchoolServiceImpl implements SchoolService {
     public List<String> getAllStu(String sch_id) {
         return schoolDao.getAllStu(sch_id);
     }
+
+    @Override
+    public void updateSchool(School New) {
+        schoolDao.updateSchool(New);
+    }
 }

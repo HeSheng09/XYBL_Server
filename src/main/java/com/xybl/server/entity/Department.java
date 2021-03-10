@@ -14,8 +14,8 @@ public class Department {
     private String web;
     private String level;
 
-    public Department(String name){
-        this.name = name;
+    public Department(String id){
+        this.id = id;
     }
 
     public Department(String id, String name) {

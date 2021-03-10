@@ -65,4 +65,14 @@ public interface SchoolDao {
     * @create: 2021-03-10
     */
     public List<String> getAllStu(String sch_id);
+
+    /**
+    * updateSchool
+    * <p>根据学校id修改其基本信息</p>
+    * @param New com.xybl.server.entity.School.
+    * @return void
+    * @author liubocai
+    * @create: 2021-03-10
+    */
+    public void updateSchool(School New);
 }

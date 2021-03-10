@@ -60,4 +60,14 @@ public class DepartServiceImpl implements DepartService {
     public List<String> getAllNsUser(String id) {
         return departDao.getAllNsUser(id);
     }
+
+    @Override
+    public void updateDepart(Department New) {
+        departDao.updateDepart(New);
+    }
+
+    @Override
+    public void updateDmsch(String nameCode, String newName) {
+        departDao.updateDmsch(nameCode, newName);
+    }
 }

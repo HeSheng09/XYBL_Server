@@ -64,4 +64,25 @@ public interface DepartService {
      * @create: 2021-03-10
      */
     public List<String> getAllNsUser(String id);
+
+    /**
+     * updateDepart
+     * <p>根据部门id修改其个人信息</p>
+     * @param New com.xybl.server.entity.Department.
+     * @return void
+     * @author liubocai
+     * @create: 2021-03-10
+     */
+    public void updateDepart(Department New);
+
+    /**
+     * updateDmsch
+     * <p>根据部门id修改其在r_dmsch_name中的中文名称</p>
+     * @param nameCode java.lang.String.
+     * @param newName java.lang.String.
+     * @return void
+     * @author liubocai
+     * @create: 2021-03-10
+     */
+    public void updateDmsch(String nameCode, String newName);
 }
