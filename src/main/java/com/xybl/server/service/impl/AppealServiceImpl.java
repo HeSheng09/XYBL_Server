@@ -58,8 +58,6 @@ public class AppealServiceImpl implements AppealService {
 
     @Override
     public List<Appeal> getAppealsUnderManagement(String user_id) {
-//        String dmsch_id = userDao.getUserById(user_id).getName().substring(0, 10) + "000";
-//        return appealDao.getAppealsByDmSchId(dmsch_id);
         return appealDao.getAppealsByNsUserId(user_id);
     }
 
@@ -81,5 +79,45 @@ public class AppealServiceImpl implements AppealService {
     @Override
     public List<Appeal> getUnWatchedAppealsByNs_id(String ns_id) {
         return appealDao.getUnWatchedAppealsByNs_id(ns_id);
+    }
+
+    @Override
+    public List<Appeal> getWatchedAppealsByStu_id(String user_id) {
+        return appealDao.getWatchedAppealsByStu_id(user_id);
+    }
+
+    @Override
+    public List<Appeal> getNoResultAppealsByStu_id(String user_id) {
+        return appealDao.getNoResultAppealsByStu_id(user_id);
+    }
+
+    @Override
+    public List<Appeal> getHasResultAppealsByStu_id(String user_id) {
+        return appealDao.getHasResultAppealsByStu_id(user_id);
+    }
+
+    @Override
+    public List<Appeal> getRe_appealedAppealsByStu_id(String user_id) {
+        return appealDao.getRe_appealedAppealsByStu_id(user_id);
+    }
+
+    @Override
+    public List<Appeal> getWatchedAppealsByNs_id(String user_id) {
+        return appealDao.getWatchedAppealsByNs_id(user_id);
+    }
+
+    @Override
+    public List<Appeal> getNoResultAppealsByNs_id(String user_id) {
+        return appealDao.getNoResultAppealsByNs_id(user_id);
+    }
+
+    @Override
+    public List<Appeal> getHasResultAppealsByNs_id(String user_id) {
+        return appealDao.getHasResultAppealsByNs_id(user_id);
+    }
+
+    @Override
+    public List<Appeal> searchForAppealsByKeywords(String user_id, String keys) {
+        return appealDao.searchForAppealsByKeywords(user_id,keys);
     }
 }
