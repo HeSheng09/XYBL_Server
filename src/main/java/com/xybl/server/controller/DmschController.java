@@ -52,6 +52,35 @@ public class DmschController {
         return response(200, "ok", departments);
     }
 
+    @RequestMapping("/getalluser")
+    public Map<String, Object> getAllStu(@RequestParam(name="id")String id,
+                                         @RequestParam(name="role")String role)
+    {
+        User user = userService.getUserById(id);
+        if("false".equals(role)){
+            try{
+                List<String> stus =  schoolService.getAllStu(user.getName());
+                logService.addOneLog(id, "user(id="+id+")get all students' id", "succeed");
+                return response(200, "ok", stus);
+            }catch (Exception e){
+                e.printStackTrace();
+                logService.addOneLog(id, "user(id="+id+")get all students' id", "failed");
+                return response(400, "failed");
+            }
+        }else{
+            try{
+                List<String> nsUser =  departService.getAllNsUser(user.getName());
+                logService.addOneLog(id, "user(id="+id+")get all nsUsers' id", "succeed");
+                return response(200, "ok", nsUser);
+            }catch (Exception e){
+                e.printStackTrace();
+                logService.addOneLog(id, "user(id="+id+")get all nsUsers' id", "failed");
+                return response(400, "failed");
+            }
+        }
+    }
+
+
 
 
     @GetMapping("/add")

@@ -31,4 +31,10 @@ class SchoolDaoTest {
         List<School> schools = schoolDao.getAllSchool();
         System.out.println(schools);
     }
+
+    @Test
+    void getAllStu(){
+        List<String> stus = schoolDao.getAllStu("0101001001000");
+        System.out.println(stus);
+    }
 }

@@ -30,5 +30,8 @@ public class DepartDaoTest {
         departDao.addDepartment(department);
     }
 
-
+    @Test
+    void getAllNsUser(){
+        System.out.println(departDao.getAllNsUser("0101001000000"));
+    }
 }

@@ -33,4 +33,10 @@
     <select id="getAllDepart" resultMap="departMap">
         select * from t_department;
     </select>
+
+    <select id="getAllNsUser" parameterType="String" resultType="String">
+        select ns_id
+        from r_ns_dmsch
+        where dmsch_id=#{id};
+    </select>
 </mapper>

@@ -54,4 +54,14 @@ public interface DepartDao {
     * @create: 2021-03-08
     */
     public List<Department> getAllDepart();
+
+    /**
+    * getAllNsUser
+    * <p>根据部门nameCode获取其管理员id所有</p>
+    * @param id java.lang.String.
+    * @return java.util.List<java.lang.String>
+    * @author liubocai
+    * @create: 2021-03-10
+    */
+    public List<String> getAllNsUser(String id);
 }

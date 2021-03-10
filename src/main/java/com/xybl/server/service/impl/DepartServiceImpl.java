@@ -55,4 +55,9 @@ public class DepartServiceImpl implements DepartService {
     public List<Department> getAllDepart() {
         return departDao.getAllDepart();
     }
+
+    @Override
+    public List<String> getAllNsUser(String id) {
+        return departDao.getAllNsUser(id);
+    }
 }
