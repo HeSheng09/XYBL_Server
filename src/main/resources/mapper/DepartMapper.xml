@@ -39,4 +39,45 @@
         from r_ns_dmsch
         where dmsch_id=#{id};
     </select>
+
+    <update id="updateDepart" parameterType="com.xybl.server.entity.Department">
+        update t_department
+        <set>
+            <if test="name != null and name != ''">
+                t_dm_name = #{name},
+            </if>
+            <if test="address != null and address != ''">
+                t_dm_address = #{address},
+            </if>
+            <if test="web != null and web != ''">
+                t_dm_web = #{web}
+            </if>
+        </set>
+        <where>
+            t_dm_id = #{id};
+        </where>
+    </update>
+
+<!--    public void updateDmsch(String nameCode, String newName);-->
+    <update id="updateDmsch">
+        update r_dmsch_name
+        <set>
+            <if test="newName != null and newName != ''">
+                dmsch = #{newName},
+            </if>
+        </set>
+        <where>
+            name = #{nameCode};
+        </where>
+    </update>
+
+<!--    public void addOneNs(String dmschid, String nsUid);-->
+    <insert id="addOneNs">
+        insert into r_ns_dmsch(ns_id, dmsch_id) VALUE (#{nsUid}, #{dmschid})
+    </insert>
+
+<!--    public void addOneSch(String departid, String schid);-->
+    <insert id="addOneSch">
+        insert into r_dm_sch(dm_id, sch_id) VALUE (#{departid}, #{schid})
+    </insert>
 </mapper>

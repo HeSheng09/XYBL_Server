@@ -34,4 +34,14 @@ public class DepartDaoTest {
     void getAllNsUser(){
         System.out.println(departDao.getAllNsUser("0101001000000"));
     }
+
+    @Test
+    void update(){
+        Department department = new Department("0101001000000");
+        department.setAddress("武汉市洪山区");
+        department.setName("武汉市洪山区教育分局");
+
+        departDao.updateDepart(department);
+        departDao.updateDmsch("0101001000000", "武汉市洪山区教育分局");
+    }
 }

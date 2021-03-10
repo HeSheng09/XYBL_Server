@@ -41,4 +41,33 @@
         from r_sch_stu
         where sch_id=#{sch_id};
     </select>
+
+    <update id="updateSchool" parameterType="com.xybl.server.entity.School">
+        update t_school
+        <set>
+            <if test="name != null and name != ''">
+                t_sch_name = #{name},
+            </if>
+            <if test="address != null and address != ''">
+                t_sch_address = #{address},
+            </if>
+            <if test="postcode != null and postcode != ''">
+                t_sch_postcode = #{postcode},
+            </if>
+            <if test="tel != null and tel != ''">
+                t_sch_tel = #{tel},
+            </if>
+            <if test="web != null and web != ''">
+                t_sch_web = #{web}
+            </if>
+        </set>
+        <where>
+            t_sch_id = #{id};
+        </where>
+    </update>
+
+<!--    public void addOneStu(String schId, String stuId);-->
+    <insert id="addOneStu">
+        insert into r_sch_stu(sch_id, stu_id) VALUE (#{schId}, #{stuId});
+    </insert>
 </mapper>
