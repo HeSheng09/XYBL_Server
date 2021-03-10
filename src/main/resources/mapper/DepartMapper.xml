@@ -28,4 +28,9 @@
     <select id="getDepartById" parameterType="String" resultMap="departMap">
         SELECT * FROM t_department WHERE t_dm_id = #{id};
     </select>
+
+<!--    public List<Department> getAllDepart();-->
+    <select id="getAllDepart" resultMap="departMap">
+        select * from t_department;
+    </select>
 </mapper>

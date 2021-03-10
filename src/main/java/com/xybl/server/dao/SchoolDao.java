@@ -2,6 +2,8 @@ package com.xybl.server.dao;
 
 import com.xybl.server.entity.School;
 
+import java.util.List;
+
 public interface SchoolDao {
 
     /**
@@ -43,4 +45,14 @@ public interface SchoolDao {
     * @create: 2021-03-08
     */
     public School getSchoolById(String id);
+
+    /**
+    * getAllSchool
+    * <p>获取所有学校</p>
+    * @param  .
+    * @return java.util.List<com.xybl.server.entity.School>
+    * @author liubocai
+    * @create: 2021-03-08
+    */
+    public List<School> getAllSchool();
 }

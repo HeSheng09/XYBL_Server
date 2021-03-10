@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * SchoolDaoTest
@@ -23,5 +24,11 @@ class SchoolDaoTest {
     void getSchById(){
         School school = schoolDao.getSchoolById("0101001001000");
         System.out.println(school);
+    }
+
+    @Test
+    void getAllSch(){
+        List<School> schools = schoolDao.getAllSchool();
+        System.out.println(schools);
     }
 }

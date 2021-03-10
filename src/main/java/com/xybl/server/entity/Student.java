@@ -22,6 +22,7 @@ public class Student extends User {
     public Student() {
 
     }
+    public Student(String id){super(id);}
 
     public Student(String id, String name, String stu_name, String tel, String address, String email) {
         super(id, name, false);

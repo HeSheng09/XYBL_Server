@@ -143,4 +143,61 @@
     <select id="getSchIdByStuid" parameterType="String" resultType="String">
         select sch_id from r_sch_stu where stu_id=#{id};
     </select>
+
+    <update id="updateStu" parameterType="com.xybl.server.entity.Student">
+        update t_student
+        <set>
+            <if test="stu_name != null and stu_name != ''">
+                t_stu_name = #{stu_name},
+            </if>
+            <if test="tel != null and tel != ''">
+                t_stu_tel = #{tel},
+            </if>
+            <if test="address != null and address != ''">
+                t_stu_address = #{address},
+            </if>
+            <if test="email != null and email != ''">
+                t_stu_email = #{email}
+            </if>
+        </set>
+        <where>
+            t_stu_id = #{id};
+        </where>
+    </update>
+
+    <update id="updateNs" parameterType="com.xybl.server.entity.NsUser">
+        update t_nsuser
+        <set>
+            <if test="ns_name != null and ns_name != ''">
+                t_ns_name = #{ns_name},
+            </if>
+            <if test="tel != null and tel != ''">
+                t_ns_tel = #{tel},
+            </if>
+            <if test="privilege != null and privilege != ''">
+                t_ns_privilege = #{privilege},
+            </if>
+            <if test="email != null and email != ''">
+                t_ns_email = #{email}
+            </if>
+        </set>
+        <where>
+            t_ns_id = #{id};
+        </where>
+    </update>
+
+    <update id="updateUser" parameterType="com.xybl.server.entity.User">
+        update t_user
+        <set>
+            <if test="name != null and name !=''">
+                t_user_name = #{name},
+            </if>
+            <if test="pwd != null and pwd != ''">
+                t_user_pwd = #{pwd}
+            </if>
+        </set>
+        <where>
+            t_user_id =#{id};
+        </where>
+    </update>
 </mapper>

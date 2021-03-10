@@ -254,4 +254,75 @@ public class UserController {
     };
 
 
+    @RequestMapping("/update")
+    public Map<String, Object> updateUserInfo(@RequestParam(name = "id")String id,
+                                              @RequestParam(name = "pwd", defaultValue = "not_provided")String pwd,
+                                              @RequestParam(name = "name", defaultValue = "not_provided")String name,
+                                              @RequestParam(name = "uName", defaultValue = "not_provided")String uName,
+                                              @RequestParam(name = "tel", defaultValue = "not_provided")String tel,
+                                              @RequestParam(name = "address", defaultValue = "not_provided")String address,
+                                              @RequestParam(name = "email", defaultValue = "not_provided")String email)
+    {//0.更新user表
+        User user = userService.getUserById(id);
+        if(!"not_provided".equals(name)){
+            if(userService.getUserByName(name) != null){
+                logService.addOneLog(id, "(id="+id+")try to update", "name has been used");
+                return response(400, "name has been used");
+            }
+            user.setName(name);
+        }
+        if(!"not_provided".equals(pwd)){
+            String enPwd = MD5Util.getEncryptedText(pwd);
+            user.setPwd(enPwd);
+        }
+        userService.updateUser(user);
+
+    //1.判斷是学生用户修改
+        if(!user.getRole()){
+            Student stu = new Student(id);
+            if(!"not_provided".equals(uName)){
+                stu.setStu_name(uName);
+            }
+            if(!"not_provided".equals(tel)){
+                stu.setTel(tel);
+            }
+            if(!"not_provided".equals(address)){
+                stu.setAddress(address);
+            }
+            if(!"not_provided".equals(email)){
+                stu.setEmail(email);
+            }
+            try{
+                userService.updateStu(stu);
+                logService.addOneLog(id, "user(id="+id+") update self info", "succeed");
+                return response(200, "ok");
+            }catch (Exception e){
+                e.printStackTrace();
+                logService.addOneLog(id, "user(id="+id+") update self info", "failed");
+                return response(400, "update failed");
+            }
+    //2.判斷管理员用户修改
+        }else{
+            NsUser nsUser = new NsUser(id);
+            if(!"not_provided".equals(uName)){
+                nsUser.setNs_name(uName);
+            }
+            if(!"not_provided".equals(email)){
+                nsUser.setEmail(email);
+            }
+            if(!"not_provided".equals(tel)){
+                nsUser.setTel(tel);
+            }
+            try{
+                userService.updateNs(nsUser);
+                logService.addOneLog(id, "user(id="+id+") update self info", "succeed");
+                return response(200, "ok");
+            }catch (Exception e) {
+                e.printStackTrace();
+                logService.addOneLog(id, "user(id=" + id + ") update self info", "failed");
+                return response(400, "update failed");
+            }
+        }
+    };
+
 }

@@ -173,4 +173,34 @@ public interface UserDao {
     * @create: 2021-03-08
     */
     public String getSchIdByStuid(String id);
+
+    /**
+    * updateStuByid
+    * <p>更新学生个人信息</p>
+    * @param New com.xybl.server.entity.Student.
+    * @return void
+    * @author liubocai
+    * @create: 2021-03-10
+    */
+    public void updateStu(Student New);
+
+    /**
+    * updateNsByid
+    * <p>更新管理员信息</p>
+    * @param New com.xybl.server.entity.NsUser.
+    * @return void
+    * @author liubocai
+    * @create: 2021-03-10
+    */
+    public void updateNs(NsUser New);
+
+    /**
+    * updateUser
+    * <p>更新User表用户名或密码</p>
+    * @param New com.xybl.server.entity.User.
+    * @return void
+    * @author liubocai
+    * @create: 2021-03-10
+    */
+    public void updateUser(User New);
 }

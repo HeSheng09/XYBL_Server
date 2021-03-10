@@ -29,4 +29,10 @@
     <select id="getSchoolById" parameterType="String" resultMap="baseMap">
         select * from t_school where t_sch_id=#{id};
     </select>
+
+<!--    public List<School> getAllSchool();-->
+    <select id="getAllSchool" resultMap="baseMap">
+        select *
+        from t_school
+    </select>
 </mapper>

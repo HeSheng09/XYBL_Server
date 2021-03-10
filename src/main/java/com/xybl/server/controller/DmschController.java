@@ -1,14 +1,19 @@
 package com.xybl.server.controller;
 
+import com.xybl.server.entity.Department;
 import com.xybl.server.entity.School;
+import com.xybl.server.entity.User;
 import com.xybl.server.service.DepartService;
+import com.xybl.server.service.LogService;
 import com.xybl.server.service.SchoolService;
 import com.xybl.server.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 import static com.xybl.server.utils.ResponseUtil.response;
@@ -29,6 +34,23 @@ public class DmschController {
     private DepartService departService;
     @Resource
     private UserService userService;
+    @Resource
+    private LogService logService;
+
+
+    @RequestMapping("/getallsch")
+    public Map<String, Object> getAllSchool(@RequestParam(name="user_id")String user_id){
+        List<School> schools = schoolService.getAllSch();
+        logService.addOneLog(user_id, "get all schools info","ok");
+        return response(200, "ok", schools);
+    }
+
+    @RequestMapping("/getallde")
+    public Map<String, Object> getAllDepartment(@RequestParam(name="user_id")String user_id){
+        List<Department> departments = departService.getAllDepart();
+        logService.addOneLog(user_id, "get all departments info","ok");
+        return response(200, "ok", departments);
+    }
 
 
 

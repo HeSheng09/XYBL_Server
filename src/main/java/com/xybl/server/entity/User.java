@@ -7,6 +7,10 @@ package com.xybl.server.entity;
  * @create 2021/2/2
  **/
 public class User {
+    public User(String id) {
+        this.id = id;
+    }
+
     public User(String id, String name, boolean role) {
         this.id = id;
         this.name = name;

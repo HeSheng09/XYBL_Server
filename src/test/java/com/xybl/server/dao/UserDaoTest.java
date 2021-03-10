@@ -93,4 +93,13 @@ class UserDaoTest {
         String sId = userDao.getSchIdByStuid("1615105454044009");
         System.out.println(sId);
     }
+
+    @Test
+    void updateStu(){
+        Student stu = new Student("1615105454044009");
+        stu.setAddress("学生宿舍C4");
+        stu.setEmail("2018302130193@whu.edu.cn");
+        stu.setStu_name("liubocai");
+        userDao.updateStu(stu);
+    }
 }

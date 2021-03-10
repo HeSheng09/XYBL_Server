@@ -2,6 +2,8 @@ package com.xybl.server.dao;
 
 import com.xybl.server.entity.Department;
 
+import java.util.List;
+
 public interface DepartDao {
     /**
     * addDepartment
@@ -43,5 +45,13 @@ public interface DepartDao {
     */
     public void delDepartById(String id);
 
-
+    /**
+    * getAllDepart
+    * <p>获取所有部门详细信息</p>
+    * @param  .
+    * @return java.util.List<com.xybl.server.entity.Department>
+    * @author liubocai
+    * @create: 2021-03-08
+    */
+    public List<Department> getAllDepart();
 }

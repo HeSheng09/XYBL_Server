@@ -6,6 +6,7 @@ import com.xybl.server.service.SchoolService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * SchoolServiceImpl
@@ -47,5 +48,10 @@ public class SchoolServiceImpl implements SchoolService {
     public String delSchoolById(String id) {
         schoolDao.delSchoolById(id);
         return "done";
+    }
+
+    @Override
+    public List<School> getAllSch() {
+        return schoolDao.getAllSchool();
     }
 }

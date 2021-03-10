@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int addOneStu(Student stu) {
         int isAdd = 200;
-        if (userDao.getUserById(stu.getId()) != null) {
+        if (userDao.getUserByName(stu.getName()) != null) {
             isAdd = 401;//用户已存在
         } else {
             try{
@@ -229,5 +229,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getSchIdByStuid(String stu_id) {
         return userDao.getSchIdByStuid(stu_id);
+    }
+
+    @Override
+    public void updateStu(Student New) {
+        userDao.updateStu(New);
+    }
+
+    @Override
+    public void updateNs(NsUser New) {
+        userDao.updateNs(New);
+    }
+
+    @Override
+    public void updateUser(User New) {
+        userDao.updateUser(New);
     }
 }

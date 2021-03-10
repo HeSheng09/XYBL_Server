@@ -6,6 +6,7 @@ import com.xybl.server.service.DepartService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * DepartServiceImpl
@@ -50,4 +51,8 @@ public class DepartServiceImpl implements DepartService {
         }
     }
 
+    @Override
+    public List<Department> getAllDepart() {
+        return departDao.getAllDepart();
+    }
 }

@@ -2,6 +2,8 @@ package com.xybl.server.service;
 
 import com.xybl.server.entity.School;
 
+import java.util.List;
+
 public interface SchoolService {
     /**
     * addSchool
@@ -43,5 +45,13 @@ public interface SchoolService {
     */
     public String delSchoolById(String id);
 
-
+    /**
+    * getAllSch
+    * <p>获取所有的学校</p>
+    * @param  .
+    * @return java.util.List<com.xybl.server.entity.School>
+    * @author liubocai
+    * @create: 2021-03-08
+    */
+    public List<School> getAllSch();
 }
