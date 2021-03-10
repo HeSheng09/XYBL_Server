@@ -84,4 +84,14 @@ public interface ResearchService {
     * @create: 2021/3/7
     */
     public Research getOneResearchById(String rh_id);
+
+    /**
+    * getOneResearchByAl_id
+    * <p>按appeal id查询其对应的research。</p>
+    * @param al_id java.lang.String.
+    * @return com.xybl.server.entity.Research
+    * @author hesheng
+    * @create: 2021/3/10
+    */
+    Research getOneResearchByAl_id(String al_id);
 }

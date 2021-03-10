@@ -83,4 +83,9 @@ public class ResearchServiceImpl implements ResearchService {
     public Research getOneResearchById(String rh_id) {
         return researchDao.getOneResearchById(rh_id);
     }
+
+    @Override
+    public Research getOneResearchByAl_id(String al_id) {
+        return researchDao.getOneResearchByAlId(al_id);
+    }
 }

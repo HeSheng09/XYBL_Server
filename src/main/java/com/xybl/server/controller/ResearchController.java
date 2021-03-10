@@ -161,4 +161,18 @@ public class ResearchController {
             return response(500, "server error");
         }
     }
+
+    @RequestMapping("/get_by_al_id")
+    public Map<String,Object> getOneResearchByAl_id(@RequestParam(name = "user_id")String user_id,
+                                                    @RequestParam(name = "al_id")String al_id){
+        try {
+            Research research = researchService.getOneResearchByAl_id(al_id);
+            logService.addOneLog(user_id, "ask for one research by al_id(="+al_id+")", "succeed");
+            return response(200, "ok", research);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "ask for one research by al_id(="+al_id+")", "failed");
+            return response(500, "server error");
+        }
+    }
 }
