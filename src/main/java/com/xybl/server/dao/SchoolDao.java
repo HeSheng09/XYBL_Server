@@ -55,4 +55,14 @@ public interface SchoolDao {
     * @create: 2021-03-08
     */
     public List<School> getAllSchool();
+
+    /**
+    * getAllStu
+    * <p>根据学校id获取其所有学生id</p>
+    * @param sch_id java.lang.String.
+    * @return java.util.List<java.lang.String>
+    * @author liubocai
+    * @create: 2021-03-10
+    */
+    public List<String> getAllStu(String sch_id);
 }

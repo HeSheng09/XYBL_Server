@@ -54,4 +54,9 @@ public class SchoolServiceImpl implements SchoolService {
     public List<School> getAllSch() {
         return schoolDao.getAllSchool();
     }
+
+    @Override
+    public List<String> getAllStu(String sch_id) {
+        return schoolDao.getAllStu(sch_id);
+    }
 }

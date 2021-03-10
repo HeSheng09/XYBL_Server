@@ -35,4 +35,10 @@
         select *
         from t_school
     </select>
+
+    <select id="getAllStu" parameterType="String" resultType="String">
+        select stu_id
+        from r_sch_stu
+        where sch_id=#{sch_id};
+    </select>
 </mapper>
