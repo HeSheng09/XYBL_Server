@@ -30,6 +30,21 @@ public class AppealController {
     @Resource
     private LogService logService;
 
+    /**
+     * addOneAppeal
+     * <p>学生提交一条Appeal。</p>
+     *
+     * @param appellant  java.lang.String.
+     * @param al_address java.lang.String.
+     * @param al_pos     java.lang.String.
+     * @param al_title   java.lang.String.
+     * @param al_detail  java.lang.String.
+     * @param handler    java.lang.String.
+     * @param last_al    java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
     // http://localhost:8080/server/appeal/addone?user_id=&al_address=&al_pos=&al_title=&al_detail=&handler=
     @RequestMapping("/addone")
     public Map<String, Object> addOneAppeal(@RequestParam(name = "user_id") String appellant,
@@ -62,35 +77,16 @@ public class AppealController {
         }
     }
 
-    // http://localhost:8080/server/appeal/getbyid?al_id=&user_id=
-    @RequestMapping("/getbyid")
-    public Map<String, Object> getOneAppealById(@RequestParam(name = "al_id") String al_id,
-                                                @RequestParam(name = "user_id") String user_id) {
-        try {
-            Appeal appeal = appealService.getOneAppealById(al_id);
-            logService.addOneLog(user_id, "ask for an apeal(id=" + al_id + ")", "succeed");
-            return response(200, "ok", appeal);
-        } catch (Exception e) {
-            e.printStackTrace();
-            logService.addOneLog(user_id, "ask for an apeal(id=" + al_id + ")", "failed");
-            return response(500, "server error");
-        }
-    }
-
-    // http://localhost:8080/server/appeal/undermanage?user_id=
-    @RequestMapping("/undermanage")
-    public Map<String, Object> getAppealsUnderManagement(@RequestParam(name = "user_id") String user_id) {
-        try {
-            List<Appeal> appeals = appealService.getAppealsUnderManagement(user_id);
-            logService.addOneLog(user_id, "ask for appeals under management", "succeed");
-            return response(200, "ok", appeals);
-        } catch (Exception e) {
-            e.printStackTrace();
-            logService.addOneLog(user_id, "ask for appeals under management", "failed");
-            return response(500, "server error");
-        }
-    }
-
+    /**
+     * deleteOneAppealById
+     * <p>学生删除一条举报</p>
+     *
+     * @param user_id java.lang.String.
+     * @param al_id   java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
     // http://localhost:8080/server/appeal/deletebyid?al_id=&user_id=
     @RequestMapping("/deletebyid")
     public Map<String, Object> deleteOneAppealById(@RequestParam(name = "user_id") String user_id,
@@ -106,6 +102,20 @@ public class AppealController {
         }
     }
 
+    /**
+     * updateOneAppealById
+     * <p>学生更新指定appeal的部分信息</p>
+     *
+     * @param user_id    java.lang.String.
+     * @param al_id      java.lang.String.
+     * @param al_address java.lang.String.
+     * @param al_pos     java.lang.String.
+     * @param al_title   java.lang.String.
+     * @param al_detail  java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
     // http://localhost:8080/server/appeal/updatebyid?user_id=&al_id=&al_address=&al_pos=&al_title=&al_detail=&
     @RequestMapping("/updatebyid")
     public Map<String, Object> updateOneAppealById(@RequestParam(name = "user_id") String user_id,
@@ -138,8 +148,42 @@ public class AppealController {
         }
     }
 
+    /**
+     * getOneAppealById
+     * <p>用户根据Appeal id查询appeal详情。</p>
+     *
+     * @param al_id   java.lang.String.
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
+    // http://localhost:8080/server/appeal/getbyid?al_id=&user_id=
+    @RequestMapping("/getbyid")
+    public Map<String, Object> getOneAppealById(@RequestParam(name = "al_id") String al_id,
+                                                @RequestParam(name = "user_id") String user_id) {
+        try {
+            Appeal appeal = appealService.getOneAppealById(al_id);
+            logService.addOneLog(user_id, "ask for an apeal(id=" + al_id + ")", "succeed");
+            return response(200, "ok", appeal);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "ask for an apeal(id=" + al_id + ")", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+     * getAppealsByUser_id
+     * <p>学生查询自己提交的所有举报。</p>
+     *
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
     // http://localhost:8080/server/appeal/getbyuserid?user_id=
-    @RequestMapping("/getbyuserid")
+    @RequestMapping("/get_bs")
     public Map<String, Object> getAppealsByUser_id(@RequestParam(name = "user_id") String user_id) {
         try {
             List<Appeal> appeals = appealService.getAppealsByUserId(user_id);
@@ -152,29 +196,247 @@ public class AppealController {
         }
     }
 
-    @RequestMapping("/get_unwatched_by_stu_id")
-    public Map<String,Object> getUnwatchedAppealsByUser_id(@RequestParam(name = "user_id")String user_id){
-        try{
-            List<Appeal> appeals=appealService.getUnWatchedAppealsByStu_id(user_id);
-            logService.addOneLog(user_id,"ask for unwatched appeals","succeed");
-            return response(200,"ok",appeals);
-        }catch (Exception e){
+    /**
+     * getUnwatchedAppealsByUser_id
+     * <p>学生查询自己的所有未受理的举报。</p>
+     *
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
+    @RequestMapping("/get_unwatched_bs")
+    public Map<String, Object> getUnwatchedAppealsByUser_id(@RequestParam(name = "user_id") String user_id) {
+        try {
+            List<Appeal> appeals = appealService.getUnWatchedAppealsByStu_id(user_id);
+            logService.addOneLog(user_id, "ask for unwatched appeals", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
             e.printStackTrace();
-            logService.addOneLog(user_id,"ask for unwatched appeals","failed");
-            return response(500,"server error");
+            logService.addOneLog(user_id, "ask for unwatched appeals", "failed");
+            return response(500, "server error");
         }
     }
 
-    @RequestMapping("/get_unwatched_by_ns")
-    public Map<String,Object> getUnwatchedAppealsByNs_id(@RequestParam(name = "user_id")String user_id){
-        try{
-            List<Appeal> appeals=appealService.getUnWatchedAppealsByNs_id(user_id);
-            logService.addOneLog(user_id,"ask for unwatched appeals","succeed");
-            return response(200,"ok",appeals);
-        }catch (Exception e){
+    /**
+     * getWatchedAppealsByStu_id
+     * <p>学生查询已受理的所有举报（包括已得出结果和未得出结果的。）</p>
+     *
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
+    @RequestMapping("/get_watched_bs")
+    public Map<String, Object> getWatchedAppealsByStu_id(@RequestParam(name = "user_id") String user_id) {
+        try {
+            List<Appeal> appeals = appealService.getWatchedAppealsByStu_id(user_id);
+            logService.addOneLog(user_id, "ask for watched appeals", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
             e.printStackTrace();
-            logService.addOneLog(user_id,"ask for unwatched appeals","failed");
-            return response(500,"server error");
+            logService.addOneLog(user_id, "ask for watched appeals", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+     * getNoResultAppealsByStu_id
+     * <p>学生查询已受理，但未得出结果的举报。</p>
+     *
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
+    @RequestMapping("/get_noresult_bs")
+    public Map<String, Object> getNoResultAppealsByStu_id(@RequestParam(name = "user_id") String user_id) {
+        try {
+            List<Appeal> appeals = appealService.getNoResultAppealsByStu_id(user_id);
+            logService.addOneLog(user_id, "ask for no result appeals", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "ask for no result appeals", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+     * getHasResultAppealsByStu_id
+     * <p>学生查询已经得出结果的所有举报</p>
+     *
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
+    @RequestMapping("/get_hasresult_bs")
+    public Map<String, Object> getHasResultAppealsByStu_id(@RequestParam(name = "user_id") String user_id) {
+        try {
+            List<Appeal> appeals = appealService.getHasResultAppealsByStu_id(user_id);
+            logService.addOneLog(user_id, "ask for has result appeals", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "ask for has result appeals", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+     * getRe_appealedAppealsByStu_id
+     * <p>学生查询所有进行了二次举报的举报，即查询结果为初次举报的信息。</p>
+     *
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
+    @RequestMapping("/get_real")
+    public Map<String, Object> getRe_appealedAppealsByStu_id(@RequestParam(name = "user_id") String user_id) {
+        try {
+            List<Appeal> appeals = appealService.getRe_appealedAppealsByStu_id(user_id);
+            logService.addOneLog(user_id, "ask for re_appealed appeals", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "ask for re_appealed appeals", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+     * getAppealsUnderManagement
+     * <p>非学生用户查询所有提交到所在单位的举报。</p>
+     *
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
+    // http://localhost:8080/server/appeal/undermanage?user_id=
+    @RequestMapping("/undermanage")
+    public Map<String, Object> getAppealsUnderManagement(@RequestParam(name = "user_id") String user_id) {
+        try {
+            List<Appeal> appeals = appealService.getAppealsUnderManagement(user_id);
+            logService.addOneLog(user_id, "ask for appeals under management", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "ask for appeals under management", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+     * getUnwatchedAppealsByNs_id
+     * <p>非学生用户查询所在单位未受理的所有举报。</p>
+     *
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
+    @RequestMapping("/get_unwatched_ns")
+    public Map<String, Object> getUnwatchedAppealsByNs_id(@RequestParam(name = "user_id") String user_id) {
+        try {
+            List<Appeal> appeals = appealService.getUnWatchedAppealsByNs_id(user_id);
+            logService.addOneLog(user_id, "ask for unwatched appeals", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "ask for unwatched appeals", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+     * getWatchedAppealsByNs_id
+     * <p>非学生用户查询所在单位已受理的所有举报。</p>
+     *
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
+    @RequestMapping("/get_watched_ns")
+    public Map<String, Object> getWatchedAppealsByNs_id(@RequestParam(name = "user_id") String user_id) {
+        try {
+            List<Appeal> appeals = appealService.getWatchedAppealsByNs_id(user_id);
+            logService.addOneLog(user_id, "ask for watched appeals", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "ask for watched appeals", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+     * getNoResultAppealsByNs_id
+     * <p>非学生用户查询所在单位已受理，但未得出结果的举报。</p>
+     *
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
+    @RequestMapping("/get_noresult_ns")
+    public Map<String, Object> getNoResultAppealsByNs_id(@RequestParam(name = "user_id") String user_id) {
+        try {
+            List<Appeal> appeals = appealService.getNoResultAppealsByNs_id(user_id);
+            logService.addOneLog(user_id, "ask for no result appeals", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "ask for no result appeals", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+     * getHasResultAppealsByNs_id
+     * <p>非学生用户查询所在单位已给出调查结果的所有举报。</p>
+     *
+     * @param user_id java.lang.String.
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @author hesheng
+     * @create: 2021/3/10
+     */
+    @RequestMapping("/get_hasresult_ns")
+    public Map<String, Object> getHasResultAppealsByNs_id(@RequestParam(name = "user_id") String user_id) {
+        try {
+            List<Appeal> appeals = appealService.getHasResultAppealsByNs_id(user_id);
+            logService.addOneLog(user_id, "ask for has result appeals", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "ask for has result appeals", "failed");
+            return response(500, "server error");
+        }
+    }
+
+    /**
+    * searchForAppealsByKeywords
+    * <p>根据关键词查询举报。</p>
+    * @param user_id java.lang.String.
+     * @param keys java.lang.String.
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    * @author hesheng
+    * @create: 2021/3/10
+    */
+    @RequestMapping("/search_al")
+    public Map<String, Object> searchForAppealsByKeywords(@RequestParam(name = "user_id") String user_id,
+                                                          @RequestParam(name = "keys") String keys) {
+        try {
+            List<Appeal> appeals = appealService.searchForAppealsByKeywords(user_id,keys);
+            logService.addOneLog(user_id, "search for appeals by keywords", "succeed");
+            return response(200, "ok", appeals);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logService.addOneLog(user_id, "search for appeals by keywords", "failed");
+            return response(500, "server error");
         }
     }
 }

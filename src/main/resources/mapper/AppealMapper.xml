@@ -154,4 +154,98 @@
                                 SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{ns_id}), 1, 10)
                             AND r_al_ns.al_id NOT IN (SELECT r_al_rh.al_id FROM r_al_rh));
     </select>
+
+    <!--  List<Appeal> getWatchedAppealsByStu_id(String user_id);  -->
+    <select id="getWatchedAppealsByStu_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_appellant = #{user_id}
+          AND t_al_id IN (SELECT al_id FROM r_al_rh);
+    </select>
+
+    <!--  List<Appeal> getNoResultAppealsByStu_id(String user_id);  -->
+    <select id="getNoResultAppealsByStu_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_appellant = #{user_id}
+          AND t_al_id IN
+              (SELECT al_id FROM r_al_rh WHERE rh_id IN (SELECT t_rh_id FROM t_research WHERE t_rh_restime IS NULL));
+    </select>
+
+    <!--  List<Appeal> getHasResultAppealsByStu_id(String user_id);  -->
+    <select id="getHasResultAppealsByStu_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_appellant = #{user_id}
+          AND t_al_id IN
+              (SELECT al_id
+               FROM r_al_rh
+               WHERE rh_id IN (SELECT t_rh_id FROM t_research WHERE t_rh_restime IS NOT NULL));
+    </select>
+
+    <!--   List<Appeal> getRe_appealedAppealsByStu_id(String user_id);  -->
+    <select id="getRe_appealedAppealsByStu_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_appellant = #{user_id}
+          AND t_al_real IS NOT NULL;
+    </select>
+
+    <!--  List<Appeal> getWatchedAppealsByNs_id(String user_id);  -->
+    <select id="getWatchedAppealsByNs_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_id IN (SELECT r_al_ns.al_id
+                          FROM r_al_ns
+                          WHERE SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = r_al_ns.dmsch_id), 1, 10) =
+                                SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}), 1, 10)
+                            AND r_al_ns.al_id IN (SELECT r_al_rh.al_id FROM r_al_rh));
+    </select>
+
+    <!--  List<Appeal> getNoResultAppealsByNs_id(String user_id);  -->
+    <select id="getNoResultAppealsByNs_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_id IN
+              (SELECT al_id
+               FROM r_al_rh
+               WHERE rh_id IN (SELECT t_rh_id
+                               FROM t_research
+                               WHERE t_rh_restime IS NULL
+                                 AND SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}), 1, 10) =
+                                     SUBSTRING(
+                                             (SELECT t_user_name FROM t_user WHERE t_user_id = t_research.t_rh_handler),
+                                             1, 10)));
+    </select>
+
+    <!--  List<Appeal> getHasResultAppealsByNs_id(String user_id);  -->
+    <select id="getHasResultAppealsByNs_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_id IN
+              (SELECT al_id
+               FROM r_al_rh
+               WHERE rh_id IN (SELECT t_rh_id
+                               FROM t_research
+                               WHERE t_rh_restime IS NOT NULL
+                                 AND SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}), 1, 10) =
+                                     SUBSTRING(
+                                             (SELECT t_user_name FROM t_user WHERE t_user_id = t_research.t_rh_handler),
+                                             1, 10)));
+    </select>
+
+    <!--  List<Appeal> searchForAppealsByKeywords(String user_id, String keys);  -->
+    <select id="searchForAppealsByKeywords" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_id IN (SELECT r_al_ns.al_id
+                          FROM r_al_ns
+                          WHERE SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = r_al_ns.dmsch_id), 1,
+                                          10) =
+                                SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}), 1, 10))
+          AND (t_al_detail LIKE CONCAT('%', #{keys}, '%')
+            OR t_al_title LIKE CONCAT('%', #{keys}, '%')
+            OR t_al_address LIKE CONCAT('%', #{keys}, '%')
+            OR t_al_appellant IN (SELECT t_user_id FROM t_user WHERE t_user_name LIKE CONCAT('%', #{keys}, '%')));
+    </select>
 </mapper>
