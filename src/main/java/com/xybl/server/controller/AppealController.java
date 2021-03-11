@@ -502,6 +502,15 @@ public class AppealController {
         }
     }
 
+    /**
+    * getAppealsWaitForComment
+    * <p>获取未评论的举报。</p>
+    * @param user_id java.lang.String.
+     * @param is_first int.
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    * @author hesheng
+    * @create: 2021/3/11
+    */
     @RequestMapping("/wait_comment")
     public Map<String,Object> getAppealsWaitForComment(@RequestParam(name = "user_id")String user_id,
                                                        @RequestParam(name = "is_first",defaultValue = "0")int is_first){
@@ -516,6 +525,15 @@ public class AppealController {
         }
     }
 
+    /**
+    * getAppealsHasCommented
+    * <p>获取已经评论的举报。</p>
+    * @param user_id java.lang.String.
+     * @param is_first int.
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    * @author hesheng
+    * @create: 2021/3/11
+    */
     @RequestMapping("/get_commented")
     public Map<String,Object> getAppealsHasCommented(@RequestParam(name = "user_id")String user_id,
                                                      @RequestParam(name = "is_first",defaultValue = "0")int is_first){

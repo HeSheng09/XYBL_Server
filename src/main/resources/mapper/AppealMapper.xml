@@ -356,10 +356,11 @@
             FROM r_al_rh
             WHERE rh_id IN (SELECT t_rh_id
             FROM t_research
-            WHERE SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}),
+            WHERE (SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}),
             1, 10) = SUBSTRING(
             (SELECT t_user_name FROM t_user WHERE t_user_id = t_rh_auditor),
-            1, 10)
+            1, 10) OR SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}),1, 10) = SUBSTRING((SELECT
+            t_user_name FROM t_user WHERE t_user_id =t_rh_handler),1, 10))
             AND t_rh_appcomment IS NULL))
             <if test="is_first==true">
                 AND t_al_id NOT IN (SELECT ta_2.t_al_real FROM t_appeal AS ta_2 WHERE t_al_real IS NOT NULL)
@@ -371,14 +372,17 @@
         SELECT *
         FROM t_appeal
         <where>
-            t_al_id IN (SELECT al_id
+            t_al_id IN
+            (SELECT al_id
             FROM r_al_rh
-            WHERE rh_id IN (SELECT t_rh_id
+            WHERE rh_id IN
+            (SELECT t_rh_id
             FROM t_research
-            WHERE SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}),
-            1, 10) = SUBSTRING(
-            (SELECT t_user_name FROM t_user WHERE t_user_id = t_rh_auditor),
-            1, 10)
+            WHERE
+            (SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}),1, 10) =
+            SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = t_rh_auditor),1, 10) OR SUBSTRING((SELECT
+            t_user_name FROM t_user WHERE t_user_id = #{user_id}),1, 10) = SUBSTRING((SELECT
+            t_user_name FROM t_user WHERE t_user_id =t_rh_handler),1, 10))
             AND t_rh_appcomment IS NOT NULL))
             <if test="is_first==true">
                 AND t_al_id NOT IN (SELECT ta_2.t_al_real FROM t_appeal AS ta_2 WHERE t_al_real IS NOT NULL)
