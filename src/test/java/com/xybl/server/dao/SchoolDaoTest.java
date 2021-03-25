@@ -26,7 +26,7 @@ class SchoolDaoTest {
 
     @Test
     void getSchById(){
-        School school = schoolDao.getSchoolById("0101001001000");
+        School school = schoolDao.getSchoolById("0101001002000");
         System.out.println(school);
     }
 
