@@ -6,6 +6,7 @@ import com.xybl.server.service.MessageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,7 +21,7 @@ import static com.xybl.server.utils.ResponseUtil.response;
  * @author hesheng
  * @create 2021/3/10
  **/
-@Controller
+@RestController
 @RequestMapping("/msg")
 public class MessageController {
     @Resource

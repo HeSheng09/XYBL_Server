@@ -30,7 +30,16 @@ public interface RouteService {
     * @param re_al java.lang.String.
     * @return java.util.List<java.util.Map<java.lang.String,java.lang.Object>>
     * @author hesheng
-    * @create: 2021/3/8
+    * @create 2021/3/8
     */
     public List<Map<String, Object>> getFollowRoutes(String re_al);
+
+    /**
+     * <p>根据al_id字段获取包括此条举报之前的所有举报和调查。</p>
+     * @param al_id java.lang.String
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     * @author hesheng
+     * @create 2021/3/26
+     */
+    public Map<String, Object> getBeforeComRoute(String al_id);
 }

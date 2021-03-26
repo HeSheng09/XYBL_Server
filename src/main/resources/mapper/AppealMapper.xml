@@ -64,8 +64,7 @@
     <select id="getAppeals" resultMap="baseMap">
         SELECT *
         FROM t_appeal
-        ORDER BY t_al_id DESC
-        LIMIT 100;
+        ORDER BY t_al_id DESC LIMIT 100;
     </select>
 
     <!--  public void addOneAppeal(Appeal appeal);  -->
@@ -122,8 +121,7 @@
         SELECT SUBSTRING(t_al_id, 14, 3) as last_id, SUBSTRING(t_al_id, 1, 13) as t_id
         FROM t_appeal
         WHERE SUBSTRING(t_al_id, 1, 10) > UNIX_TIMESTAMP(CAST(SYSDATE() AS DATE))
-        ORDER BY t_id DESC
-        LIMIT 1;
+        ORDER BY t_id DESC LIMIT 1;
     </select>
 
     <!--  public void deleteRelAlNsByAlId(String al_id, String user_id);  -->
@@ -405,5 +403,11 @@
                           FROM r_al_ns
                           WHERE SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}), 1, 10) =
                                 SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = r_al_ns.dmsch_id), 1, 10));
+    </select>
+
+    <select id="getAppealByRl_id" parameterType="String" resultMap="baseMap">
+        SELECT *
+        FROM t_appeal
+        WHERE t_al_real = #{al_id};
     </select>
 </mapper>

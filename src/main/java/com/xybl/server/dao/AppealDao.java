@@ -261,4 +261,6 @@ public interface AppealDao {
     List<Appeal> getFirstAppealsByStu_id(String user_id);
 
     List<Appeal> getFirstAppealByNs_id(String user_id);
+
+    Appeal getAppealByRl_id(String al_id);
 }

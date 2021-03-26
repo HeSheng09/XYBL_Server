@@ -23,14 +23,16 @@
     <select id="getUnseenMessageByUser_id" parameterType="String" resultMap="baseMap">
         SELECT *
         FROM t_msg
-        WHERE user_id = #{user_id}
+        WHERE (user_id = #{user_id} OR SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}), 1, 10) =
+                                       SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = user_id), 1, 10))
           AND flag = FALSE;
     </select>
 
     <select id="getAllMessagesByUser_id" parameterType="String" resultMap="baseMap">
         SELECT *
         FROM t_msg
-        WHERE user_id = #{user_id};
+        WHERE (user_id = #{user_id} OR SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = #{user_id}), 1, 10) =
+                                       SUBSTRING((SELECT t_user_name FROM t_user WHERE t_user_id = user_id), 1, 10));
     </select>
 
     <update id="updateOneMessage" parameterType="com.xybl.server.entity.Message">

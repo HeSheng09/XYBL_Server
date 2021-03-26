@@ -63,4 +63,17 @@ public class RouteServiceImpl implements RouteService {
         }
         return follows;
     }
+
+    @Override
+    public Map<String, Object> getBeforeComRoute(String al_id) {
+        // get init appeal id
+        String init_al=al_id;
+        Appeal appeal= appealDao.getAppealByRl_id(al_id);
+        while(appeal!=null){
+            init_al=appeal.getId();
+            appeal=appealDao.getAppealByRl_id(init_al);
+        }
+        // get route
+        return getOneCompleteRoute(init_al);
+    }
 }
