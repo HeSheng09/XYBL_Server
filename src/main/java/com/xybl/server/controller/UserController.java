@@ -284,7 +284,7 @@ public class UserController {
             logService.addOneLog(requestId, "get User(" + id + ") information", msg);
             return response(401, msg);
         }
-        if (id != requestId && requestUser.getRole()) {
+        if (!id.equals(requestId) && requestUser.getRole()) {
             String msg = "has no right";
             logService.addOneLog(requestId, "get User(" + id + ") information", msg);
             return response(400, msg);
@@ -358,7 +358,7 @@ public class UserController {
             } catch (Exception e) {
                 e.printStackTrace();
                 logService.addOneLog(id, "user(id=" + id + ") update self info", "failed");
-                return response(400, "update failed");
+                return response(500, "server error");
             }
             //2.判斷管理员用户修改
         } else {

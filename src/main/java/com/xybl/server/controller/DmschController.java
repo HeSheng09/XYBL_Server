@@ -160,28 +160,4 @@ public class DmschController {
             }
         }
     }
-
-
-
-
-
-
-
-
-    @GetMapping("/get")
-    public Map<String, Object> getSchool(){
-        School t = schoolService.getSchoolByName("武汉大学");
-        if(t != null){
-            return response(200, t.toString());
-        }else{
-            return response(401, "not find");
-        }
-    }
-
-    @GetMapping("/del")
-    public Map<String, Object> delSchool(){
-        String result = schoolService.delSchoolById("test_whu_id");
-        return response(401, result);
-
-    }
 }

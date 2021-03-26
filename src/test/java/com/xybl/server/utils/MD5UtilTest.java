@@ -2,6 +2,7 @@ package com.xybl.server.utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
@@ -45,5 +46,10 @@ class MD5UtilTest {
     void validText() {
         String text="001";
         System.out.println(MD5Util.validText(text,"37F3E94DB4ABC9B0D154C68487AA182D9735E258CBF552884ADAEF11"));
+    }
+
+    @Test
+    void t() throws IOException {
+        FileUtil.pictest("F:/test.png");
     }
 }
