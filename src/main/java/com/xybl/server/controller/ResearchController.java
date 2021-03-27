@@ -43,18 +43,25 @@ public class ResearchController {
         try {
             NsUser user = userService.getNsUserById(user_id);
             if (Integer.parseInt(user.getPrivilege().substring(1, 2)) < 3) {
+                // 查询是否已有处理
+                Research is_rh = researchService.getOneResearchByAl_id(al_id);
+                if (is_rh != null) {
+                    logService.addOneLog(user_id, "add one research(id=(" + is_rh.getId() + ")", "failed");
+                    return response(602, "already exist", is_rh);
+                }
+
                 // privilege=0,1,2
                 String rh_id = researchService.genResearchId();
                 Research research = new Research(rh_id, user_id, getAndFormatDatetime());
                 if (researchService.addOneResearch(research, al_id)) {
 
-                    messageService.sendMessage(appealService.getOneAppealById(al_id).getAppellant(), "Your appeal(id="+al_id+") has been accepted!");
+                    messageService.sendMessage(appealService.getOneAppealById(al_id).getAppellant(), "Your appeal(id=" + al_id + ") has been accepted!");
                     // 插入成功
                     logService.addOneLog(user_id, "add one research(id=(" + rh_id + ")", "succeed");
 
                     // 是否二次处理。若是，则更新上次举报的re_research属性
                     if (!"not_provided".equals(last_rh)) {
-                        Research lastRh=researchService.getOneResearchById(last_rh);
+                        Research lastRh = researchService.getOneResearchById(last_rh);
                         lastRh.setRe_research(rh_id);
                         researchService.selfUpdateResearch(lastRh);
                     }
@@ -101,17 +108,17 @@ public class ResearchController {
         research.setRes_time(getAndFormatDatetime());
         try {
             // 提交完结果之后，需要将此research提交给上级部门审核。故需要update rh_auditor字段
-            String super_id=userService.getSuperDmId(user_id);
+            String super_id = userService.getSuperDmId(user_id);
             research.setAuditor(super_id);
 
             researchService.selfUpdateResearch(research);
 
             // 通知学生已经提交调查结果
-            Appeal appeal=appealService.getAppealByRh_id(rh_id);
-            messageService.sendMessage(appeal.getAppellant(),"The organization has submitted research result on your appeal(id="+appeal.getId()+")!");
+            Appeal appeal = appealService.getAppealByRh_id(rh_id);
+            messageService.sendMessage(appeal.getAppellant(), "The organization has submitted research result on your appeal(id=" + appeal.getId() + ")!");
 
             // 通知上级部门进行审核
-            messageService.sendMessage(super_id,"A new research on appeal(id="+appeal.getId()+") need to be examined.");
+            messageService.sendMessage(super_id, "A new research on appeal(id=" + appeal.getId() + ") need to be examined.");
 
             logService.addOneLog(user_id, "submit research(id=" + rh_id + ") result", "succeed");
             return response(200, "ok");
@@ -137,11 +144,11 @@ public class ResearchController {
             researchService.superUpdateResearch(research);
 
             // 通知处理部门已经审核
-            String handler=researchService.getOneResearchById(rh_id).getHandler();
-            Appeal appeal=appealService.getAppealByRh_id(rh_id);
-            messageService.sendMessage(handler,"The research on appeal(id-"+appeal.getId()+") has been examined!");
+            String handler = researchService.getOneResearchById(rh_id).getHandler();
+            Appeal appeal = appealService.getAppealByRh_id(rh_id);
+            messageService.sendMessage(handler, "The research on appeal(id-" + appeal.getId() + ") has been examined!");
             // 通知用户已经审核结束
-            messageService.sendMessage(appeal.getAppellant(), "Your appeal(id="+appeal.getId()+") has been examined.");
+            messageService.sendMessage(appeal.getAppellant(), "Your appeal(id=" + appeal.getId() + ") has been examined.");
 
             logService.addOneLog(user_id, "examine research(id=" + rh_id + ")", "succeed");
             return response(200, "ok");
@@ -161,11 +168,11 @@ public class ResearchController {
         try {
             researchService.stuUpdateResearch(user_id, rh_id, app_comment);
 
-            Research research=researchService.getOneResearchById(rh_id);
-            Appeal appeal=appealService.getAppealByRh_id(rh_id);
+            Research research = researchService.getOneResearchById(rh_id);
+            Appeal appeal = appealService.getAppealByRh_id(rh_id);
             // 通知管理和审核部门用户意见
-            messageService.sendMessage(research.getHandler(), "The student has submitted comment on your research about appeal(id="+appeal.getAppellant()+").");
-            messageService.sendMessage(research.getAuditor(),"The student has submitted comment on your research about appeal(id="+appeal.getAppellant()+").");
+            messageService.sendMessage(research.getHandler(), "The student has submitted comment on your research about appeal(id=" + appeal.getAppellant() + ").");
+            messageService.sendMessage(research.getAuditor(), "The student has submitted comment on your research about appeal(id=" + appeal.getAppellant() + ").");
 
             logService.addOneLog(user_id, "submit research(id=" + rh_id + ") comment", "succeed");
             return response(200, "ok");
@@ -192,15 +199,15 @@ public class ResearchController {
     }
 
     @RequestMapping("/get_by_al_id")
-    public Map<String,Object> getOneResearchByAl_id(@RequestParam(name = "user_id")String user_id,
-                                                    @RequestParam(name = "al_id")String al_id){
+    public Map<String, Object> getOneResearchByAl_id(@RequestParam(name = "user_id") String user_id,
+                                                     @RequestParam(name = "al_id") String al_id) {
         try {
             Research research = researchService.getOneResearchByAl_id(al_id);
-            logService.addOneLog(user_id, "ask for one research by al_id(="+al_id+")", "succeed");
+            logService.addOneLog(user_id, "ask for one research by al_id(=" + al_id + ")", "succeed");
             return response(200, "ok", research);
         } catch (Exception e) {
             e.printStackTrace();
-            logService.addOneLog(user_id, "ask for one research by al_id(="+al_id+")", "failed");
+            logService.addOneLog(user_id, "ask for one research by al_id(=" + al_id + ")", "failed");
             return response(500, "server error");
         }
     }
