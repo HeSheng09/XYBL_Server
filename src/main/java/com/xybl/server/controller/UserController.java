@@ -277,8 +277,10 @@ public class UserController {
     @RequestMapping("/getuserinfo")
     Map<String, Object> getUser(@RequestParam(name = "requestId") String requestId,
                                 @RequestParam(name = "id") String id) {
+        //1.回收参数
         User user = userService.getUserById(id);
         User requestUser = userService.getUserById(requestId);
+        //2.判断权限
         if (user == null) {
             String msg = "there is no such user";
             logService.addOneLog(requestId, "get User(" + id + ") information", msg);
@@ -289,23 +291,34 @@ public class UserController {
             logService.addOneLog(requestId, "get User(" + id + ") information", msg);
             return response(400, msg);
         }
+        //3.查询信息
         User tempUser = new User();
         Object tempDmsch = new Object();
+        String dmschUid = "";
         if (user.getRole()) {
             tempUser = userService.getNsUserById(id);
-            if ("000".equals(id.substring(7, 10))) {
-                tempDmsch = departService.getDepartById(id.substring(0, 10) + "000");
+            String nid = userService.getDmschNidByNsUid(id);
+            System.out.println(nid);
+            if ("000".equals(nid.substring(7, 10))) {
+                tempDmsch = departService.getDepartById(nid.substring(0, 10) + "000");
+                dmschUid = userService.getUserByName(nid.substring(0, 10) + "000").getId();
             } else {
-                tempDmsch = schoolService.getSchoolById(id.substring(0, 10) + "000");
+                tempDmsch = schoolService.getSchoolById(nid.substring(0, 10) + "000");
+                dmschUid = userService.getUserByName(nid.substring(0, 10) + "000").getId();
+
             }
         } else {
             tempUser = userService.getStuById(id);
             String tempSchId = userService.getSchIdByStuid(id);
+            dmschUid = userService.getUserByName(tempSchId).getId();
             tempDmsch = schoolService.getSchoolById(tempSchId);
         }
+
+        //4.返回封装消息
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("user", tempUser);
         jsonObject.put("dmsch", tempDmsch);
+        jsonObject.put("dmschUid", dmschUid);
         String msg = "ok";
         logService.addOneLog(requestId, "get User(" + id + ") information", msg);
         return response(200, msg, jsonObject);

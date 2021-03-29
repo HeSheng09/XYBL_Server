@@ -198,4 +198,8 @@
             t_user_id =#{id};
         </where>
     </update>
+
+    <select id="getDmschNidByNsUid" parameterType="String" resultType="String">
+        select dmsch_id from r_ns_dmsch where ns_id = #{nsUid}
+    </select>
 </mapper>

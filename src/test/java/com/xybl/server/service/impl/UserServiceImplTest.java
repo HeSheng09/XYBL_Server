@@ -71,15 +71,14 @@ class UserServiceImplTest {
     @Test
     void GetUserInfoById() throws JSONException {
         String id = "1615105454044009";
-//      User tempUser = new User();
         Object tempUser = new Object();
         tempUser = userService.getStuById(id);
-//        String tempSchId = userService.getSchIdByStuid(id);
-//        School tempDmsch = schoolService.getSchoolById(tempSchId);
-//        String data = tempUser.toString() + tempDmsch.toString();
-//        System.out.println(data);
-        System.out.println(tempUser);
-
+        String tempSchId = userService.getSchIdByStuid(id);
+        String dmschUid = userService.getUserByName(tempSchId).getId();
+        School tempDmsch = schoolService.getSchoolById(tempSchId);
+        System.out.println(tempSchId);
+        System.out.println(dmschUid);
 
     }
+
 }

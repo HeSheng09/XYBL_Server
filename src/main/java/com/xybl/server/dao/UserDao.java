@@ -203,4 +203,14 @@ public interface UserDao {
     * @create: 2021-03-10
     */
     public void updateUser(User New);
+
+    /**
+    * getDmschNidByNsUid
+    * <p>在r_ns_dmsch表中根据非学生用户的uid查询其所在机构的nid</p>
+    * @param nsUid java.lang.String.
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-03-29
+    */
+    public String getDmschNidByNsUid(String nsUid);
 }

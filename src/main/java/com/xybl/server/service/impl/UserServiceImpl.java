@@ -245,4 +245,9 @@ public class UserServiceImpl implements UserService {
     public void updateUser(User New) {
         userDao.updateUser(New);
     }
+
+    @Override
+    public String getDmschNidByNsUid(String nsUid) {
+        return userDao.getDmschNidByNsUid(nsUid);
+    }
 }

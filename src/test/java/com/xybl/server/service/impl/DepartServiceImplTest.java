@@ -2,7 +2,9 @@ package com.xybl.server.service.impl;
 
 import com.xybl.server.ServerApplication;
 import com.xybl.server.entity.Department;
+import com.xybl.server.entity.User;
 import com.xybl.server.service.DepartService;
+import com.xybl.server.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,6 +21,8 @@ import javax.annotation.Resource;
 public class DepartServiceImplTest {
     @Resource
     private DepartService departService;
+    @Resource
+    private UserService userService;
 
     @Test
     void addDepartment(){
@@ -32,7 +36,10 @@ public class DepartServiceImplTest {
 
     @Test
     void testGetById(){
-        Department depart = departService.getDepartById("0000000000000");
+        String id = "1615124188221017";
+        String nid = userService.getDmschNidByNsUid(id);
+        System.out.println(nid);
+        Department depart = departService.getDepartById(nid.substring(0, 10) + "000");
         System.out.println(depart);
     }
 }
