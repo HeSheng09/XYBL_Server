@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 @MapperScan("com.xybl.server.dao")
-public class ServerApplication extends SpringBootServletInitializer {
+public class ServerApplication{
 
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
