@@ -146,7 +146,7 @@ public class ResearchController {
             // 通知处理部门已经审核
             String handler = researchService.getOneResearchById(rh_id).getHandler();
             Appeal appeal = appealService.getAppealByRh_id(rh_id);
-            messageService.sendMessage(handler, "The research on appeal(id-" + appeal.getId() + ") has been examined!");
+            messageService.sendMessage(handler, "The research on appeal(id=" + appeal.getId() + ") has been examined!");
             // 通知用户已经审核结束
             messageService.sendMessage(appeal.getAppellant(), "Your appeal(id=" + appeal.getId() + ") has been examined.");
 
