@@ -217,4 +217,14 @@ public interface UserService {
     * @create: 2021-03-29
     */
     public String getDmschNidByNsUid(String nsUid);
+
+    /**
+    * getUidByNid
+    * <p>根据管理员用户和机构用户的13位nameid获取其带时间戳的userid</p>
+    * @param nid java.lang.String.
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-04-01
+    */
+    public String getUidByNid(String nid);
 }

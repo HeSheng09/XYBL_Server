@@ -250,4 +250,9 @@ public class UserServiceImpl implements UserService {
     public String getDmschNidByNsUid(String nsUid) {
         return userDao.getDmschNidByNsUid(nsUid);
     }
+
+    @Override
+    public String getUidByNid(String nid) {
+        return userDao.getUidByNid(nid);
+    }
 }
