@@ -57,9 +57,12 @@ mybatis:
   typeAliasesPackage: com.xybl.server.entity
   mapperLocations: classpath:mapper/*.xml
 
+#server:
+#  servlet:
+#    encoding:
+#      charset: UTF-8
+#  tomcat:
+#    uri-encoding: UTF-8
 server:
   servlet:
-    encoding:
-      charset: UTF-8
-  tomcat:
-    uri-encoding: UTF-8
+    context-path: /server

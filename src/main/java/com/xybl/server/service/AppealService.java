@@ -45,7 +45,7 @@ public interface AppealService {
      * @author hesheng
      * @create: 2021/3/6
      */
-    public void addOneAppeal(Appeal appeal, String handler) throws Exception;
+    public void addOneAppeal(Appeal appeal, String handler);
 
     /**
      * getAppealsUnderManagement

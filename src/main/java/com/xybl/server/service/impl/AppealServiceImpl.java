@@ -41,7 +41,7 @@ public class AppealServiceImpl implements AppealService {
     }
 
     @Override
-    public void addOneAppeal(Appeal appeal, String handler) throws Exception {
+    public void addOneAppeal(Appeal appeal, String handler){
         // 保存一条关系到r_al_ns中。
         appealDao.addRelAlHandler(appeal.getId(), handler);
         // 保存举报信息
