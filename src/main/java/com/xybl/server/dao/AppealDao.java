@@ -263,4 +263,26 @@ public interface AppealDao {
     List<Appeal> getFirstAppealByNs_id(String user_id);
 
     Appeal getAppealByRl_id(String al_id);
+
+
+    /**
+    * uploadFiles
+    * <p>根据alid 添加文件路径</p>
+    * @param files java.lang.String.
+     * @param alid java.lang.String.
+    * @return void
+    * @author liubocai
+    * @create: 2021-04-04
+    */
+    void uploadFiles(String files, String alid);
+
+    /**
+    * getAllFilesByid
+    * <p>根据t_appeal_id获取其所有可下载的文件</p>
+    * @param alid java.lang.String.
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-04-04
+    */
+    String getAllFilesByid(String alid);
 }

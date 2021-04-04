@@ -88,4 +88,14 @@ public class ResearchServiceImpl implements ResearchService {
     public Research getOneResearchByAl_id(String al_id) {
         return researchDao.getOneResearchByAlId(al_id);
     }
+
+    @Override
+    public void uploadFiles(String files, String rhid) {
+        researchDao.uploadFiles(files, rhid);
+    }
+
+    @Override
+    public String getAllFilesByid(String rhid) {
+        return researchDao.getAllFilesByid(rhid);
+    }
 }

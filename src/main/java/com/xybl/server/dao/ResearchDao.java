@@ -118,4 +118,25 @@ public interface ResearchDao {
     * @create: 2021/3/8
     */
     public Research getOneResearchByAlId(String al_id);
+
+    /**
+    * uploadFiles
+    * <p>根据research id添加文件</p>
+    * @param files java.lang.String.
+     * @param rhid java.lang.String.
+    * @return void
+    * @author liubocai
+    * @create: 2021-04-04
+    */
+    void uploadFiles(String files, String rhid);
+
+    /**
+    * getAllFilesByid
+    * <p>根据t_research_id获取其所有可下载的文件名</p>
+    * @param rhid java.lang.String.
+    * @return java.lang.String
+    * @author liubocai
+    * @create: 2021-04-04
+    */
+    String getAllFilesByid(String rhid);
 }

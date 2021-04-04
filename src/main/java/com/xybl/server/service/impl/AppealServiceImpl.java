@@ -159,4 +159,14 @@ public class AppealServiceImpl implements AppealService {
     public List<Appeal> getFirstAppealsByNs_id(String user_id) {
         return appealDao.getFirstAppealByNs_id(user_id);
     }
+
+    @Override
+    public void uploadFiles(String files, String alid) {
+        appealDao.uploadFiles(files, alid);
+    }
+
+    @Override
+    public String getAllFilesByid(String alid) {
+        return appealDao.getAllFilesByid(alid);
+    }
 }

@@ -148,4 +148,17 @@
         FROM t_research
         WHERE t_rh_id = (SELECT rh_id FROM r_al_rh WHERE al_id = #{al_id});
     </select>
+
+<!--    void uploadFiles(String files, String rhid);-->
+    <update id="uploadFiles">
+        update t_research
+        set t_rh_filepath=concat(ifnull(t_rh_filepath,''), #{files})
+        where t_rh_id = #{rhid}
+    </update>
+
+    <select id="getAllFilesByid" parameterType="String" resultType="String">
+        select t_rh_filepath
+        from t_research
+        where t_rh_id = #{rhid}
+    </select>
 </mapper>

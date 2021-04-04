@@ -410,4 +410,17 @@
         FROM t_appeal
         WHERE t_al_real = #{al_id};
     </select>
+
+<!--    void uploadFiles(String files, String alid);-->
+    <update id="uploadFiles">
+        update t_appeal
+        set t_al_filepath = concat(ifnull(t_al_filepath,''), #{files})
+        where t_al_id = #{alid}
+    </update>
+
+    <select id="getAllFilesByid" parameterType="String" resultType="String">
+        select t_al_filepath
+        from t_appeal
+        where t_al_id = #{alid}
+    </select>
 </mapper>
