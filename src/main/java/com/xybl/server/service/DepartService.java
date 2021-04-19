@@ -107,4 +107,14 @@ public interface DepartService {
      * @create: 2021-03-10
      */
     public void addOneSch(String departid, String schid);
+
+    /**
+     * getNameByNid
+     * <p>在t_dmsch_name表中根据t_user_name获取机构名称</p>
+     * @param nid java.lang.String.
+     * @return java.lang.String
+     * @author liubocai
+     * @create: 2021-04-19
+     */
+    public String getNameByNid(String nid);
 }

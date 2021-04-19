@@ -192,11 +192,11 @@ public class DmschController {
             tnameList.add(s1+s2+s3+s4+"000");
         }
 
-
         for(String s : tnameList){
             String t = userService.getUidByNid(s);
+            String tn = departService.getNameByNid(s);
             if(t != null){
-                uidList.add(t);
+                uidList.add(tn+" "+t);
             }
         }
         return response(200, "ok", uidList);

@@ -80,4 +80,11 @@
     <insert id="addOneSch">
         insert into r_dm_sch(dm_id, sch_id) VALUE (#{departid}, #{schid})
     </insert>
+
+<!--    public String getNameByNid(String nid);-->
+    <select id="getNameByNid" parameterType="String" resultType="String">
+        select dmsch
+        from r_dmsch_name
+        where name = #{nid}
+    </select>
 </mapper>

@@ -400,7 +400,7 @@ public class UserController {
     @RequestMapping("/getnsuserid")
     public Map<String, Object> nsuserid(@RequestParam(name = "nameid")String nameid)
     {
-        return response(200, userService.getUidByNid(nameid));
+        return response(200, "ok", userService.getUidByNid(nameid));
     }
 
 }

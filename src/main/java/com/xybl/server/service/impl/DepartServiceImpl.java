@@ -80,4 +80,9 @@ public class DepartServiceImpl implements DepartService {
     public void addOneSch(String departid, String schid) {
         departDao.addOneSch(departid, schid);
     }
+
+    @Override
+    public String getNameByNid(String nid) {
+        return departDao.getNameByNid(nid);
+    }
 }
