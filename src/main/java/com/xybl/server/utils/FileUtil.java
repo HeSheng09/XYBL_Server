@@ -17,35 +17,39 @@ import java.util.List;
  * @create 2021-02-25
  **/
 public class FileUtil {
+    private static final String fileDir = "/usr/wb-server/XYBL_Server/data";
 
     /**
-    * uploadFile
-    * <p>上传文件并返回其文件名test</p>
-    * @param file org.springframework.web.multipart.MultipartFile.
-    * @return java.lang.String
-    * @author liubocai
-    * @create: 2021-02-25
-    */
+     * uploadFile
+     * <p>上传文件并返回其文件名test</p>
+     *
+     * @param file org.springframework.web.multipart.MultipartFile.
+     * @return java.lang.String
+     * @author liubocai
+     * @create: 2021-02-25
+     */
     public static String uploadFile(MultipartFile file) throws IOException {
-        String filePath="D:\\test\\";
-        if(!file.isEmpty()){
+//        String filePath="D:\\test\\";
+        String filePath = "";
+        if (!file.isEmpty()) {
             String originalFilename = file.getOriginalFilename();
-            filePath += originalFilename;
-            file.transferTo(new File(filePath) );
+            filePath = fileDir + originalFilename;
+            file.transferTo(new File(filePath));
         }
         return filePath;
     }
 
     public static List<String> uploadFiles(MultipartFile[] files) throws IOException {
-        String filePath="D:\\test\\";
+//        String filePath = "D:\\test\\";
+        String filePath = "";
         List<String> filePathList = new ArrayList<>();
-        for(MultipartFile file:files){
-            if(!file.isEmpty()){
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
                 String originalFilename = file.getOriginalFilename();
-                filePath += originalFilename;
-                file.transferTo(new File(filePath) );
+                filePath = fileDir + originalFilename;
+                file.transferTo(new File(filePath));
                 filePathList.add(originalFilename);
-            }else{
+            } else {
                 continue;
             }
         }
@@ -53,7 +57,7 @@ public class FileUtil {
     }
 
 
-    public static HttpServletResponse loadFileAsResource(String path) throws IOException{
+    public static HttpServletResponse loadFileAsResource(String path) throws IOException {
         // path是指想要下载的文件的路径
         File file = new File(path);
         // 获取文件名
@@ -83,7 +87,6 @@ public class FileUtil {
         outputStream.flush();
         return res;
     }
-
 
 
 }
