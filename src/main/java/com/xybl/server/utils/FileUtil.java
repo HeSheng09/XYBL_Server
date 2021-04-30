@@ -28,25 +28,23 @@ public class FileUtil {
      * @author liubocai
      * @create: 2021-02-25
      */
-    public static String uploadFile(MultipartFile file) throws IOException {
-//        String filePath="D:\\test\\";
+    public static String uploadFile(String alrhid, MultipartFile file) throws IOException {
         String filePath = "";
         if (!file.isEmpty()) {
             String originalFilename = file.getOriginalFilename();
-            filePath = fileDir + originalFilename;
+            filePath = fileDir +"/" + alrhid + "/"  + originalFilename;
             file.transferTo(new File(filePath));
         }
         return filePath;
     }
 
-    public static List<String> uploadFiles(MultipartFile[] files) throws IOException {
-//        String filePath = "D:\\test\\";
+    public static List<String> uploadFiles(String alrhid, MultipartFile[] files) throws IOException {
         String filePath = "";
         List<String> filePathList = new ArrayList<>();
         for (MultipartFile file : files) {
             if (!file.isEmpty()) {
                 String originalFilename = file.getOriginalFilename();
-                filePath = fileDir + originalFilename;
+                filePath = fileDir +"/" + alrhid + "/" + originalFilename;
                 file.transferTo(new File(filePath));
                 filePathList.add(originalFilename);
             } else {

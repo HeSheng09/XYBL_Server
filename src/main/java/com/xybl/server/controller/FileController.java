@@ -43,7 +43,7 @@ public class FileController {
                                @RequestParam(name = "alorrh", defaultValue = "null")String alorrh,
                                @RequestParam(name = "uploadFiles") MultipartFile[] uploadFiles) throws IOException {
         //1.存储文件
-        List<String> filePaths =  FileUtil.uploadFiles(uploadFiles);
+        List<String> filePaths =  FileUtil.uploadFiles(alrhid, uploadFiles);
         logService.addOneLog(uid, "upload files", "ok");
         //2.文件名入库
         String aLongStr = " " + String.join(" ", filePaths);
@@ -58,10 +58,12 @@ public class FileController {
 
     @RequestMapping("/download")
     public Map<String, Object> download(@RequestParam(name = "uid")String uid,
+                                        @RequestParam(name = "alrhid")String alrhid,
                                         @RequestParam(name = "filename")String filename,
                                         HttpServletResponse response) throws UnsupportedEncodingException {
         //1.下载文件
-        String filePath = "D:/test/";
+        String filePath = "/usr/wb-server/XYBL_Server/data";
+        filePath += "/"+alrhid+"/";
         File file = new File(filePath + filename);
         if(file.exists()){ //判断文件父目录是否存在
             response.setContentType("application/vnd.ms-excel;charset=UTF-8");
