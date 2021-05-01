@@ -32,6 +32,10 @@ public class FileUtil {
         String filePath = "";
         if (!file.isEmpty()) {
             String originalFilename = file.getOriginalFilename();
+            File faPath = new File(fileDir+"/" + alrhid + "/");
+            if(!faPath.exists()){
+                faPath.mkdirs();
+            }
             filePath = fileDir +"/" + alrhid + "/"  + originalFilename;
             file.transferTo(new File(filePath));
         }
